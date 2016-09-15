@@ -1,10 +1,15 @@
 let assert = require('assert');
 let hello = require('./public/main').hello;
+<<<<<<< HEAD
 let plural = require('./public/main').plural;
 let filter = require('./public/main').filter
+=======
+let filter = require('./public/main').filter;
 
-assert.equal(hello('Test'), 'Привет, Test');
+>>>>>>> upstream/master
 
+
+<<<<<<< HEAD
 /*
 assert.equal(plural(0), 'раз');
 assert.equal(plural(1), 'раз');
@@ -22,3 +27,8 @@ assert.equal(filter('orange'), '******');
 assert.equal(filter('orange sdasdasd'), '****** sdasdasd');
 assert.equal(filter('sdasdasd orange'), 'sdasdasd ******');
 assert.equal(filter('orangesdasdasd'), '******sdasdasd');
+=======
+assert.equal(hello('Test'), 'Привет, Test');
+//TODO: Кейсы для функции filter
+// assert.equal(filter('КЕК'), '***');
+>>>>>>> upstream/master
