@@ -1,14 +1,7 @@
 'use strict';
-<<<<<<< HEAD
 /**
 * @see http://artsiom.mezin.eu/technofront/
 */
-
-
-function onSubmit (form) {
-
-	var data = {
-=======
 
 let userData = {};
 
@@ -18,25 +11,26 @@ function filter (str, rules = ['КЕК']) {
 
 function onLogin (form, block) {
 	userData = {
->>>>>>> upstream/master
+
 		user: form.elements['user'].value,
 		email: form.elements['email'].value
 	};
 
-<<<<<<< HEAD
 	var result = request('/users', data);
 
 	if( result != undefined ) {
 		form.hidden = true;
 		window.helloWorld.innerHTML = helloUser(data.user, result);
-=======
-	 jsLogin.hidden = true;
-	 jsChat.hidden = false;
 
-	 if (userData.user) {
-		 userData.user = filter(userData.user);
-		 jsTitle.innerHTML = jsTitle.innerHTML.replace('%username%', userData.user);
-	 }
+
+		jsLogin.hidden = true;
+		jsChat.hidden = false;
+
+		if (userData.user) {
+			userData.user = filter(userData.user);
+			jsTitle.innerHTML = jsTitle.innerHTML.replace('%username%', userData.user);
+		}
+	}
 
 	 subscribe();
 }
@@ -52,7 +46,6 @@ function createMessage (opts, isMy = false) {
 		message.classList.add('chat__message_my');
 	} else {
 		message.style.backgroundColor = `#${technolibs.colorHash(opts.email || '')}`;
->>>>>>> upstream/master
 	}
 	message.innerHTML = opts.message;
 	email.innerHTML = opts.email;
@@ -87,7 +80,7 @@ function subscribe () {
 	});
 }
 
-<<<<<<< HEAD
+
 function plural (num) {
 
 	if( num >= 2 && num <= 4 ) {
@@ -102,9 +95,10 @@ function helloUser (text, count) {
 }
 
 function hello (text) {
-=======
+	return text;
+}
+
 function hello(text) {
->>>>>>> upstream/master
 	return 'Привет, ' + text;
 }
 
@@ -129,9 +123,6 @@ function filter(str) {
 
 if (typeof exports === 'object') {
 	exports.hello = hello;
-<<<<<<< HEAD
 	exports.plural = plural;
-=======
->>>>>>> upstream/master
 	exports.filter = filter;
 }
