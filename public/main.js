@@ -1,33 +1,43 @@
-(function() {
-    'use strict';
+(function () {
+    "use strict";
+
+    //import
+    if (typeof window === 'object') {
+        let Button = window.ButtonClass;
+        let formEl = document.querySelector('.js-form');
+
+        let userData = {};
+
+        // Пример использования компоненты
+        let formButton = new Button({
+            text: 'Привет!',
+            attrs: {
+                name: 'name'
+            }
+        });
+
+        Button.include(formButton, formEl);
+    }
 
     let userData = {};
 
-    // function filter (str, rules = ['КЕК']) {
-    //    return `//TODO: реализовать filter`;
-    //}
+    function filter (str, rules = ['КЕК']) {
+        return `//TODO: реализовать filter`;
+    }
 
     function onLogin (form, block) {
         userData = {
-
             user: form.elements['user'].value,
             email: form.elements['email'].value
         };
 
-        var result = request('/users', userData);
+        jsLogin.hidden = true;
+        jsChat.hidden = false;
 
-        if( result != undefined ) {
-            form.hidden = true;
-            window.helloWorld.innerHTML = helloUser(userData.user, result);
-
-
-            jsLogin.hidden = true;
-            jsChat.hidden = false;
-
-            if (userData.user) {
-                userData.user = filter(userData.user);
-                jsTitle.innerHTML = jsTitle.innerHTML.replace('%username%', userData.user);
-            }
+        if (userData.user) {
+            userData.user = filter(userData.user);
+            jsTitle.innerHTML = jsTitle.innerHTML
+                .replace('%username%', userData.user);
         }
 
         subscribe();
@@ -78,56 +88,16 @@
         });
     }
 
-
-    function plural (num) {
-
-        if( num >= 2 && num <= 4 ) {
-            return "раза";
-        }else {
-            return "раз";
-        }
-    }
-
-    function helloUser (text, count) {
-        return 'Привет, ' + text + ', вы заходили ' + count + ' раз.';
-    }
-
-    function hello (text) {
-        return text;
-    }
-
     function hello(text) {
         return 'Привет, ' + text;
     }
 
-    function filter(str) {
-
-        let rules = window.rules || [];
-
-        rules = rules.map( rule => {
-            return {
-                regex: new RegExp(rule, 'g'),
-                length: rule.length
-            };
-        });
-
-        rules.forEach( rule => {
-            str = str.replace(rule.regex, (new Array(rule.length + 1)).join('*'))
-        });
-
-
-        return str;
-    }
-
-    if (typeof exports === 'object') { // for Node.js
+    if (typeof exports === 'object') { // for NodeJS
         exports.hello = hello;
-        exports.plural = plural;
         exports.filter = filter;
-    }else {
+    } else {
         window.onLogin = onLogin;
         window.onChat = onChat;
     }
 
 })();
-
-
