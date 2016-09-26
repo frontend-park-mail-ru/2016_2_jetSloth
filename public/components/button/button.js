@@ -1,14 +1,11 @@
 (function () {
-    "use strict";
+    'use strict';
 
-    class ButtonClass {
+    class Button {
         constructor (options) {
+            this.text = options.text;
+            this.attrs = options.attrs || [];
             this.el = document.createElement('button');
-            this.el.innerHTML = options.text;
-            this.el.style.backgroundColor = options.backgroundColor || '';
-            this.el.classList.add('button');
-
-            this.setAttrs(options.attrs);
         }
 
         setAttrs (attrs) {
@@ -17,12 +14,19 @@
             })
         }
 
-        static include (btn, el) {
-            el.appendChild(btn.el);
+        render () {
+            this.el.innerHTML = this.text;
+            this.el.classList.add('button');
+            this.setAttrs(this.attrs);
+            return this;
+        }
+
+        toString () {
+            return this.el.outerHTML;
         }
     }
 
     //export
-    window.ButtonClass = ButtonClass;
+    window.Button = Button;
 
 })();
