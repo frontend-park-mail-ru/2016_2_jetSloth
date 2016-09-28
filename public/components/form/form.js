@@ -12,7 +12,6 @@
         constructor (options = { data: {} }) {
             this.data = options.data;
             this.el = options.el;
-
             this.render();
         }
 

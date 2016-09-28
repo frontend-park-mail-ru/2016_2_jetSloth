@@ -10,11 +10,6 @@
 
         let signInPage = document.querySelector('.js-signin');
         let signUpPage = document.querySelector('.js-signup');
-	let gamePage = document.querySelector('.js-game');
-
-	let gameBox = new Game({
-		el: document.createElement('div')
-	});
 
         let signInForm = new Form({
             el: document.createElement('div'),
@@ -77,21 +72,11 @@
 			email: formData.email,
 			password: formData.password
 	    };
-	    var myHeaders = new Headers();
-	    myHeaders.append("Content-Type", "application/json");
-	    fetch('/signin', {method: "post", headers: myHeaders, body: JSON.stringify(body)}) 
+	    fetch('/signin', {method: "post", body: JSON.stringify(body)}) 
 		.then(
 		function(response) {
-		if (response.status == 200) {
-			session = response.headers.get('session');
-			signInPage.hidden = true;
-			signUpPage.hidden = true;
-			gamePage.hidden = false;
-			alert("your sesion:" + session);
-		}
-		else {
-			alert("Что-то пошло не так (неправильный логин или пароль?)");
-		}
+		alert("signInGetAnswer");
+		signInPage.hidden = true;
 		});
 
         });
@@ -103,30 +88,16 @@
 			name: formData.name,
 			password: formData.password
 		};
-	    var myHeaders = new Headers();
-	    myHeaders.append("Content-Type", "application/json");
-	    fetch('/signup', {method: "post", headers: myHeaders, body: JSON.stringify(body)}) 
+	    fetch('/signup', {method: "post", body: JSON.stringify(body)}) 
 		.then(
 		function(response) {
-		if (response.status == 200) {
-			session = response.headers.get('session');
-			signInPage.hidden = true;
-			signUpPage.hidden = true;
-			gamePage.hidden = false;
-			alert("your sesion:" + session);
-		}
-		else {
-			alert("Что-то пошло не так (пользователь уже существует?)");
-		}
+		alert("signUpGetAnswer");
+		signUpPage.hidden = true;
 	        });
         });
         signInPage.appendChild(signInForm.el);
         
 	signUpPage.appendChild(signUpForm.el);
-	
-	gamePage.appendChild(gameBox.el);
-
-	gamePage.hidden = true;
 
         signInPage.hidden = false;
 
