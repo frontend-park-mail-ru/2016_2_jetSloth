@@ -83,10 +83,11 @@
 		.then(
 		function(response) {
 		if (response.status == 200) {
-			session = response.headers.get('session');
+			let session = response.headers.get('session');
 			signInPage.hidden = true;
 			signUpPage.hidden = true;
 			gamePage.hidden = false;
+			gameBox.start(session);
 			alert("your sesion:" + session);
 		}
 		else {
@@ -109,9 +110,10 @@
 		.then(
 		function(response) {
 		if (response.status == 200) {
-			session = response.headers.get('session');
+			let session = response.headers.get('session');
 			signInPage.hidden = true;
 			signUpPage.hidden = true;
+			gameBox.start(session);
 			gamePage.hidden = false;
 			alert("your sesion:" + session);
 		}
