@@ -12,6 +12,7 @@
         constructor (options = { data: {} }) {
             this.data = options.data;
             this.el = options.el;
+	    this.validator = options.validator;
             this.render();
         }
 
@@ -19,6 +20,8 @@
             this._updateHtml()
             this._installControls();
         }
+	send() {
+	}
 
         /**
          * Вернуть поля формы
@@ -27,7 +30,12 @@
         _getFields () {
             let { fields = [] } = this.data;
 
-            return fields.map(field => { return `<input type="${field.type}" name="${field.name}">` }).join(' ')
+            return fields.map(field => { return `  <div class="lineWithInputAndError">
+							<div style = "float : left; width: 10%">${field.name}</div>
+						   	<input type="${field.type}" name="${field.name}" class="validInput">
+							<div style = "float : right; width: 39%" class="errOut"</div>
+						   </div>
+					` }).join(' ')
         }
 
         /**
@@ -89,6 +97,7 @@
 
             return fields;
         }
+	
 
     }
 

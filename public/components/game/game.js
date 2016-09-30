@@ -21,8 +21,7 @@
 	start(session) {
 		this.info.innerHTML = "<h1>your session: " + session + "</h1>";
 		
-	}
+		}
 	}
 	window.Game = Game;
-	window.session = session;
 })();
