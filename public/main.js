@@ -5,6 +5,7 @@
    	let Button = window.Button;
         let Game = window.Game;
         let Form = window.Form;
+	let Input = window.Input;
 
         let signInPage = document.querySelector('.js-signin');
         let signUpPage = document.querySelector('.js-signup');
@@ -20,8 +21,8 @@
 			let result = true;
 			let pasReg = /[\d\w]{5,65}/;
 			let emailReg = /([\d\w])+@([\d\w])+/;
-			let form = signInForm.el.querySelector('form');
-            		let elements = form.elements;
+			alert("!!!" + signInForm.form.elements);
+            		let elements = signInForm.form.elements;
 			if (!emailReg.test(data.email)) {
 				elements.email.className = 'invalidInput';
 				result = false;
@@ -35,14 +36,8 @@
             data: {
                 title: 'signIn',
                 fields: [
-                    {
-                        name: 'email',
-                        type: 'text',
-                    },
-                    {
-                        name: 'password',
-                        type: 'password',
-                    }
+			new Input('text', 'email', 'email'),
+			new Input('password', 'password', 'password')
                 ],
                 controls: [
                     {
@@ -63,7 +58,7 @@
 			let pasReg = /[\d\w]{5,65}/;
 			let emailReg = /([\d\w])+@([\d\w])+/;
 			let nameReg = /[\w]{3,65}/;
-			let form = signUpForm.el.querySelector('form');
+			let form = signUpForm.form;
             		let elements = form.elements;
 			if (!emailReg.test(data.email)) {
 				form.elements.email.className = "invalidInput";
@@ -86,22 +81,10 @@
             data: {
                 title: 'signUp',
                 fields: [
-                    {
-                        name: 'email',
-                        type: 'text'
-                    },
-		    {
-                        name: 'name',
-                        type: 'text'
-                    },
-                    {
-                        name: 'password',
-                        type: 'password'
-                    },
-		    {
-                        name: 'password2',
-                        type: 'password'
-                    }
+			new Input('text', 'email', 'email'),
+			new Input('text', 'name', 'name'),
+			new Input('password', 'password', 'password'),
+			new Input('password', 'password2', 'repeat password'),
                 ],
                 controls: [
                     {
@@ -174,9 +157,9 @@
 	else {
 	}
         });
-        signInPage.appendChild(signInForm.el);
+        signInPage.appendChild(signInForm.form);
         
-	signUpPage.appendChild(signUpForm.el);
+	signUpPage.appendChild(signUpForm.form);
 	
 	gamePage.appendChild(gameBox.el);
 

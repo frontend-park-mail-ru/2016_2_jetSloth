@@ -13,57 +13,25 @@
             this.data = options.data;
             this.el = options.el;
 	    this.validator = options.validator;
-            this.render();
-        }
+	    this.form = document.createElement('form');
 
-        render () {
-            this._updateHtml()
-            this._installControls();
-        }
-	send() {
-	}
+	    this.title = document.createElement('div');
+	    	this.title.innerHTML = this.data.title;
+	    this.form.appendChild(this.title);
 
-        /**
-         * Вернуть поля формы
-         * @return {string}
-         */
-        _getFields () {
-            let { fields = [] } = this.data;
+	    this.inputsList = document.createElement('div');
+            	let { fields = [] } = this.data;
+            	fields.forEach(field => {this.inputsList.appendChild(field)});
+	    this.form.appendChild(this.inputsList);
 
-            return fields.map(field => { return `  <div class="lineWithInputAndError">
-							<div style = "float : left; width: 10%">${field.name}</div>
-						   	<input type="${field.type}" name="${field.name}" class="validInput">
-							<div style = "float : right; width: 39%" class="errOut"</div>
-						   </div>
-					` }).join(' ')
-        }
-
-        /**
-         * Обновить html компонента
-         */
-        _updateHtml () {
-            this.el.innerHTML = `
-				<form>
-					<h1>${this.data.title}</h1>
-					<div>
-						${this._getFields()}
-					</div>
-					<div class="js-controls">
-					</div>
-				<form>
-			`;
-        }
-
-        /**
-         * Вставить управляющие элементы в форму
-         */
-        _installControls () {
-            let { controls = [] } = this.data;
-
-            controls.forEach(data => {
-                let control = new Button({text: data.text}).render();
-                this.el.querySelector('.js-controls').appendChild(control.el);
-            });
+	    this.controlsList = document.createElement('div');
+	    this.controlsList.className = "js-controls";
+	    	let { controls = [] } = this.data;
+            	controls.forEach(data => {
+                	let control = new Button({text: data.text}).render();
+                	this.controlsList.appendChild(control.el);
+            	});
+	    this.form.appendChild(this.controlsList);
         }
 
         /**
@@ -72,7 +40,7 @@
          * @param {function} callback - коллбек
          */
         on (type, callback) {
-            this.el.addEventListener(type, callback);
+            this.form.addEventListener(type, callback);
         }
 
         /**
@@ -80,10 +48,8 @@
          * @return {object}
          */
         getFormData () {
-            let form = this.el.querySelector('form');
-            let elements = form.elements;
+            let elements = this.form.elements;
             let fields = {};
-
             Object.keys(elements).forEach(element => {
                 let name = elements[element].name;
                 let value = elements[element].value;

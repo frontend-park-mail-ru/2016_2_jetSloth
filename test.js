@@ -1,7 +1,7 @@
-let assert = require('assert');
-let hello = require('./public/main').hello;
-let plural = require('./public/main').plural;
-let filter = require('./public/main').filter;
+//let assert = require('assert');
+//let hello = require('./public/main').hello;
+//let plural = require('./public/main').plural;
+//let filter = require('./public/main').filter;
 
 
 /*
