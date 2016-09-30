@@ -10,7 +10,7 @@
 
 
 
-').filter;
+//').filter;
 
 /*
 assert.equal(plural(0), 'раз');
