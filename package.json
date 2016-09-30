@@ -1,11 +1,12 @@
 {
-  "name": "sample",
-  "version": "1.0.0",
-  "description": "",
+  "name": "monopoly",
+  "version": "0.0.1",
+  "description": "retro game",
   "main": "index.js",
   "scripts": {
     "test": "node test.js",
-    "lint": "./node_modules/.bin/eslint **/*.js"
+    "lint": "eslint **/*.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,7 +16,7 @@
     "node": "6.3.1"
   },
   "keywords": [],
-  "author": "",
+  "author": "JetSloth",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
@@ -26,5 +27,10 @@
   "devDependencies": {
     "eslint": "^3.5.0",
     "eslint-config-google": "^0.6.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/sample/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/sample#readme",
+  "license": "ISC"
 }

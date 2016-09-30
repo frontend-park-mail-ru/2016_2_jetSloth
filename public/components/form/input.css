@@ -1,4 +1,4 @@
-.validInput {
+/*.validInput {
     border:1px solid green !important;
     width: 50% !important;
     float : bottom;
@@ -9,4 +9,23 @@
     width: 50% !important;
     float: bottom;
 }
+*/
 
+form {
+    opacity: 0.9;
+    margin: 0px 0px 0px 270px;
+    float: left;
+}
+
+
+input[type=password], [type=text] {
+    background-color: white !important;
+}
+
+.validInput {
+    border: 2px solid green !important;
+}
+
+.invalidInput {
+    border: 2px solid red !important;
+}

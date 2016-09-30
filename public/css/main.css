@@ -1,7 +1,24 @@
 body {
+    background-image: url("2.jpg");
+    background-position: right;
+    background-attachment: fixed;
+    padding: 5vw;
+    box-sizing: border-box;
+}
+header h1 {
+  text-align: center;
+  text-decoration: underline;
+  font-size: 100px;
+}
+
+h1 {
+  color: black;
+}
+
+/*body {
 	padding: 5vw;
 	box-sizing: border-box;
-}
+}*/
 
 .chat {
 	height: 50vh;
