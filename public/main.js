@@ -171,7 +171,24 @@
 
 	signUpPage.hidden = false;
     }
+function filter (str, rules = ['KEK']) {
+    rules = rules.map(rule => {
+        return {
+            regexp: new RegExp('\\b' + rule + '\\b', 'g'),
+            length: rule.length
+          };
+        });
 
+    rules.forEach(rule => {
+        str = str.replace(rule.regexp, (new Array(rule.length + 1)).join('*'))
+    });
+	return str;
+}
+if (typeof exports === 'object') {
+		exports.filter = filter;
+	} else {
+		window.filter = filter;
+	}
 })();
 
 
