@@ -30,6 +30,11 @@
     }
 
     //export
-    window.Input = Input;
+	if (typeof exports === 'object') { // for NodeJS
+		exports.Input = Input;
+	} else {
+		 window.Input = Input;
+	}
+
 
 })();

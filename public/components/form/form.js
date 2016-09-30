@@ -68,5 +68,9 @@
     }
 
     //export
-    window.Form = Form;
+    if (typeof exports === 'object') { // for NodeJS
+		exports.Form = Form;
+	} else {
+		 window.Form = Form;
+	}
 })();

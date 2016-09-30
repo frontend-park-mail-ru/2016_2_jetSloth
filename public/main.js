@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
    if (typeof window === 'object') {
    //import
@@ -12,6 +12,7 @@
 	let gamePage = document.querySelector('.js-game');
 	
 	let gameBox = new Game({el: document.createElement('div')});
+	let domain = 'https://monopolygames.herokuapp.com';
 
         let signInForm = new Form({
             el: document.createElement('div'),
@@ -108,7 +109,7 @@
 	    if (signInForm.validator()) {
 	    var myHeaders = new Headers();
 	    myHeaders.append("Content-Type", "application/json");
-	    fetch('/signin', {method: "post", headers: myHeaders, body: JSON.stringify(formData)}) 
+	    fetch( domain + '/signin', {method: "post", headers: myHeaders, body: JSON.stringify(formData)}) 
 		.then(
 		function(response) {
 		if (response.status == 200) {
@@ -135,11 +136,12 @@
 	});
         signUpForm.on('submit', event => {
             event.preventDefault();
-	    let formData = signInForm.getFormData();
+	    let formData = signUpForm.getFormData();
+	   
 	    if (signUpForm.validator()) {
 	    var myHeaders = new Headers();
 	    myHeaders.append("Content-Type", "application/json");
-	    fetch('/signup', {method: "post", headers: myHeaders, body: JSON.stringify(formData)}) 
+	    fetch( domain + '/signup', {method: "post", headers: myHeaders, body: JSON.stringify(formData)}) 
 		.then(
 		function(response) {
 		if (response.status == 200) {
@@ -171,3 +173,5 @@
     }
 
 })();
+
+

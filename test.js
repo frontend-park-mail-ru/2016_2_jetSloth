@@ -2,7 +2,15 @@
 //let hello = require('./public/main').hello;
 //let plural = require('./public/main').plural;
 //let filter = require('./public/main').filter;
+//let Input = equire('./public/input/input').Input;
+//let input = new Input('text', 'name', 'title');
+//assert(input.title.innerHTML, 'title');
 
+
+
+
+
+').filter;
 
 /*
 assert.equal(plural(0), 'раз');
