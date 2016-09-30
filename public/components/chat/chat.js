@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     // import
@@ -9,14 +9,17 @@
         /**
          * Конструктор класса Chat
          */
-        constructor ({ data = {}, el }) {
+        constructor({
+            data = {},
+            el
+        }) {
             this.data = data;
             this.el = el;
 
             this.render();
         }
 
-        render () {
+        render() {
             this._updateHtml();
         }
 
@@ -24,13 +27,13 @@
          * Обновить данные компонента
          * @param {object} data - данные компонента
          */
-        set (data) {
+        set(data) {
             this.data = data;
 
             return this;
         }
 
-        _updateHtml () {
+        _updateHtml() {
             this.el.innerHTML = `
 				<h3 id="jsTitle">Ты в чате, ${this.data.username}!</h3>
 				<div id="jsMessages" class="chat">
@@ -47,11 +50,11 @@
 			`;
         }
 
-        filter (str, rules = ['КЕК']) {
+        filter(str, rules = ['КЕК']) {
             return `//TODO: реализовать filter`;
         }
 
-        createMessage (opts, isMy = false) {
+        createMessage(opts, isMy = false) {
             let message = document.createElement('div');
             let email = document.createElement('div');
 
@@ -70,7 +73,7 @@
             return message;
         }
 
-        onChat (form) {
+        onChat(form) {
             let data = {
                 message: form.elements['message'].value,
                 email: this.data.email
@@ -80,7 +83,7 @@
             form.reset();
         }
 
-        renderMessages (items) {
+        renderMessages(items) {
             let messages = this.el.querySelector('#jsMessages');
             messages.innerHTML = '';
 
@@ -91,7 +94,7 @@
             messages.scrollTop = messages.scrollHeight;
         }
 
-        subscribe () {
+        subscribe() {
             technolibs.onMessage(data => {
                 this.renderMessages(Object.keys(data).map(key => data[key]));
             });
@@ -103,18 +106,18 @@
                 })
         }
 
-        on (type, callback) {
+        on(type, callback) {
             this.el.addEventListener(type, callback);
         }
 
         //TODO вернуть данные формы
-        getFormData () {
+        getFormData() {
             return {
                 key: 'value'
             };
         }
 
-        install (el) {
+        install(el) {
             el.appendChild(this.el);
         }
     }
