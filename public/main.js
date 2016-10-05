@@ -107,7 +107,7 @@
             if (signInForm.validator()) {
                 var myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/json");
-                fetch(domain + '/signin', {
+                fetch(domain + '/api/session', {
                         method: "post",
                         headers: myHeaders,
                         body: JSON.stringify(formData)
@@ -140,7 +140,7 @@
             if (signUpForm.validator()) {
                 var myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/json");
-                fetch(domain + '/signup', {
+                fetch(domain + '/api/user', {
                         method: "post",
                         headers: myHeaders,
                         body: JSON.stringify(formData)
