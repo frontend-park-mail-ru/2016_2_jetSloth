@@ -18,6 +18,7 @@
 			this.activeRoute = null;
 
 			this.history = window.history;
+			this.started = false;
 
 			Router.__instance = this;
 		}
@@ -49,6 +50,7 @@
 
 			const pathname = window.location.pathname;
 			this.onroute(pathname, state);
+			this.started = true;
 		}
 
 		/**
@@ -76,11 +78,13 @@
 		 * @param {Object} [state={}] - Объект state, который передаётся в вызов history.pushState
 		 */
 		go(pathname, state = {}) {
-			if (window.location.pathname === pathname) {
-				return;
+				if (this.started) {
+				if (window.location.pathname === pathname) {
+					return;
+				}
+				this.history.pushState(state, '', pathname);
+				this.onroute(pathname, state);
 			}
-			this.history.pushState(state, '', pathname);
-			this.onroute(pathname, state);
 		}
 
 		/**

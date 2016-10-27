@@ -10,28 +10,31 @@
 			.map(part => {
 				if (/^:/.exec(part)) {
 					keyNames.push(part.slice(1));
-					return new RegExp(`^\/([^/]+)`, `i`);
+					return new RegExp(`^\/([^/]+)($|\/)`, `i`);
 				}
-				return new RegExp(`^\/${part}`, `i`);
+				return new RegExp(`^\/${part}($|\/)`, `i`);
 			});
 
 
 		return function (path) {
-
+			console.log("path before=" + path);
 			let keys = [];
 			let check = parts.every((regexp, step) => {
 				let tmp = regexp.exec(path);
 				if (!tmp) {
 					return false;
 				}
-				if (tmp.length === 2) {
+				if (tmp.length === 3) {
 					keys.push(tmp[1]);
+					path = path.replace(regexp, '$2');
 				}
-				path = path.replace(regexp, '');
+				else {
+					path = path.replace(regexp, '$1');
+				}
 				return true;
 			});
 
-			if (check) {
+			if (check && (path == '' || path == '/')) {
 				return keys.reduce((prev, curr, pos) => {
 					prev[keyNames[pos]] = curr;
 					return prev;
