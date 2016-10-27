@@ -16,6 +16,13 @@ app.use('/libs', express.static('node_modules'));
 app.post('/api/messages', (req, res) => {
     technolibs.publish(req.body).then(body => res.json(req.body));
 });
+app.get('/signin', (req, res) => {
+});
+app.get('/signup', (req, res) => {
+});
+app.get('/rating', (req, res) => {
+});
+
 app.post('/signin', (req, res) => {
     let content = req.body;
     if ((content.email && (content.email in userMas)) && (userMas[content.email].password == content.password)) {

@@ -12,13 +12,13 @@ module.exports = {
     paths: {
         '/signup': require('./resources/signup'),
         '/signin': require('./resources/signin'),
-        '/signout': require('./resources/signout'),
-        '/game': require('./resources/game')
+		'/rating': require('./resources/rating')
     },
 
     definitions: {
-        Game: require('./scheme/Game'),
-        WSMessage: require('./scheme/WSMessage'),
+        //Game: require('./scheme/Game'),
+        //WSMessage: require('./scheme/WSMessage'),
+		Medalist: require('./scheme/Medalist')
     }
 
 }

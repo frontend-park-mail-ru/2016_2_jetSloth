@@ -17,7 +17,7 @@
 				let str = "<h3>Рейтинг</h3>"
 				str += `<button class="goBackButton">X</button>`;
 				str += "Nickname  Rating";
-				this.data.medalists.forEach(medalist => {str += `<br/>${medalist.name}  ${medalist.wins}`});
+				data.forEach(medalist => {str += `<br/>${medalist.name}  ${medalist.wins}`});
 				return str;
 				
 			};
@@ -25,9 +25,15 @@
 			this.render();
 		}
 		init() {
+			this.model = new RatingModel();
+			this.model.fetch().then(function(data) {this.set(data)}.bind(this), function() {console.log("wrong password or username")});
+		}
+		set(data) {
+			this.data.medalists = data;
+			return this.render();
 		}
 		render() {
-			this._el.innerHTML = this.template([{name: "ivan", wins: 30},{name: "vlad", wins: 20}]);
+			this._el.innerHTML = this.template(this.data.medalists);
 		};
 		subscribe() {
 			this._el.onclick = function(event) {

@@ -16,6 +16,7 @@
 		
 		
 		_clean(attributes) {
+			if (null != attributes)
 			Object.keys(attributes).forEach(key => {
 				if (attributes[key] === undefined) {
 					delete attributes[key];
