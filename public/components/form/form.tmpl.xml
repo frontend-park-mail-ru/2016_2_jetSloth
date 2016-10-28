@@ -1,13 +1,16 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-	<form>
-		<h1>
-			<fest:value>data.title</fest:value>
-		</h1>
-		<div>
-			<fest:for iterate="data.fields" index="i" value="field">
-				<input type="text" name="{field.name}" placeholder="{field.placeholder}"/>
-			</fest:for>
-		</div>
-		<div class="js-controls"></div>
-	</form>
+    <header class="modal-window__header">
+        <img src="img/form-logo.png" class="modal-window__header__logo"/>
+        <div class="modal-close">
+            <i class="fa fa-3x fa-times-circle"></i>
+        </div>
+    </header>
+    <div class="modal-window__content">
+        <form class="form-default form-modal {data.class}">
+            <fest:for iterate="data.fields" index="i" value="field">
+                <input type="text" class="input" name="{field.name}" placeholder="{field.placeholder}"/>
+            </fest:for>
+            <div class="js-controls"></div>
+        </form>
+    </div>
 </fest:template>

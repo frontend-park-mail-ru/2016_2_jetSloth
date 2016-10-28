@@ -1,18 +1,69 @@
-.button {
-	background-color: #4dca62;
-    border: .1rem solid #4dca62;
-    border-radius: .4rem;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 1.1rem;
-    font-weight: 700;
-    height: 3.8rem;
-    letter-spacing: .1rem;
-    line-height: 3.8rem;
-    padding: 0 3rem;
+.btn {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 25px;
+}
+
+.btn-create-game {
+    margin: 15px auto 30px auto;
+    color: #fff6de;
+    background-color: #15ab7f;
+    border: 3px solid #15ab7f;
+}
+
+.btn-create-game:hover {
+    color: #15ab7f;
+    background-color: transparent;
+}
+
+.btn-login, .btn-register {
+    margin-bottom: 45px;
+    background-color: transparent;
+    border: 3px solid;
+}
+
+.btn-login:hover, .btn-register:hover {
+    color: #fff6de;
+}
+
+.btn-register {
+    color: #e26700;
+    border-color: #e26700;
+}
+
+.btn-register:hover {
+    background-color: #e26700;
+}
+
+.btn-login {
+    color: #1f6a8d;
+    border-color: #1f6a8d;
+}
+
+.btn-login:hover {
+    background-color: #1f6a8d;
+}
+
+.form-modal .btn {
+    display: block;
+    margin: auto;
     text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    white-space: nowrap;
+    border-radius: 0px;
+}
+
+.form-modal .btn:hover {
+    background-color: #15ab7f;
+    border: #15ab7f;
+}
+
+.js-controls .btn {
+    background-color: #e26700;
+    color: white;
+    margin-top: 110px;
+}
+
+.login-form-modal .btn {
+    background-color: #1f6a8d;
+    color: white;
+    margin-top: 150px;
 }

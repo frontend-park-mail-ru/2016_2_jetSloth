@@ -15,7 +15,6 @@
 		}
 		
 		resume(options = {}) {
-
 			this._component = new SignIn({
 				el: this._el,
 				data: null
