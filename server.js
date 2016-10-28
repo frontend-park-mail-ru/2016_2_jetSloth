@@ -24,17 +24,22 @@ app.get('/signup', (req, res) => {
 });
 app.get('/rating.json', (req, res) => {
 	res.writeHead(200, {
-            'Content-Type': 'text/plain; charset=UTF-8',
-            'Session': userMas[content.email].session
+            'Content-Type': 'application/json; charset=UTF-8'
         });
 	res.send(JSON.stringif({
 		medalists: [
-			{username: "ivan",
-			wins: 25},
-			{username: "bob",
-			wins: 20},
-			{username: "oleg",
-			wins: 15},
+			{
+			username: "ivan",
+			wins: 25
+			},
+			{
+			username: "bob",
+			wins: 20
+			},
+			{
+			username: "oleg",
+			wins: 15
+			}
 		]
 	}));
 });
