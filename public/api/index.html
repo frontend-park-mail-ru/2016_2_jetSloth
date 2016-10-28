@@ -31,6 +31,10 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td><a href="#operation--signup-get">GET /signup</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
                         <td><a href="#operation--signup-post">POST /signup</a></td>
                         <td></td>
                     </tr>
@@ -48,12 +52,16 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td><a href="#operation--signin-get">GET /signin</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
                         <td><a href="#operation--signin-post">POST /signin</a></td>
                         <td></td>
                     </tr>
                 </tbody>
             </table>
-            <h3 id="tag-signout" class="swagger-summary-tag">Tag: signout</h3>
+            <h3 id="tag-rating" class="swagger-summary-tag">Tag: rating</h3>
             <p></p>
         
             <table class="table table-bordered table-condensed swagger--summary">
@@ -65,36 +73,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><a href="#operation--signout-post">POST /signout</a></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3 id="tag-game" class="swagger-summary-tag">Tag: game</h3>
-            <p></p>
-        
-            <table class="table table-bordered table-condensed swagger--summary">
-                <thead>
-                <tr>
-                    <th>Operation</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="#operation--game-get">GET /game</a></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#operation--game-post">POST /game</a></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#operation--game-put">PUT /game</a></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#operation--game-delete">DELETE /game</a></td>
+                        <td><a href="#operation--rating-get">GET /rating</a></td>
                         <td></td>
                     </tr>
                 </tbody>
@@ -106,48 +85,20 @@
     <h2>Paths</h2>
     
         
-        <span id="path--game"></span>
-            <div id="operation--game-delete" class="swagger--panel-operation-delete panel">
+        <span id="path--rating"></span>
+            <div id="operation--rating-get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
                     <div class="operation-summary"></div>
-                    <h3 class="panel-title"><span class="operation-name">DELETE</span> <strong>/game</strong></h3>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/rating</strong></h3>
                         Tags:
-                            <a href="#tag-game">game</a>
+                            <a href="#tag-rating">rating</a>
                 </div>
                 <div class="panel-body">
                     <section class="sw-operation-description">
-                        <p>Метод удаляет пользователя из текущей игры</p>
+                        <p>Выводит рейтинг пользователей</p>
             
                     </section>
                     
-                        <section class="sw-request-params">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th class="sw-param-name"></th>
-                                    <th class="sw-param-description"></th>
-                                    <th class="sw-param-type"></th>
-                                    <th class="sw-param-data-type"></th>
-                                    <th class="sw-param-annotation"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                            <td>
-                                                session
-                                            <td><p>Сессия</p>
-                                        </td>
-                                            <td>Header</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </section>
                     
                         <section class="sw-responses">
                     
@@ -168,101 +119,12 @@
                                                 <div  class="panel panel-definition">
                                                     <div class="panel-body">
                                                                 <section class="json-schema-description">
-                                                                    <p>Ничего не передается</p>
-                                                            
-                                                                </section>
-                                                            
-                                                    </div>
-                                                </div></div>
-                                            
-                                            </div>                </dd>
-                                    <dt class="sw-response-400">
-                                        400 Bad Request
-                                    
-                                    </dt>
-                                    <dd class="sw-response-400">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p>Ошибка при выполнении запроса</p>
-                                            
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6 sw-response-model">
-                                            </div>
-                                            
-                                            </div>                </dd>
-                            </dl>
-                        </section>
-                </div>
-            </div>    <div id="operation--game-get" class="swagger--panel-operation-get panel">
-                <div class="panel-heading">
-                    <div class="operation-summary"></div>
-                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/game</strong></h3>
-                        Tags:
-                            <a href="#tag-game">game</a>
-                </div>
-                <div class="panel-body">
-                    <section class="sw-operation-description">
-                        <p>Метод отдает игроку информацию об играх к которым можно присоедениться (те игры которые были созданы, но еще не начались т.к. не достаточно пользоветелей вступило в игру</p>
-            
-                    </section>
-                    
-                        <section class="sw-request-params">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th class="sw-param-name"></th>
-                                    <th class="sw-param-description"></th>
-                                    <th class="sw-param-type"></th>
-                                    <th class="sw-param-data-type"></th>
-                                    <th class="sw-param-annotation"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                            <td>
-                                                session
-                                            <td><p>Сессия</p>
-                                        </td>
-                                            <td>header</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </section>
-                    
-                        <section class="sw-responses">
-                    
-                            <dl>
-                                    <dt class="sw-response-200">
-                                        200 OK
-                                    
-                                    </dt>
-                                    <dd class="sw-response-200">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6 sw-response-model">
-                                                <div  class="panel panel-definition">
-                                                    <div class="panel-body">
-                                                                <section class="json-schema-description">
-                                                                    <p>Массив данных об играх к которым можно присоедениться</p>
+                                                                    <p>Массив пользователей которые в рейтинг попали</p>
                                                             
                                                                 </section>
                                                             
                                                                             <section class="json-schema-array-items">
-                                                                                <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/Game">Game</a>
+                                                                                <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/Medalist">Medalist</a>
                                                                                 </span>
                                                                                 <span class="json-property-range" title="Value limits"></span>
                                                                                 
@@ -293,207 +155,63 @@
                             </dl>
                         </section>
                 </div>
-            </div>    <div id="operation--game-post" class="swagger--panel-operation-post panel">
-                <div class="panel-heading">
-                    <div class="operation-summary"></div>
-                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/game</strong></h3>
-                        Tags:
-                            <a href="#tag-game">game</a>
-                </div>
-                <div class="panel-body">
-                    <section class="sw-operation-description">
-                        <p>Web Socket Метод включает игрока в игру</p>
-            
-                    </section>
-                    
-                        <section class="sw-request-params">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th class="sw-param-name"></th>
-                                    <th class="sw-param-description"></th>
-                                    <th class="sw-param-type"></th>
-                                    <th class="sw-param-data-type"></th>
-                                    <th class="sw-param-annotation"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                            <td>
-                                                session
-                                            <td><p>Сессия</p>
-                                        </td>
-                                            <td>header</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                gameId
-                                            <td><p>Номер игры</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </section>
-                    
-                        <section class="sw-responses">
-                    
-                            <dl>
-                                    <dt class="sw-response-200">
-                                        200 OK
-                                    
-                                    </dt>
-                                    <dd class="sw-response-200">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p>Устанавливается Web Socket соединение теперь сервер в течении игры будет посылать WSMessage игроку</p>
-                                            
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6 sw-response-model">
-                                                <div  class="panel panel-definition">
-                                                    <div class="panel-body">
-                                                                <a class="json-schema-ref" href="#/definitions/WSMessage">WSMessage</a>
-                                                    </div>
-                                                </div></div>
-                                            
-                                            </div>                </dd>
-                                    <dt class="sw-response-400">
-                                        400 Bad Request
-                                    
-                                    </dt>
-                                    <dd class="sw-response-400">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p>Ошибка при выполнении запроса</p>
-                                            
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6 sw-response-model">
-                                            </div>
-                                            
-                                            </div>                </dd>
-                            </dl>
-                        </section>
-                </div>
-            </div>    <div id="operation--game-put" class="swagger--panel-operation-put panel">
-                <div class="panel-heading">
-                    <div class="operation-summary"></div>
-                    <h3 class="panel-title"><span class="operation-name">PUT</span> <strong>/game</strong></h3>
-                        Tags:
-                            <a href="#tag-game">game</a>
-                </div>
-                <div class="panel-body">
-                    <section class="sw-operation-description">
-                        <p>Создает новую игру с заданым количеством мест</p>
-            
-                    </section>
-                    
-                        <section class="sw-request-params">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th class="sw-param-name"></th>
-                                    <th class="sw-param-description"></th>
-                                    <th class="sw-param-type"></th>
-                                    <th class="sw-param-data-type"></th>
-                                    <th class="sw-param-annotation"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                            <td>
-                                                session
-                                            <td><p>Сессия</p>
-                                        </td>
-                                            <td>header</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                count
-                                            <td><p>Количество игроков в игре</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td><span class="json-property-type">integer</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </section>
-                    
-                        <section class="sw-responses">
-                    
-                            <dl>
-                                    <dt class="sw-response-200">
-                                        200 OK
-                                    
-                                    </dt>
-                                    <dd class="sw-response-200">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p>Данные об игре которую создал пользователь</p>
-                                            
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6 sw-response-model">
-                                                <div  class="panel panel-definition">
-                                                    <div class="panel-body">
-                                                                <a class="json-schema-ref" href="#/definitions/Game">Game</a>
-                                                    </div>
-                                                </div></div>
-                                            
-                                            </div>                </dd>
-                                    <dt class="sw-response-400">
-                                        400 Bad Request
-                                    
-                                    </dt>
-                                    <dd class="sw-response-400">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p>Ошибка при выполнении запроса</p>
-                                            
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6 sw-response-model">
-                                            </div>
-                                            
-                                            </div>                </dd>
-                            </dl>
-                        </section>
-                </div>
             </div>    
         <span id="path--signin"></span>
-            <div id="operation--signin-post" class="swagger--panel-operation-post panel">
+            <div id="operation--signin-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary"></div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/signin</strong></h3>
+                        Tags:
+                            <a href="#tag-signin">signin</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>При заходе на эту страницу пользователю должна выводится таже самая форма что и при входе на serverAdress/ фронтендовский роутер все поймет и выведет страницу с формой signin</p>
+            
+                    </section>
+                    
+                    
+                        <section class="sw-responses">
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Содержит ключ сессии пользователя</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Ошибка при выполнении запроса</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    <div id="operation--signin-post" class="swagger--panel-operation-post panel">
                 <div class="panel-heading">
                     <div class="operation-summary"></div>
                     <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/signin</strong></h3>
@@ -520,8 +238,8 @@
                                 <tbody>
                                         <tr>
                                             <td>
-                                                email
-                                            <td><p>Электроная почта пользователя</p>
+                                                username
+                                            <td><p>Логин пользователя</p>
                                         </td>
                                             <td></td>
                                             <td><span class="json-property-type">string</span>
@@ -589,48 +307,20 @@
                         </section>
                 </div>
             </div>    
-        <span id="path--signout"></span>
-            <div id="operation--signout-post" class="swagger--panel-operation-post panel">
+        <span id="path--signup"></span>
+            <div id="operation--signup-get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
                     <div class="operation-summary"></div>
-                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/signout</strong></h3>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/signup</strong></h3>
                         Tags:
-                            <a href="#tag-signout">signout</a>
+                            <a href="#tag-signup">signup</a>
                 </div>
                 <div class="panel-body">
                     <section class="sw-operation-description">
-                        <p>Метод для выхода пользователя</p>
+                        <p>При заходе на эту страницу пользователю должна выводится таже самая форма что и при входе на serverAdress/ фронтендовский роутер все поймет и выведет страницу с формой signup</p>
             
                     </section>
                     
-                        <section class="sw-request-params">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th class="sw-param-name"></th>
-                                    <th class="sw-param-description"></th>
-                                    <th class="sw-param-type"></th>
-                                    <th class="sw-param-data-type"></th>
-                                    <th class="sw-param-annotation"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                            <td>
-                                                session
-                                            <td><p>Сессия</p>
-                                        </td>
-                                            <td>header</td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </section>
                     
                         <section class="sw-responses">
                     
@@ -642,14 +332,21 @@
                                     <dd class="sw-response-200">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <p>Ничего не содержит</p>
-                                            
+                                                    
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 
                                                 <div class="col-md-6 sw-response-model">
-                                            </div>
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <section class="json-schema-description">
+                                                                    <p>Содержит ключь сессии пользователя</p>
+                                                            
+                                                                </section>
+                                                            
+                                                    </div>
+                                                </div></div>
                                             
                                             </div>                </dd>
                                     <dt class="sw-response-400">
@@ -672,9 +369,7 @@
                             </dl>
                         </section>
                 </div>
-            </div>    
-        <span id="path--signup"></span>
-            <div id="operation--signup-post" class="swagger--panel-operation-post panel">
+            </div>    <div id="operation--signup-post" class="swagger--panel-operation-post panel">
                 <div class="panel-heading">
                     <div class="operation-summary"></div>
                     <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/signup</strong></h3>
@@ -701,8 +396,8 @@
                                 <tbody>
                                         <tr>
                                             <td>
-                                                email
-                                            <td><p>Электроная почта пользователя</p>
+                                                username
+                                            <td><p>Логин пользователя</p>
                                         </td>
                                             <td></td>
                                             <td><span class="json-property-type">string</span>
@@ -715,19 +410,6 @@
                                         <tr>
                                             <td>
                                                 name
-                                            <td><p>Имя пользователя</p>
-                                        </td>
-                                            <td></td>
-                                            <td><span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                password
                                             <td><p>Пароль пользователя</p>
                                         </td>
                                             <td></td>
@@ -796,9 +478,9 @@
         <h2>Schema definitions</h2>
     
             
-                <div id="definition-Game" class="panel panel-definition">
+                <div id="definition-Medalist" class="panel panel-definition">
                         <div class="panel-heading">
-                                <h3 class="panel-title"><a name="/definitions/Game"></a>Game:
+                                <h3 class="panel-title"><a name="/definitions/Medalist"></a>Medalist:
                                     <span class="json-property-type"><span class="json-property-type">object</span>
                 <span class="json-property-range" title="Value limits"></span>
                 
@@ -807,91 +489,35 @@
                         </div>
                     <div class="panel-body">
                                 <section class="json-schema-description">
-                                    <p>Информация об игре</p>
+                                    <p>Информация об пользователе в рейтинге</p>
                             
                                 </section>
                             
                                     <section class="json-schema-properties">
                                         <dl>
-                                                <dt data-property-name="gameId">
-                                                    <span class="json-property-name">gameId:</span>
-                                                    <span class="json-property-type">integer</span>
-                                                    <span class="json-property-range" title="Value limits">, { x ∈ ℤ | x ≥ 0 }</span>
-                                                    
-                                                        <span class="json-property-required"></span>
-                                                </dt>
-                                                <dd>
-                                                    <p>Идентификатор игры</p>
-                                    
-                                                    <div class="json-inner-schema">
-                                                        
-                                                    </div>
-                                                </dd>
-                                                <dt data-property-name="usersArray">
-                                                    <span class="json-property-name">usersArray:</span>
-                                                    <span class="json-property-type">string[]</span>
+                                                <dt data-property-name="username">
+                                                    <span class="json-property-name">username:</span>
+                                                    <span class="json-property-type">string</span>
                                                     <span class="json-property-range" title="Value limits"></span>
                                                     
                                                         <span class="json-property-required"></span>
                                                 </dt>
                                                 <dd>
-                                                    <p>Массив строк являющихся именами игроков подключенных к игре</p>
-                                    
-                                                    <div class="json-inner-schema">
-                                                        
-                                                                        <section class="json-schema-array-items">
-                                                                            <span class="json-property-type">string</span>
-                                                                            <span class="json-property-range" title="Value limits"></span>
-                                                                            
-                                                                            <div class="json-inner-schema">
-                                                                                
-                                                                            </div>
-                                                                        </section>                </div>
-                                                </dd>
-                                        </dl>
-                                    </section>
-                    </div>
-                </div>        
-                <div id="definition-WSMessage" class="panel panel-definition">
-                        <div class="panel-heading">
-                                <h3 class="panel-title"><a name="/definitions/WSMessage"></a>WSMessage:
-                                    <span class="json-property-type"><span class="json-property-type">object</span>
-                <span class="json-property-range" title="Value limits"></span>
-                
-                </span>
-                                </h3>
-                        </div>
-                    <div class="panel-body">
-                                <section class="json-schema-description">
-                                    <p>Web socket сообщения посылаемые игроку сервером о действиях происодящих в игре (например начало игры, конец игры, ход пользователя)</p>
-                            
-                                </section>
-                            
-                                    <section class="json-schema-properties">
-                                        <dl>
-                                                <dt data-property-name="actionId">
-                                                    <span class="json-property-name">actionId:</span>
-                                                    <span class="json-property-type">integer</span>
-                                                    <span class="json-property-range" title="Value limits">, { x ∈ ℤ | x ≥ 0 }</span>
-                                                    
-                                                        <span class="json-property-required"></span>
-                                                </dt>
-                                                <dd>
-                                                    <p>Идентификатор игрового события</p>
+                                                    <p>Логин пользователя</p>
                                     
                                                     <div class="json-inner-schema">
                                                         
                                                     </div>
                                                 </dd>
-                                                <dt data-property-name="actionData">
-                                                    <span class="json-property-name">actionData:</span>
+                                                <dt data-property-name="wins">
+                                                    <span class="json-property-name">wins:</span>
                                                     <span class="json-property-type">integer</span>
                                                     <span class="json-property-range" title="Value limits">, { x ∈ ℤ | x ≥ 0 }</span>
                                                     
                                                         <span class="json-property-required"></span>
                                                 </dt>
                                                 <dd>
-                                                    <p>Данные игрового события</p>
+                                                    <p>Количество побед</p>
                                     
                                                     <div class="json-inner-schema">
                                                         

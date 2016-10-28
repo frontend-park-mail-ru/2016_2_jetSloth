@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Frontend privet</title>
+    <title>Monopoly</title>
     <link rel="stylesheet" href="/css/milligram.min.css" />
     <link rel="stylesheet" href="/css/main.css" />
 
@@ -17,20 +17,45 @@
         <h1>MONOPOLY</h1>
     </header>
 
-    <div class="js-game" hidden="hidden">
-    </div>
-    <div class="js-signin" hidden="hidden">
-    </div>
-    <div class="js-signup" hidden="hidden">
-    </div>
+	<script src="/modules/pathToRegex.js"></script>
+	<script src="/modules/view.js"></script>
+	<script src="/modules/model.js"></script>
+	<script src="/modules/route.js"></script>
+	<script src="/modules/router.js"></script>
 
+    <div class="js-game" hidden="hidden"></div>
+	<div class="js-pregame" hidden="hidden"></div>
+	<div class="js-main" hidden="hidden"></div>
+    <div class="js-signin" hidden="hidden"></div>
+    <div class="js-signup" hidden="hidden"></div>
+	<div class="js-rating" hidden="hidden"></div>
+
+	<script src="/models/rating.js"></script>
+	<script src="/models/avaliableGames.js"></script>
+	<script src="/models/signIn.js"></script>
+	<script src="/models/signUp.js"></script>
+
+	<script src="/components/block/block.js"></script>
     <script src="/components/button/button.js"></script>
-    <script src="/components/form/form.js"></script>
-    <script src="/components/game/game.js"></script>
-    <script src="/components/input/input.js"></script>
+	<script src="/components/game/game.js"></script>
+	<script src="/components/rating/rating.js"></script>
+	<script src="/components/pregame/pregame.js"></script>
+	<script src="/components/main/main.js"></script>
+	<script src="/components/form/form.tmpl.js"></script>
+	<script src="/components/form/form.js"></script>
+	<script src="/components/signIn/signIn.js"></script>
+	<script src="/components/signUp/signUp.js"></script>
+
+	<script src="views/main.js"></script>
+	<script src="views/game.js"></script>
+	<script src="views/pregame.js"></script>
+	<script src="views/rating.js"></script>
+	<script src="views/signIn.js"></script>
+	<script src="views/signUp.js"></script>
 
     <script src="/libs/technolibs/index.js"></script>
     <script src="main.js"></script>
+
 </body>
 
 </html>
