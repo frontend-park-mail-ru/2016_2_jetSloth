@@ -10,15 +10,15 @@
 			this._el = document.querySelector('.js-pregame');
 			this.hide();
 		}
-
+		init() {
+			//this.resume();
+		}
 		resume(options = {}) {
 
 			this._component = new Pregame({
 				el: this._el,
 				data: {
-					messages: [],
-					username: options.username,
-					email: options.email
+					medalists: []
 				}
 			});
 			this._component.render();

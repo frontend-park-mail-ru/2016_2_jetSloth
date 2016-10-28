@@ -20,6 +20,7 @@
 				data: null
 			});
 			this._component.render();
+			this._component._subscribe();
 			this.show();
 		}
 

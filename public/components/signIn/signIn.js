@@ -75,14 +75,14 @@
             });
         }
 
-        // subscribe() {
-        //     this._el.onclick = function (event) {
-        //         event.stopPropagation();
-        //         if (event.target.classList.contains("modal-close")) {
-        //             this.router.back();
-        //         }
-        //     }.bind(this);
-        // }
+        _subscribe() {
+            this._el.onclick = function (event) {
+                event.stopPropagation();
+                if (event.target.classList.contains("fa-times-circle")) {
+                    this.router.back();
+                }
+            }.bind(this);
+        }
     }
 
     //export
