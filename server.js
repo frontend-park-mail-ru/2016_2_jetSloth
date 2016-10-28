@@ -24,11 +24,11 @@ app.get('/signup', (req, res) => {
 });
 app.post('/signIn.json', (req, res) => {
 	res.writeHead(200, {'Content-Type': 'application/json; charset=UTF-8'});
-	res.send({'hello user'});
+	res.send({ans: 'hello user'});
 });
 app.post('/signUp.json', (req, res) => {
 	res.writeHead(200, {'Content-Type': 'application/json; charset=UTF-8'});
-	res.send({'hello user'});
+	res.send({ans: 'hello user'});
 });
 app.get('/rating.json', (req, res) => {
 	res.writeHead(200, {'Content-Type': 'application/json; charset=UTF-8'});
