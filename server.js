@@ -17,10 +17,37 @@ app.post('/api/messages', (req, res) => {
     technolibs.publish(req.body).then(body => res.json(req.body));
 });
 app.get('/signin', (req, res) => {
+	res.sendfile('public/index.html', {root: __dirname });
 });
 app.get('/signup', (req, res) => {
+	res.sendfile('public/index.html', {root: __dirname });
+});
+app.get('/rating.json', (req, res) => {
+	res.writeHead(200, {
+            'Content-Type': 'application/json; charset=UTF-8'
+        });
+	res.send(JSON.stringif({
+		medalists: [
+			{
+			username: "ivan",
+			wins: 25
+			},
+			{
+			username: "bob",
+			wins: 20
+			},
+			{
+			username: "oleg",
+			wins: 15
+			}
+		]
+	}));
 });
 app.get('/rating', (req, res) => {
+	res.sendfile('public/index.html', {root: __dirname });
+});
+app.get('/pregame', (req, res) => {
+	res.sendfile('public/index.html', {root: __dirname });
 });
 
 app.post('/signin', (req, res) => {
