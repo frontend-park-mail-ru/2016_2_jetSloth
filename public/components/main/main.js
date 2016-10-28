@@ -12,7 +12,8 @@
 			this.router = new Router();
 			this.template = function() {return `<button class="signInButton">Sign In</button>
 												<button class="signUpButton">Sign Up</button>
-												<button class="ratingButton">rating</button>`};
+												<button class="ratingButton">rating</button>
+												<button class="gameButton">game</button>`};
 			this.data = data;
 			this._el = el;
 		}
@@ -32,6 +33,9 @@
 				}
 				else if(event.target.classList.contains("ratingButton")) {
 					this.router.go('/rating');
+				}
+				else if(event.target.classList.contains("gameButton")) {
+					this.router.go('/pregame');
 				};
 				/**/			
 			}.bind(this);

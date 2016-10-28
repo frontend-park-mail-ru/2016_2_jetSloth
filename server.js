@@ -17,10 +17,16 @@ app.post('/api/messages', (req, res) => {
     technolibs.publish(req.body).then(body => res.json(req.body));
 });
 app.get('/signin', (req, res) => {
+	res.sendfile('public/index.html', {root: __dirname });
 });
 app.get('/signup', (req, res) => {
+	res.sendfile('public/index.html', {root: __dirname });
 });
 app.get('/rating', (req, res) => {
+	res.sendfile('public/index.html', {root: __dirname });
+});
+app.get('/pregame', (req, res) => {
+	res.sendfile('public/index.html', {root: __dirname });
 });
 
 app.post('/signin', (req, res) => {
