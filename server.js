@@ -22,11 +22,17 @@ app.get('/signin', (req, res) => {
 app.get('/signup', (req, res) => {
 	res.sendfile('public/index.html', {root: __dirname });
 });
+app.post('/signIn.json', (req, res) => {
+	res.writeHead(200, {'Content-Type': 'application/json; charset=UTF-8'});
+	res.send({'hello user'});
+});
+app.post('/signUp.json', (req, res) => {
+	res.writeHead(200, {'Content-Type': 'application/json; charset=UTF-8'});
+	res.send({'hello user'});
+});
 app.get('/rating.json', (req, res) => {
-	res.writeHead(200, {
-            'Content-Type': 'application/json; charset=UTF-8'
-        });
-	res.send(JSON.stringif({
+	res.writeHead(200, {'Content-Type': 'application/json; charset=UTF-8'});
+	res.send({
 		medalists: [
 			{
 			username: "ivan",
@@ -41,7 +47,7 @@ app.get('/rating.json', (req, res) => {
 			wins: 15
 			}
 		]
-	}));
+	})
 });
 app.get('/rating', (req, res) => {
 	res.sendfile('public/index.html', {root: __dirname });
