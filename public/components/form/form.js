@@ -15,6 +15,8 @@
 			this.template = window.fest['form/form.tmpl'];
 			this.data = options.data;
 			this._el = options.el;
+			this._el.classList.add(options.class);
+
 			this.render();
 		}
 
@@ -47,7 +49,7 @@
 			let {controls = []} = this.data;
 
 			controls.forEach(data => {
-				let control = new Button({text: data.text});
+				let control = new Button({text: data.text, class: data.class});
 				this._el.querySelector('.js-controls').appendChild(control._get());
 			});
 		}

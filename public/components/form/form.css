@@ -1,0 +1,25 @@
+input {
+    display: block;
+    margin-bottom: 5px;
+    border: 0px;
+    border-bottom: 1px solid #1f6a8d;
+    font-size: 20px;
+}
+
+input:focus {
+    border-bottom: 2px solid #1f6a8d;
+}
+
+.form-default {
+    font-size: 20px;
+}
+
+.form-modal {
+    padding-top: 50px;
+}
+
+.form-modal .input {
+  margin: auto;
+  width: 90%;
+  height: 40px;
+}

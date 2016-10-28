@@ -8,7 +8,6 @@
 	const SignUpModel = window.SignUpModel;
 	const Router = window.Router;
 
-
 	class SignUp extends Block {
 		constructor({data, el}) {
 			super('div');
@@ -16,8 +15,9 @@
 			this.data = data;
 			this._prepareHtml();
 			this.form = new Form({
-				el: this._el.querySelector('.js-signUp-form'),
+				el: this._el.querySelector('.modal-window-registration'),
 				data: {
+					class: 'reg-form-modal',
 					fields: [
 						{
 							name: 'username',
@@ -32,12 +32,13 @@
 						{
 							name: 'reenterPassword',
 							type: 'text',
-							placeholder: 'reenter password'
+							placeholder: 'confirm password'
 						}
 					],
 					controls: [
 						{
 							text: 'SIGN UP',
+							class: 'btn-register',
 							attrs: {
 								type: 'submit'
 							}
@@ -45,6 +46,7 @@
 					]
 				}
 			});
+			// this.form.classList.add('modal-window-registration');
 			this.router = new Router();
 			this.template = function(){};
 			this.init();
@@ -57,7 +59,7 @@
 			this.form.render();
 		}
 		_prepareHtml() {
-			this._el.innerHTML = `<div class ="js-signUp-form"></div>`;
+			this._el.innerHTML = `<div class ="modal-window modal-window-registration"></div>`;
 		}
 		_sendUserData(event) {
 			event.preventDefault();

@@ -15,12 +15,12 @@
 		}
 		
 		resume(options = {}) {
-
 			this._component = new SignIn({
 				el: this._el,
 				data: null
 			});
 			this._component.render();
+			this._component._subscribe();
 			this.show();
 		}
 

@@ -23,3 +23,4 @@ function trySendForm(form, url) {
     } else {
         alert("error");
     }
+};
