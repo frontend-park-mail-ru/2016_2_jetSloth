@@ -22,6 +22,22 @@ app.get('/signin', (req, res) => {
 app.get('/signup', (req, res) => {
 	res.sendfile('public/index.html', {root: __dirname });
 });
+app.get('/rating.json', (req, res) => {
+	res.writeHead(200, {
+            'Content-Type': 'text/plain; charset=UTF-8',
+            'Session': userMas[content.email].session
+        });
+	res.send(JSON.stringif({
+		medalists: [
+			{username: "ivan",
+			wins: 25},
+			{username: "bob",
+			wins: 20},
+			{username: "oleg",
+			wins: 15},
+		]
+	}));
+});
 app.get('/rating', (req, res) => {
 	res.sendfile('public/index.html', {root: __dirname });
 });

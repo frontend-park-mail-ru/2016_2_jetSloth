@@ -7,7 +7,9 @@
 		}
 		
 		get baseUrl() {
-			return 'https://monopolygames.herokuapp.com';
+			//return 'https://monopolygames.herokuapp.com';
+			//временно
+			return 'http://myhuapplication.herokuapp.com/';
 		}
 
 		get defaults() {
