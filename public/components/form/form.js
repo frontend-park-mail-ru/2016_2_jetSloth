@@ -1,84 +1,75 @@
 (function () {
-	'use strict';
+    'use strict';
 
-	// import
-	const Block = window.Block;
-	const Button = window.Button;
+    // import
+    const Block = window.Block;
+    const Button = window.Button;
+    const Input = window.Input;
 
-	class Form extends Block {
+    class Form extends Block {
 
-		/**
-		 * Конструктор класса Form
-		 */
-		constructor(options = {data: {}}) {
-			super('form');
-			this.template = window.fest['form/form.tmpl'];
-			this.data = options.data;
-			this._el = options.el;
-			this._el.classList.add(options.class);
+        /**
+         * Конструктор класса Form
+         */
+        constructor(options = {data: {}}) {
+            super('form');
+            // this.template = window.fest['form/form.tmpl'];
+            this.data = options.data;
+            this._el = options.el;
+            this.render();
+        }
 
-			this.render();
-		}
+        /**
+         * Обновляем HTML
+         */
+        render() {
+            // this._updateHtml();
+            this._installItems();
+        }
 
-		/**
-		 * Обновляем HTML
-		 */
-		render() {
-			this._updateHtml();
-			this._installControls();
-		}
+        /**
+         * Обнуляем форму
+         */
+        reset() {
+            this._el.querySelector('form').reset();
+        }
 
-		/**
-		 * Обнуляем форму
-		 */
-		reset() {
-			this._el.querySelector('form').reset();
-		}
+        /**
+         * Обновить html компонента
+         */
+        _updateHtml() {
+            // this._el.innerHTML = this.template(this.data);
+        }
 
-		/**
-		 * Обновить html компонента
-		 */
-		_updateHtml() {
-			this._el.innerHTML = this.template(this.data);
-		}
+        /**
+         * Вставить управляющие элементы в форму
+         */
+        _installItems() {
+            let {fields = []} = this.data;
 
-		/**
-		 * Вставить управляющие элементы в форму
-		 */
-		_installControls() {
-			let {controls = []} = this.data;
+            fields.forEach(data => {
+                let input = new Input({
+                    attrs: {
+                        type: data.type,
+                        name: data.name,
+                        placeholder: data.placeholder
+                    }
+                });
+                this._el.appendChild(input._get());
+            });
 
-			controls.forEach(data => {
-				let control = new Button({text: data.text, class: data.class});
-				this._el.querySelector('.js-controls').appendChild(control._get());
-			});
-		}
 
-		/**
-		 * Взять данные формы
-		 * @return {object}
-		 */
-		getFormData() {
-			let form = this._el.querySelector('form');
-			let elements = form.elements;
-			let fields = {};
+            let {controls = []} = this.data;
 
-			Object.keys(elements).forEach(element => {
-				let name = elements[element].name;
-				let value = elements[element].value;
+            controls.forEach(data => {
+                let control = new Button({
+                    text: data.text,
+                    attrs: data.attrs
+                    });
+                this._el.appendChild(control._get());
+            });
+        }
+    }
 
-				if (!name) {
-					return;
-				}
-
-				fields[name] = value;
-			});
-
-			return fields;
-		}
-
-	}
-
-	//export
-	window.Form = Form;
+    window.Form = Form;
 })();

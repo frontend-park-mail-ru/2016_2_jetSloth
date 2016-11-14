@@ -4,14 +4,12 @@
 	const Block = window.Block;
 
 	class Button extends Block {
-		constructor(options) {
+		constructor(options = {}) {
 			super('button', options);
-			this._el.classList.add('btn', this._options.class);
-			this._el.innerText = this._options.text || 'Press me';
+			this._el.classList.add('button');
+			this._el.innerText = options.text;
 		}
 	}
 
-	//export
 	window.Button = Button;
-
 })();

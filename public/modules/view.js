@@ -1,9 +1,6 @@
 (function () {
 	'use strict';
 
-	/**
-	 * Класс представляет собой view
-	 */
 	class View {
 		/**
 		 * Создаёт новую view
@@ -48,8 +45,7 @@
 		 * @param {Object} [options={}] - Объект с параметрами
 		 */
 		show(options = {}) {
-			if (this._el != null)
-			this._el.hidden = false;
+			this._el.style.display = 'flex';
 		}
 
 		/**
@@ -57,8 +53,7 @@
 		 * @param {Object} [options={}] - Объект с параметрами
 		 */
 		hide(options = {}) {
-			if (this._el != null)
-			this._el.hidden = true;
+			this._el.style.display = 'none';
 		}
 
 		/**
@@ -119,10 +114,8 @@
 		setRouter(router) {
 			this.router = router;
 		}
-
 	}
 
-	// export
 	window.View = View;
 
 })();

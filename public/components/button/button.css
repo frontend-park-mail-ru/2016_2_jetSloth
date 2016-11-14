@@ -1,69 +1,230 @@
+.button {
+    background: none;
+    outline: none;
+    border: none;
+}
+
+/* BTN */
+
 .btn {
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 25px;
+    display: inline-block;
+    margin: 0 50px 0 48px;
+    height: 90px;
+    background: none;
+    font: normal 25px/80px 'pf_isotext_probold', Arial, Helvetica, sans-serif;
+    text-align: center;
+    white-space: nowrap;
+    color: #000;
+    text-transform: uppercase;
+    position: relative;
 }
 
-.btn-create-game {
-    margin: 15px auto 30px auto;
-    color: #fff6de;
-    background-color: #15ab7f;
-    border: 3px solid #15ab7f;
+.btn::before {
+    display: block;
+    content: '';
+    width: 48px;
+    height: 90px;
+    position: absolute;
+    top: 0;
+    left: -48px;
 }
 
-.btn-create-game:hover {
-    color: #15ab7f;
-    background-color: transparent;
+.btn::after {
+    display: block;
+    content: '';
+    width: 50px;
+    height: 90px;
+    position: absolute;
+    top: 0;
+    left: 100%;
 }
 
-.btn-login, .btn-register {
-    margin-bottom: 45px;
-    background-color: transparent;
-    border: 3px solid;
+.btn:hover {
+  color: white;
 }
 
-.btn-login:hover, .btn-register:hover {
-    color: #fff6de;
+.btn:active {
+  color: transparent;
 }
 
-.btn-register {
-    color: #e26700;
-    border-color: #e26700;
+/* DEFAULT BTN */
+
+.btn-default {
+    background: url('../../img/btn-background.png') repeat-x;
 }
 
-.btn-register:hover {
-    background-color: #e26700;
+.btn-default::before {
+    background: url('../../img/sprites.png') 0px -2px no-repeat;
 }
 
-.btn-login {
-    color: #1f6a8d;
-    border-color: #1f6a8d;
+.btn-default::after {
+  background: url('../../img/sprites.png') -54px -2px no-repeat;
 }
 
-.btn-login:hover {
-    background-color: #1f6a8d;
+.button:hover .btn-default {
+    background: url('../../img/btn-background.png') 0px -91px repeat-x;
 }
 
-.form-modal .btn {
+.button:hover .btn-default::before {
+    background: url('../../img/sprites.png') 0px -93px no-repeat;
+}
+
+.button:hover .btn-default::after {
+    background: url('img/sprites.png') -54px -93px no-repeat;
+}
+
+.button:active .btn-default {
+    background: url('img/btn-background.png') 0px -183px repeat-x;
+}
+
+.button:active .btn-default::before {
+    background: url('../../img/sprites.png') 0px -185px no-repeat;
+}
+
+.button:active .btn-default::after {
+    background: url('../../img/sprites.png') -54px -185px no-repeat;
+}
+
+/* SIGNUP BTN */
+
+.btn-signup {
+  color: #e26700;
+  background: url('../../img/btn-background.png') 0px -276px repeat-x;
+}
+
+.btn-signup::before {
+    background: url('../../img/sprites.png') -103px -2px no-repeat;
+}
+
+.btn-signup::after {
+    background: url('../../img/sprites.png') -157px -2px no-repeat;
+}
+
+.btn-signup:hover {
+    background: url('../../img/btn-background.png') 0px -367px repeat-x;
+}
+
+.btn-signup:hover::before {
+    background: url('../../img/sprites.png') -103px -93px no-repeat;
+}
+
+.btn-signup:hover::after {
+    background: url('../../img/sprites.png') -157px -93px no-repeat;
+}
+
+.btn-signup:active {
+    background: url('../../img/btn-background.png') 0px -459px repeat-x;
+}
+
+.btn-signup:active::before {
+    background: url('../../img/sprites.png') -103px -185px no-repeat;
+}
+
+.btn-signup:active::after {
+    background: url('../../img/sprites.png') -157px -185px no-repeat;
+}
+
+/* SIGNIN BTN */
+
+.btn-signin {
+  color: #1f6a8d;
+  background: url('../../img/btn-background.png') 0px -552px repeat-x;
+}
+
+.btn-signin::before {
+    background: url('../../img/sprites.png') -206px -2px no-repeat;
+}
+
+.btn-signin::after {
+    background: url('../../img/sprites.png') -260px -2px no-repeat;
+}
+
+.btn-signin:hover {
+    background: url('../../img/btn-background.png') 0px -643px repeat-x;
+}
+
+.btn-signin:hover::before {
+    background: url('../../img/sprites.png') -206px -93px no-repeat;
+}
+
+.btn-signin:hover::after {
+    background: url('../../img/sprites.png') -260px -93px no-repeat;
+}
+
+.btn-signin:active {
+    background: url('../../img/btn-background.png') 0px -735px repeat-x;
+}
+
+.btn-signin:active::before {
+    background: url('../../img/sprites.png') -206px -185px no-repeat;
+}
+
+.btn-signin:active::after {
+    background: url('../../img/sprites.png') -260px -185px no-repeat;
+}
+
+/* ACTION BTN */
+
+.btn-action {
+  color: #28b187;
+  background: url('../../img/btn-background.png') 0px -828px repeat-x;
+}
+
+.btn-action::before {
+    background: url('../../img/sprites.png') -309px -2px no-repeat;
+}
+
+.btn-action::after {
+    background: url('../../img/sprites.png') -363px -2px no-repeat;
+}
+
+.button:hover .btn-action {
+    background: url('../../img/btn-background.png') 0px -919px repeat-x;
+}
+
+.button:hover .btn-action::before {
+    background: url('../../img/sprites.png') -309px -93px no-repeat;
+}
+
+.button:hover .btn-action::after {
+    background: url('../../img/sprites.png') -363px -93px no-repeat;
+}
+
+.button:active .btn-action {
+    background: url('../../img/btn-background.png') 0px -1011px repeat-x;
+}
+
+.button:active .btn-action::before {
+    background: url('../../img/sprites.png') -309px -185px no-repeat;
+}
+
+.button:active .btn-action::after {
+    background: url('../../img/sprites.png') -363px -185px no-repeat;
+}
+
+
+.form-modal__submit-btn {
     display: block;
     margin: auto;
+    background-color: #1f6a8d;
+    color: white;
+    font: 40px 'pf_isotext_probold', Arial, Helvetica, sans-serif;
     text-align: center;
     border-radius: 0px;
 }
 
-.form-modal .btn:hover {
+.reg-form-modal .form-modal__submit-btn {
+  margin-top: 110px;
+}
+
+.login-form-modal .form-modal__submit-btn {
+  margin-top: 150px;
+}
+
+.form-modal__submit-btn:hover {
     background-color: #15ab7f;
-    border: #15ab7f;
 }
 
-.js-controls .btn {
-    background-color: #e26700;
-    color: white;
-    margin-top: 110px;
-}
-
-.login-form-modal .btn {
-    background-color: #1f6a8d;
-    color: white;
-    margin-top: 150px;
+.form-modal__submit-btn:active {
+    color: transparent;
 }

@@ -5,12 +5,19 @@
 		constructor(name, options = {}) {
 			this._el = document.createElement(name);
 			this.setAttrs(options.attrs);
+			this.setClasses(options.classes);
 			this._options = options;
 		}
 
 		setAttrs(attrs = {}) {
 			Object.keys(attrs).forEach(name => {
 				this._el.setAttribute(name, attrs[name]);
+			});
+		}
+
+		setClasses(classes = []) {
+			classes.forEach((name) => {
+				this._el.classList.add(name);
 			});
 		}
 
@@ -53,6 +60,5 @@
 		}
 	}
 
-	//   export
 	window.Block = Block;
 })();
