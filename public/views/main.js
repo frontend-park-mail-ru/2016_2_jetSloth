@@ -1,23 +1,18 @@
-(function () {
-    'use strict';
+'use strict';
 
-    const View = window.View;
-    const MainMenu = window.MainMenu;
+import View from '../modules/view'
+import MainMenu from '../components/mainMenu/mainMenu'
 
-    class MainView extends View {
-        constructor(options = {}) {
-            super(options);
-            this._el = document.querySelector('.js-main');
-        }
-
-        init() {
-            this._component = new MainMenu(
-                {
-                    el: this._el
-                });
-        }
-
+export  default class MainView extends View {
+    constructor(options = {}) {
+        super(options);
+        this._el = document.querySelector('.js-main');
     }
 
-    window.MainView = MainView;
-})();
+    init() {
+        this._component = new MainMenu(
+            {
+                el: this._el
+            });
+    }
+}

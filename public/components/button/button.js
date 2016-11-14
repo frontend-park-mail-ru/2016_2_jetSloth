@@ -1,15 +1,12 @@
-(function () {
-	'use strict';
+'use strict';
 
-	const Block = window.Block;
+import Block from '../block/block'
 
-	class Button extends Block {
-		constructor(options = {}) {
-			super('button', options);
-			this._el.classList.add('button');
-			this._el.innerText = options.text;
-		}
-	}
+export default class Button extends Block {
+    constructor(options = {}) {
+        super('button', options);
+        this._el.classList.add('button');
+        this._el.innerText = options.text;
+    }
+}
 
-	window.Button = Button;
-})();

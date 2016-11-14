@@ -1,54 +1,50 @@
-(function () {
-    'use strict';
+'use strict';
 
-    const Form = window.Form;
-    const View = window.View;
+import Form from '../components/form/form'
+import View from '../modules/view'
 
-    class SignUpView extends View {
-        constructor(options = {}) {
-            super(options);
-            this._el = document.querySelector('.js-signup');
-            this.hide();
+export default class SignUpView extends View {
+    constructor(options = {}) {
+        super(options);
+        this._el = document.querySelector('.js-signup');
+        this.hide();
 
-            this._component = new Form({
-                el: this._el,
-                data: {
-                    fields: [
-                        {
-                            name: 'username',
-                            type: 'text',
-                            placeholder: 'Enter username'
-                        },
-                        {
-                            name: 'password',
-                            type: 'password',
-                            placeholder: 'Enter password'
-                        },
-                        {
-                            name: 'secured_password',
-                            type: 'password',
-                            placeholder: 'Repeat password'
+        this._component = new Form({
+            el: this._el,
+            data: {
+                fields: [
+                    {
+                        name: 'username',
+                        type: 'text',
+                        placeholder: 'Enter username'
+                    },
+                    {
+                        name: 'password',
+                        type: 'password',
+                        placeholder: 'Enter password'
+                    },
+                    {
+                        name: 'secured_password',
+                        type: 'password',
+                        placeholder: 'Repeat password'
+                    }
+                ],
+                controls: [
+                    {
+                        text: 'SUBMIT',
+                        attrs: {
+                            type: 'submit'
                         }
-                    ],
-                    controls: [
-                        {
-                            text: 'SUBMIT',
-                            attrs: {
-                                type: 'submit'
-                            }
-                        }
-                    ]
-                }
-            })
-        }
-
-        init() {
-            this._component.on('submit', event => {
-                event.preventDefault();
-                this.router.go('/');
-            });
-        }
+                    }
+                ]
+            }
+        })
     }
 
-    window.SignUpView = SignUpView;
-})();
+    init() {
+        this._component.on('submit', event => {
+            event.preventDefault();
+            this.router.go('/');
+        });
+    }
+}
