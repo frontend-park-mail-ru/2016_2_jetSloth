@@ -1,14 +1,18 @@
 'use strict';
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack');
+
 module.exports = {
+    context: __dirname + '/public',
     entry: {
-        'main': ['./public/main.js'],
-        'signin': ['./public/views/signin.js'],
-        'signup': ['./public/views/signup'],
-        'welcome': ['./public/views/main.js']
+        'main': ['./main.js'],
+        'signin': ['./views/signin.js'],
+        'signup': ['./views/signup'],
+        'welcome': ['./views/main.js']
     },
     output: {
-        path: './public/build',
+        path: __dirname + './public/build',
         filename: '[name].js'
     },
     watch: true,
@@ -31,6 +35,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin("style.css",  {allChunks: true})
+        new ExtractTextPlugin("style.css",  {allChunks: true}),
+        new webpack.NoErrorsPlugin()
     ]
 };
