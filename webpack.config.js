@@ -12,7 +12,7 @@ module.exports = {
         'welcome': ['./views/main.js']
     },
     output: {
-        path: __dirname + './public/build',
+        path: __dirname + '/public/build',
         filename: '[name].js'
     },
     watch: true,
