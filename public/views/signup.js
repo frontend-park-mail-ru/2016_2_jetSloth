@@ -39,6 +39,7 @@ export default class SignUpView extends View {
     init() {
         let passwordReg = /^[\w@$#%_+-\\*\\\/!?]{6,30}$/;
         let usernameReg = /^[\w]{4,20}$/;
+
         this._component.on('submit', event => {
             event.preventDefault();
 

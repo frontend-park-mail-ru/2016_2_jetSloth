@@ -10,7 +10,8 @@
     "build": "babel server.js -o compiled.js",
     "karma:start": "karma start",
     "karma:run": "karma run",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",

@@ -1,10 +1,9 @@
 'use strict';
 
-const express = require('express');
-const parser = require('body-parser');
-const technoDoc = require('techno-gendoc');
-const path = require('path');
-
+import express from 'express'
+import parser from 'body-parser'
+import technoDoc from 'techno-gendoc'
+import path from 'path'
 
 technoDoc.generate(require('./api'), 'public');
 
