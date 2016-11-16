@@ -70,11 +70,11 @@
 }
 
 .button:hover .btn-default::after {
-    background: url('img/sprites.png') -54px -93px no-repeat;
+    background: url('../../img/sprites.png') -54px -93px no-repeat;
 }
 
 .button:active .btn-default {
-    background: url('img/btn-background.png') 0px -183px repeat-x;
+    background: url('../../img/btn-background.png') 0px -183px repeat-x;
 }
 
 .button:active .btn-default::before {
@@ -210,7 +210,7 @@
     color: white;
     font: 40px 'pf_isotext_probold', Arial, Helvetica, sans-serif;
     text-align: center;
-    border-radius: 0px;
+    border-radius: 0;
 }
 
 .reg-form-modal .form-modal__submit-btn {

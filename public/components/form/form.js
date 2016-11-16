@@ -42,7 +42,6 @@ export default class Form extends Block {
 
         });
 
-
         let {controls = []} = this.data;
 
         controls.forEach(data => {
@@ -52,5 +51,32 @@ export default class Form extends Block {
             });
             this._el.querySelector('.js-controls').appendChild(control._get());
         });
+    }
+
+    showErr(field, errMsg) {
+        let err = new Block('span', {
+            classes: ['error-message']
+        });
+        err.innerHTML = errMsg;
+        field.append(err);
+    }
+
+    getFormData() {
+        let form = this._el.querySelector('form');
+        let elements = form.elements;
+        let fields = {};
+
+        Object.keys(elements).forEach(element => {
+            let name = elements[element].name;
+            let value = elements[element].value;
+
+            if (!name) {
+                return;
+            }
+
+            fields[name] = value;
+        });
+
+        return fields;
     }
 }

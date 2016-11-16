@@ -37,9 +37,12 @@ export default class SignInView extends View {
     }
 
     init() {
+
         this._component.on('submit', event => {
             event.preventDefault();
-            this.router.go('/');
+            let data = this._component.getFormData();
+            this._component.validateLogin();
+            // this.router.go('/');
         });
     }
 }

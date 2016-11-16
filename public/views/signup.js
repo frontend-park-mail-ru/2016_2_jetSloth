@@ -44,7 +44,7 @@ export default class SignUpView extends View {
     init() {
         this._component.on('submit', event => {
             event.preventDefault();
-            this.router.go('/');
+            // this.router.go('/');
         });
     }
 }
