@@ -15,7 +15,7 @@ export default class Form extends Block {
 
     render() {
         this._updateHtml();
-        this._installItems();
+        this._installControls();
     }
 
     reset() {
@@ -27,20 +27,7 @@ export default class Form extends Block {
     }
 
 
-    _installItems() {
-        let {fields = []} = this.data;
-
-        fields.forEach(data => {
-            let input = new Input({
-                attrs: {
-                    type: data.type,
-                    name: data.name,
-                    placeholder: data.placeholder
-                }
-            });
-            this._el.querySelector('.js-inputs').appendChild(input._get());
-
-        });
+    _installControls() {
 
         let {controls = []} = this.data;
 
@@ -51,14 +38,6 @@ export default class Form extends Block {
             });
             this._el.querySelector('.js-controls').appendChild(control._get());
         });
-    }
-
-    showErr(field, errMsg) {
-        let err = new Block('span', {
-            classes: ['error-message']
-        });
-        err.innerHTML = errMsg;
-        field.append(err);
     }
 
     getFormData() {
@@ -73,10 +52,45 @@ export default class Form extends Block {
             if (!name) {
                 return;
             }
-
             fields[name] = value;
         });
-
         return fields;
+    }
+
+    showErr(field, errMsg) {
+        field.innerHTML = errMsg;
+    }
+
+    resetErr(field) {
+        field.innerHTML = '';
+    }
+
+    validate() {
+        let form = this._el.querySelector('form');
+        let elements = form.elements;
+        let valid = true;
+
+        this.resetErr(form.querySelector('.error-username'));
+        if (elements.username.value.length === 0) {
+            this.showErr(form.querySelector('.error-username'), 'Минимум 1 символ');
+            valid = false;
+        }
+        this.resetErr(form.querySelector('.error-password'));
+        if (elements.password.value.length < 3) {
+            this.showErr(form.querySelector('.error-password'), 'Мимимум 6 символов');
+            valid = false;
+        }
+        this.resetErr(form.querySelector('.error-secured_password'));
+        if ('secured_password' in elements && form.password.value !== form['secured_password'].value) {
+            this.showErr(form.querySelector('.error-secured_password'), 'Пароли не совпадают');
+            alert(`it's bad`);
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    isValid(form) {
+        return this.validate(form);
     }
 }
