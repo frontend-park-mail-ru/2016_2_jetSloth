@@ -46,6 +46,9 @@
     "karma-chrome-launcher": "2.0.0",
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.0.2",
+    "pug": "^2.0.0-beta6",
+    "pug-html-loader": "^1.0.9",
+    "stylus": "^0.54.5",
     "webpack": "^1.13.3"
   },
   "homepage": "https://github.com/AndrySar/2016_2_jetSloth#readme",

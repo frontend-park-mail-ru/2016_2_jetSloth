@@ -2,7 +2,7 @@
 
 import Block from '../block/block'
 import Button from '../button/button'
-import Input from '../input/input'
+import Router from '../../modules/router'
 
 export default class Form extends Block {
     constructor(options = {data: {}}) {
@@ -10,7 +10,18 @@ export default class Form extends Block {
         this.template = window.fest['form/form.tmpl'];
         this.data = options.data;
         this._el = options.el;
+        this.valid = true;
         this.render();
+        this.on('click', event => {
+            if (event.target.classList.contains("fa-times-circle")) {
+                (new Router).go('/');
+            }
+        });
+
+        this.on('submit', event => {
+            event.preventDefault();
+            this.isValid();
+        });
     }
 
     render() {
@@ -68,29 +79,27 @@ export default class Form extends Block {
     validate() {
         let form = this._el.querySelector('form');
         let elements = form.elements;
-        let valid = true;
 
         this.resetErr(form.querySelector('.error-username'));
         if (elements.username.value.length === 0) {
             this.showErr(form.querySelector('.error-username'), 'Минимум 1 символ');
-            valid = false;
+            this.valid = false;
         }
         this.resetErr(form.querySelector('.error-password'));
         if (elements.password.value.length < 3) {
             this.showErr(form.querySelector('.error-password'), 'Мимимум 6 символов');
-            valid = false;
+            this.valid = false;
         }
         this.resetErr(form.querySelector('.error-secured_password'));
         if ('secured_password' in elements && form.password.value !== form['secured_password'].value) {
             this.showErr(form.querySelector('.error-secured_password'), 'Пароли не совпадают');
-            alert(`it's bad`);
-            valid = false;
+            this.valid = false;
         }
 
         return valid;
     }
 
-    isValid(form) {
-        return this.validate(form);
+    isValid() {
+        this.validate();
     }
 }

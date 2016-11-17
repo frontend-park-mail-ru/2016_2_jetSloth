@@ -9,7 +9,8 @@ module.exports = {
         'main': ['./main.js'],
         'signin': ['./views/signin.js'],
         'signup': ['./views/signup'],
-        'welcome': ['./views/main.js']
+        'welcome': ['./views/main.js'],
+        'app': ['./views/app.js']
     },
     output: {
         path: __dirname + '/public/build',

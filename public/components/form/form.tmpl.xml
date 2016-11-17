@@ -4,9 +4,7 @@
         <header class="modal-window__header">
             <img src="img/form-logo.png" class="modal-window__header__logo"/>
             <div class="modal-close">
-                <a href="#">
-                    <i class="fa fa-3x fa-times-circle"></i>
-                </a>
+                <i class="fa fa-3x fa-times-circle"></i>
             </div>
         </header>
 

@@ -1,7 +1,6 @@
 'use strict';
 
 import Block from '../block/block'
-import Button from '../button/button'
 import Router from '../../modules/router'
 
 export default class LinkedButton extends Block {

@@ -10,7 +10,7 @@ technoDoc.generate(require('./api'), 'public');
 
 const app = express();
 
-['/', '/signin', '/signup'].forEach((paths) => { app.use(paths, express.static('public', {maxAge: 1})); });
+['/', '/signin', '/signup', '/app'].forEach((paths) => { app.use(paths, express.static('public', {maxAge: 1})); });
 
 app.use(parser.json());
 app.use('/libs', express.static('node_modules'));
