@@ -16,7 +16,7 @@ input {
     font-size: 1.5em;
     background: none;
     opacity: 0;
-    font-family: 'Roboto Mono', monospace;
+    /*font-family: 'Roboto Mono', monospace;*/
     transition: all 0.5s ease;
 }
 

@@ -78,7 +78,6 @@ export default class Form extends Block {
 
             input.addEventListener('focus', event => {
                 parent.classList.add('active');
-
                 input.addEventListener('blur', event => {
                     if (input.value.length === 0) {
                         parent.classList.remove('active');

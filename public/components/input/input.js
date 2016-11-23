@@ -15,7 +15,7 @@ export default class Input extends Block {
     render() {
         this._updateHtml();
         this._drawLine();
-        // this.runAnimate();
+        this.listenToAnimate();
     }
 
     _updateHtml() {
@@ -29,29 +29,45 @@ export default class Input extends Block {
     }
 
     runAnimate() {
-        this.svgText = Snap(this._el.querySelector('.line'));
-        this.qCurve = 400 / 2;
-        this.textPath = this.svgText.path("M0 0 " + 400 + " 0");
-        var textDown = function() {
+        // var textDown = function() {
+        //     this.textPath.animate({
+        //         d: "M0 0 Q" + this.qCurve + " 40 " + 400 + " 0"
+        //     }, 150, mina.easeout);
+        // };
+        // var textUp = function() {
+        //     this.textPath.animate({
+        //         d: "M0 0 Q" + this.qCurve + " -30 " + 400 + " 0"
+        //     }, 150, mina.easeout);
+        // };
+        // var textSame = function() {
+        //     this.textPath.animate({
+        //         d: "M0 0 " + 400 + " 0"
+        //     }, 200, mina.easein);
+        // };
+        // // var textRun = function() {
+        setTimeout(() => {
             this.textPath.animate({
                 d: "M0 0 Q" + this.qCurve + " 40 " + 400 + " 0"
             }, 150, mina.easeout);
-        };
-        var textUp = function() {
+        }, 200);
+        setTimeout(() => {
             this.textPath.animate({
                 d: "M0 0 Q" + this.qCurve + " -30 " + 400 + " 0"
             }, 150, mina.easeout);
-        };
-        var textSame = function() {
+        }, 400);
+        setTimeout(() => {
             this.textPath.animate({
                 d: "M0 0 " + 400 + " 0"
             }, 200, mina.easein);
-        };
-        var textRun = function() {
-            setTimeout(textDown, 200);
-            setTimeout(textUp, 400);
-            setTimeout(textSame, 600);
-        };
+        }, 600);
+        // };
+        // textRun();
+    }
+    listenToAnimate() {
+        let input = this._el.querySelector('input');
 
+        input.addEventListener('focus', event => {
+            this.runAnimate();
+        });
     }
 }
