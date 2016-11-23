@@ -26,7 +26,15 @@ export default class Form extends Block {
     }
 
     reset() {
-        this._el.querySelector('form').reset();
+        let inputs = this._el.querySelectorAll('input');
+
+        inputs.forEach(input => {
+            let parent = input.parentElement;
+            let err = parent.parentElement.querySelector('.error');
+            parent.classList.remove('active', 'valid', 'invalid');
+            input.value = '';
+            err.innerHTML = '';
+        });
     }
 
     _updateHtml() {
@@ -72,7 +80,6 @@ export default class Form extends Block {
 
             input.addEventListener('focus', event => {
                 parent.classList.add('active');
-
                 input.addEventListener('blur', event => {
                     if (input.value.length === 0) {
                         parent.classList.remove('active');
@@ -112,6 +119,11 @@ export default class Form extends Block {
 						alert("Произошла какая-то ошибка o_O");
 					});
             	}
+        });
+
+        this.on('reset', event => {
+            event.preventDefault();
+            this.reset();
         });
     }
 

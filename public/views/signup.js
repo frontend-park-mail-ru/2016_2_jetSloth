@@ -41,7 +41,12 @@ export default class SignUpView extends View {
                 }]
             }
         });
-        this._el.appendChild(content._get());
+        this._el.appendChild(this.form._get());
         document.querySelector('.app').appendChild(this._el);
+    }
+
+    pause() {
+        this.hide();
+        this.form.reset();
     }
 }

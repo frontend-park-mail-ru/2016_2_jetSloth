@@ -7,17 +7,12 @@ module.exports = function (config) {
 		frameworks: ['jasmine'],
 
 		files: [
-			'./public/components/**/*.js',
-			'./public/modules/**/*.js',
-			'./public/views/**/*.js',
-			'./test/**/*.spec.js'
+			'./public/build/*.js',
 		],
 
 		reporters: ['progress', 'coverage'],
 		preprocessors: {
-			'./public/components/**/*.js': ['coverage'],
-			'./public/modules/**/*.js': ['coverage'],
-			'./public/views/**/*.js': ['coverage']
+			'./public/build/*.js': ['coverage'],
 		},
 
 		port: 9876,

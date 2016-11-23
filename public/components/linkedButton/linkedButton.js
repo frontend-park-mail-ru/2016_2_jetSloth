@@ -17,6 +17,7 @@ export default class LinkedButton extends Button {
             setTimeout(function() {
                 (new Router).go(url);
             }, 1000);
+            // this.animate();
         });
     }
 }
