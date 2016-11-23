@@ -51,7 +51,6 @@ export default class SignInView extends View {
     }
 
     pause() {
-        alert('hi');
         this.hide();
         this.form.reset();
     }
