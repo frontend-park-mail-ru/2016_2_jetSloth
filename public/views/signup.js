@@ -9,7 +9,7 @@ export default class SignUpView extends View {
     }
 
     init() {
-        this._el.classList.add('js-signup');
+        this._el.classList.add('content', 'js-signup');
         let content = new Form({
             data: {
                 fields: [{

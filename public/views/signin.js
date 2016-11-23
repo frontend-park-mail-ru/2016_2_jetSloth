@@ -10,7 +10,7 @@ export default class SignInView extends View {
     }
 
     init() {
-        this._el.classList.add('js-signin');
+        this._el.classList.add('content', 'js-signin');
         let form = new Form({
             data: {
                 fields: [{
@@ -43,6 +43,7 @@ export default class SignInView extends View {
             url: '/signup',
             classes: ['button', 'btn', 'btn-signup']
         });
+
         this._el.appendChild(form._get());
         this._el.appendChild(signUpBtn._get());
         document.querySelector('.app').appendChild(this._el);

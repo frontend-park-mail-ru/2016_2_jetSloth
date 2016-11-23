@@ -1,6 +1,7 @@
 'use strict';
 
 import View from '../modules/view'
+import template from '../templates/app.pug'
 
 
 export default class AppView extends View {
@@ -8,7 +9,10 @@ export default class AppView extends View {
         super();
     }
     init() {
-      this._el.classList.add('js-app');
+      this._el.classList.add('content', 'js-app');
+      this._el.innerHTML = template();
+
+      document.querySelector('.app').appendChild(this._el);
     }
 
 }

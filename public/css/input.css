@@ -13,8 +13,7 @@ input {
     left: 0;
     padding-top: 5px;
     border: none;
-    font-size: 1em;
-    font-weight: 200;
+    font-size: 1.5em;
     background: none;
     opacity: 0;
     font-family: 'Roboto Mono', monospace;
@@ -40,7 +39,7 @@ label {
     color: #fff;
     position: absolute;
     top: 15px;
-    font-size: 1.3em;
+    font-size: 1.5em;
     transition: all 0.5s ease;
 }
 
