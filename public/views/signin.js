@@ -12,6 +12,7 @@ export default class SignInView extends View {
     init() {
         this._el.classList.add('content', 'js-signin');
         let form = new Form({
+			formType: 'signIn',
             data: {
                 fields: [{
                     name: 'username',
