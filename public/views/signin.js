@@ -11,7 +11,7 @@ export default class SignInView extends View {
 
     init() {
         this._el.classList.add('content', 'js-signin');
-        let form = new Form({
+        this.form = new Form({
             data: {
                 fields: [{
                     name: 'username',
@@ -38,14 +38,21 @@ export default class SignInView extends View {
             }
         });
 
-        let signUpBtn = new LinkedButton({
+        this.signUpBtn = new LinkedButton({
             text: 'sign up',
             url: '/signup',
             classes: ['button', 'btn', 'btn-signup']
         });
 
-        this._el.appendChild(form._get());
-        this._el.appendChild(signUpBtn._get());
+        this._el.appendChild(this.form._get());
+        this._el.appendChild(this.signUpBtn._get());
         document.querySelector('.app').appendChild(this._el);
+
+    }
+
+    pause() {
+        alert('hi');
+        this.hide();
+        this.form.reset();
     }
 }
