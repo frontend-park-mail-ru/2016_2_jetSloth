@@ -19,24 +19,24 @@ module.exports = {
     watch: true,
     devtool: 'source-map',
     module: {
-        loaders: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'
-            },
-            {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract("style", "css")
-            },
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract("style", "css!sass")
-            }
-        ]
+        loaders: [{
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader'
+        },
+        {
+            test: /\.pug$/,
+            loader: 'pug-loader'
+        },
+        {
+            test: /\.css$/,
+            loader: ExtractTextPlugin.extract("style", "css")
+        }]
     },
     plugins: [
-        new ExtractTextPlugin("style.css",  {allChunks: true}),
-        new webpack.NoErrorsPlugin()
+        new ExtractTextPlugin("[name].css", {
+            allChunks: true
+        }),
+        new webpack.NoErrorsPlugin(),
     ]
 };

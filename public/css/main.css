@@ -1,4 +1,6 @@
-*, *:before, *:after {
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -6,121 +8,23 @@
     outline: none;
 }
 
-html {
-    font-size: 14px;
-}
-
 body {
-    margin: 0;
-    padding: 0;
-    min-width: 1200px;
-    height: 100%;
+    background: #f1c40f;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    background-color: #fff6de;
-}
-
-a {
-    text-decoration: none;
-}
-
-.js-signin, .js-signup {
-    display: flex;
-    justify-content: center;
-    margin: 10%;
-}
-
-
-.fa {
-    color: black;
 }
 
 .container {
-    margin-right: 10%;
-    margin-left: 10%;
-}
-
-.main-header {
+    margin: 0 50px;
+    height: 100%;
     display: flex;
     justify-content: center;
-    border-bottom: 3px solid #e26700;
-}
-
-.main-header__logo {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.content {
-    padding-top: 40px;
-    display: flex;
-}
-
-.login-page-content {
-    justify-content: center;
-    align-items: flex-end;
-}
-
-.main-page-content {
-    justify-content: space-between;
-    align-items: center;
-}
-
-.rating-page-content {
-    position: relative;
-    flex-direction: column;
-    justify-content: center;
-
-}
-
-.trophies-view {
-    display: flex;
-    justify-content: center;
-}
-
-.search-your-place {
-    text-align: center;
-    font-size: 30px;
-    color: #e26700;
-}
-
-.trophies-view__item {
-    margin-right: 15px;
-    margin-left: 15px;
-    text-align: center;
-    color: #1f6a8d;
-}
-
-.trophies-view__item>p {
-    margin: 3px;
-}
-
-.trophies-view__item__img {
-    width: 100px;
 }
 
 .close {
     position: absolute;
-    top: 40px;
-    right: 0;
-}
+    color: #11355e;
+    top: 30px;
+    right: 30px;
 
-.rating-img, .exit-img {
-    width: 150px;
-    min-width: 150px;
-}
-
-.create-new-room {
-    text-align: center;
-    margin: 15px auto 30px auto;
-}
-
-.created-rooms-window {
-    min-height: 500px;
-    min-width: 500px;
-    text-align: center;
-    color: #1f6a8d;
-    font-size: 40px;
-    border: 3px solid #e26700;
-    border-radius: 15px;
 }

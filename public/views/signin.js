@@ -1,42 +1,50 @@
 'use strict';
 
 import Form from '../components/form/form'
+import LinkedButton from '../components/linkedButton/linkedButton'
 import View from '../modules/view'
 
 export default class SignInView extends View {
-    constructor(options = {}) {
-        super(options);
-        this._el = document.querySelector('.js-signin');
-        this._component = new Form({
-            el: this._el,
+    constructor() {
+        super();
+    }
+
+    init() {
+        this._el.classList.add('js-signin');
+        let form = new Form({
             data: {
                 fields: [{
                     name: 'username',
                     type: 'text',
-                    placeholder: 'Enter username'
+                    label: 'Enter username'
                 }, {
                     name: 'password',
                     type: 'password',
-                    placeholder: 'Enter password'
+                    label: 'Enter password'
                 }],
                 controls: [{
-                    text: 'SIGN IN',
+                    text: 'enter',
+                    classes: ['button', 'btn', 'btn-submit'],
                     attrs: {
                         type: 'submit'
                     }
+                }, {
+                    text: 'reset',
+                    classes: ['button', 'btn', 'btn-reset'],
+                    attrs: {
+                        type: 'reset'
+                    }
                 }]
             }
-        })
+        });
+
+        let signUpBtn = new LinkedButton({
+            text: 'sign up',
+            url: '/signup',
+            classes: ['button', 'btn', 'btn-signup']
+        });
+        this._el.appendChild(form._get());
+        this._el.appendChild(signUpBtn._get());
+        document.querySelector('.app').appendChild(this._el);
     }
-
-
-    // init() {
-    //     this._component.on('submit', event => {
-    //         let isValid = false;
-    //         event.preventDefault();
-    //         let form = this._component.getFormData();
-    //         this._component.isValid(form);
-    //     });
-    // }
-
 }

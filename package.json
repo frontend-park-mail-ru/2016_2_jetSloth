@@ -25,9 +25,11 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "technolibs": "1.1.0",
+    "jade": "^1.11.0",
     "json-schema-mock": "0.0.8",
-    "techno-gendoc": "0.4.1"
+    "pug": "^2.0.0-beta6",
+    "techno-gendoc": "0.4.1",
+    "technolibs": "1.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -47,8 +49,11 @@
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.0.2",
     "pug": "^2.0.0-beta6",
+    "pug-filters": "^1.2.4",
     "pug-html-loader": "^1.0.9",
+    "pug-loader": "^2.3.0",
     "stylus": "^0.54.5",
+    "stylus-loader": "^2.3.1",
     "webpack": "^1.13.3"
   },
   "homepage": "https://github.com/AndrySar/2016_2_jetSloth#readme",

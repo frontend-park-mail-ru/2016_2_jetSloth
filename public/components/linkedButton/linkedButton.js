@@ -1,19 +1,22 @@
 'use strict';
 
-import Block from '../block/block'
+import Button from '../button/button'
 import Router from '../../modules/router'
 
-export default class LinkedButton extends Block {
-    constructor(options = {}) {
-        super('button', options);
-        this._el.innerText = options.text;
+export default class LinkedButton extends Button {
+    constructor(options) {
+        super(options);
         this.setLink(options.url);
+
+
     }
 
     setLink(url) {
         this.on('click', event => {
-            event.preventDefault();
-            (new Router).go(url);
-        })
+            this.animate();
+            setTimeout(function() {
+                (new Router).go(url);
+            }, 1000);
+        });
     }
 }

@@ -6,10 +6,10 @@ export default class View {
      * @param {Object} [options={}] - Объект с параметрами
      */
     constructor(options = {}) {
-        if (options.createElement) {
+        // if (options.createElement) {
             this.tagName = options.tagName || 'div';
             this._el = document.createElement(this.tagName);
-        }
+        // }
     }
 
     /**
@@ -19,6 +19,7 @@ export default class View {
      */
     init(options = {}) {
         this.setAttrs(options.attrs);
+        this.setClasses(options.classes);
     }
 
     /**
@@ -44,7 +45,7 @@ export default class View {
      * @param {Object} [options={}] - Объект с параметрами
      */
     show(options = {}) {
-        this._el.style.display = 'flex';
+        this._el.style.display = 'block';
     }
 
     /**
@@ -98,6 +99,12 @@ export default class View {
         })
     }
 
+    setClasses(classes = []) {
+        classes.forEach((name) => {
+            this._el.classList.add(name);
+        });
+    }
+
     /**
      * Возвращает строку, содержашую текстовое представление текущей view
      * @returns {string}
@@ -114,5 +121,3 @@ export default class View {
         this.router = router;
     }
 }
-
-

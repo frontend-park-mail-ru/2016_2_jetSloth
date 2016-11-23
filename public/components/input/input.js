@@ -1,14 +1,57 @@
 'use strict';
 
 import Block from '../block/block'
+import template from '../../templates/input.pug'
 
 export default class Input extends Block {
-    constructor(options) {
-        super('input', options);
-        this._el.classList.add('input');
+    constructor(options = {}) {
+        super('div', {
+            classes: ['form-wrap']
+        });
+        this.fields = options;
+        this.render();
     }
 
-    getValue() {
-        return this._el.value;
+    render() {
+        this._updateHtml();
+        this._drawLine();
+        // this.runAnimate();
+    }
+
+    _updateHtml() {
+        this._el.innerHTML = template(this.fields);
+    }
+
+    _drawLine() {
+        this.svgText = Snap(this._el.querySelector('.line'));
+        this.qCurve = 400 / 2;
+        this.textPath = this.svgText.path("M0 0 " + 400 + " 0");
+    }
+
+    runAnimate() {
+        this.svgText = Snap(this._el.querySelector('.line'));
+        this.qCurve = 400 / 2;
+        this.textPath = this.svgText.path("M0 0 " + 400 + " 0");
+        var textDown = function() {
+            this.textPath.animate({
+                d: "M0 0 Q" + this.qCurve + " 40 " + 400 + " 0"
+            }, 150, mina.easeout);
+        };
+        var textUp = function() {
+            this.textPath.animate({
+                d: "M0 0 Q" + this.qCurve + " -30 " + 400 + " 0"
+            }, 150, mina.easeout);
+        };
+        var textSame = function() {
+            this.textPath.animate({
+                d: "M0 0 " + 400 + " 0"
+            }, 200, mina.easein);
+        };
+        var textRun = function() {
+            setTimeout(textDown, 200);
+            setTimeout(textUp, 400);
+            setTimeout(textSame, 600);
+        };
+
     }
 }

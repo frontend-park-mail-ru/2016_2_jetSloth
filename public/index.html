@@ -3,37 +3,30 @@
 <head>
 
     <meta charset="UTF-8">
-    <title>Monopoly</title>
+
+    <link rel="stylesheet" href="css/font-awesome.min.css">
 
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="components/button/button.css">
-    <link rel="stylesheet" href="components/form/form.css">
-    <link rel="stylesheet" href="components/form/modal.css">
+    <link rel="stylesheet" href="css/button.css">
+    <link rel="stylesheet" href="css/input.css">
+
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Roboto:300,500&amp;subset=cyrillic-ext"
           rel="stylesheet">
 
+    <script src="build/app.js" charset="utf-8"></script>
     <script src="build/main.js" charset="utf-8"></script>
     <script src="build/signin.js" charset="utf-8"></script>
     <script src="build/signup.js" charset="utf-8"></script>
     <script src="build/welcome.js" charset="utf-8"></script>
 
-    <script src="/components/form/form.tmpl.js"></script>
-
-    <script src="https://use.fontawesome.com/7ab923dd1b.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <script src="components/input/snap.svg-min.js"></script>
 </head>
 
 <body>
 
-<div class="container">
-    <header class="main-header">
-        <img src="img/logo.png" class="main-header__logo"/>
-    </header>
-
-    <div class="content login-page-content js-main" style="display: none"></div>
-    <div class="content login-page-content js-signin" style="display: none"></div>
-    <div class="content login-page-content js-signup" style="display: none"></div>
-</div>
+<div class="container app"></div>
 
 </body>
 </html>

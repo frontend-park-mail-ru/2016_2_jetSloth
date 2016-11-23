@@ -4,38 +4,43 @@ import Form from '../components/form/form'
 import View from '../modules/view'
 
 export default class SignUpView extends View {
-    constructor(options = {}) {
-        super(options);
-        this._el = document.querySelector('.js-signup');
-        this._component = new Form({
-            el: this._el,
+    constructor() {
+        super();
+    }
+
+    init() {
+        this._el.classList.add('js-signup');
+        let content = new Form({
             data: {
                 fields: [{
                     name: 'username',
                     type: 'text',
-                    placeholder: 'Enter username'
+                    label: 'Enter username'
                 }, {
                     name: 'password',
                     type: 'password',
-                    placeholder: 'Enter password'
+                    label: 'Enter password'
                 }, {
-                    name: 'secured_password',
+                    name: 'password2',
                     type: 'password',
-                    placeholder: 'Repeat password'
+                    label: 'Repeat password'
                 }],
                 controls: [{
-                    text: 'SUBMIT',
+                    text: 'submit',
+                    classes: ['button', 'btn', 'btn-submit'],
                     attrs: {
                         type: 'submit'
+                    }
+                }, {
+                    text: 'reset',
+                    classes: ['button', 'btn', 'btn-reset'],
+                    attrs: {
+                        type: 'reset'
                     }
                 }]
             }
         });
+        this._el.appendChild(content._get());
+        document.querySelector('.app').appendChild(this._el);
     }
-
-
-    // init() {
-    //
-    //
-    // }
 }
