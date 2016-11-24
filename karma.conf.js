@@ -7,12 +7,12 @@ module.exports = function (config) {
 		frameworks: ['jasmine'],
 
 		files: [
-			// './public/build/*.js',
+			'./public/build/*.js',
 		],
 
 		reporters: ['progress', 'coverage'],
 		preprocessors: {
-			// './public/build/*.js': ['coverage'],
+			'./public/build/*.js': ['coverage'],
 		},
 
 		port: 9876,
@@ -28,13 +28,13 @@ module.exports = function (config) {
             'karma-chrome-launcher',
             'karma-coverage'
         ],
-
-		customLaunchers: {
-            Chrome_travis_ci: {
-                base: 'Chrome',
-                flags: ['--no-sandbox']
-            }
-        },
+		//
+		// customLaunchers: {
+        //     Chrome_travis_ci: {
+        //         base: 'Chrome',
+        //         flags: ['--no-sandbox']
+        //     }
+        // },
 
 		browsers: ['Chrome'],
 		coverageReporter: {
