@@ -1,10 +1,10 @@
 'use strict';
 
+import Router from '../../modules/router'
 import Block from '../block/block'
 import Button from '../button/button'
 import Input from '../input/input'
-import Router from '../../modules/router'
-import template from '../../templates/form.pug'
+import template from '../../templates/components/form.pug'
 
 
 export default class Form extends Block {
@@ -75,9 +75,10 @@ export default class Form extends Block {
         inputs.forEach(input => {
             let parent = input.parentElement;
 
-            input.addEventListener('focus', event => {
+            input.addEventListener('focus', () => {
                 parent.classList.add('active');
-                input.addEventListener('blur', event => {
+
+                input.addEventListener('blur', () => {
                     if (input.value.length === 0) {
                         parent.classList.remove('active');
                     } else {
@@ -159,7 +160,6 @@ export default class Form extends Block {
         let _password2 = this._el.elements.password2;
         return _password.value === _password2.value && _password.value.length > 5 ? null : 'Passwords aren\'t coincided!';
     }
-
 
     getFormData() {
         let form = this._el.querySelector('.form');

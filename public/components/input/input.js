@@ -1,7 +1,7 @@
 'use strict';
 
 import Block from '../block/block'
-import template from '../../templates/input.pug'
+import template from '../../templates/components/input.pug'
 
 export default class Input extends Block {
     constructor(options = {}) {

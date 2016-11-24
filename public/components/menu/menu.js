@@ -1,9 +1,9 @@
 'use strict';
 
-import template from '../../templates/main.pug'
 import Block from '../block/block'
 import Button from '../button/button'
 import LinkedButton from '../linkedButton/linkedButton'
+import template from '../../templates/components/main.pug'
 
 export default class Menu extends Block {
     constructor(options = {}) {
