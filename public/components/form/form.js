@@ -3,8 +3,9 @@ import Block from '../block/block'
 import Button from '../button/button'
 import Input from '../input/input'
 import Router from '../../modules/router'
-import template from '../../templates/form.pug'
+import template from '../../templates/components/form.pug'
 import User from '../../models/user'
+
 
 export default class Form extends Block {
     constructor(options = {
@@ -50,7 +51,7 @@ export default class Form extends Block {
                 type: data.type,
                 label: data.label
             });
-            this._el.querySelector('.form__content').appendChild(field._get());
+            this._el.querySelector('.form__fields').append(field._get());
         });
     }
 
@@ -65,10 +66,9 @@ export default class Form extends Block {
                 classes: data.classes,
                 attrs: data.attrs
             });
-            this._el.querySelector('.js-controls').appendChild(control._get());
+            this._el.querySelector('.form__controls').appendChild(control._get());
         });
     }
-
 
     _setListeners() {
         let inputs = this._el.querySelectorAll('input');
@@ -76,9 +76,10 @@ export default class Form extends Block {
         inputs.forEach(input => {
             let parent = input.parentElement;
 
-            input.addEventListener('focus', event => {
+            input.addEventListener('focus', () => {
                 parent.classList.add('active');
-                input.addEventListener('blur', event => {
+
+                input.addEventListener('blur', () => {
                     if (input.value.length === 0) {
                         parent.classList.remove('active');
                     } else {
@@ -175,22 +176,21 @@ export default class Form extends Block {
         return _password.value === _password2.value && _password.value.length > 5 ? null : 'Passwords aren\'t coincided!';
     }
 
+    getFormData() {
+        let form = this._el.querySelector('.form');
+        let elements = form.elements;
+        let fields = {};
 
-    // getFormData() {
-    //     let form = this._el.querySelector('form');
-    //     let elements = form.elements;
-    //     let fields = {};
-    //
-    //     Object.keys(elements).forEach(element => {
-    //         let name = elements[element].name;
-    //         let value = elements[element].value;
-    //
-    //         if (!name) {
-    //             return;
-    //         }
-    //         fields[name] = value;
-    //     });
-    //     return fields;
-    // }
-    //
+        Object.keys(elements).forEach(element => {
+            let name = elements[element].name;
+            let value = elements[element].value;
+
+            if (!name) {
+                return;
+            }
+            fields[name] = value;
+        });
+        return fields;
+    }
+
 }

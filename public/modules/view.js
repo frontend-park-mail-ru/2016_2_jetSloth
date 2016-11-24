@@ -6,10 +6,8 @@ export default class View {
      * @param {Object} [options={}] - Объект с параметрами
      */
     constructor(options = {}) {
-        // if (options.createElement) {
-            this.tagName = options.tagName || 'div';
-            this._el = document.createElement(this.tagName);
-        // }
+        this.tagName = options.tagName || 'div';
+        this._el = document.createElement(this.tagName);
     }
 
     /**

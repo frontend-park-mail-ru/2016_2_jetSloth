@@ -2,6 +2,7 @@
 
 import View from '../modules/view'
 import template from '../templates/app.pug'
+import Block from '../components/block/block'
 
 
 export default class AppView extends View {
@@ -9,10 +10,15 @@ export default class AppView extends View {
         super();
     }
     init() {
-      this._el.classList.add('content', 'js-app');
-      this._el.innerHTML = template();
+        this.setClasses(['content', 'js-app']);
+        this.block = new Block('div');
+        this.block.setClasses(['pam-pam']);
 
-      document.querySelector('.app').appendChild(this._el);
+        this._el.innerHTML = template();
+
+        this._el.querySelector('.block').appendChild(this.block._get());
+
+        document.querySelector('.app').appendChild(this._el);
     }
 
 }

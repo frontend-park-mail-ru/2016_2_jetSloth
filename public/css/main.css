@@ -27,6 +27,7 @@ body {
 
 .main-backround {
     display: block;
+    user-select: none;
 }
 
 .content {
@@ -44,6 +45,15 @@ body {
     align-items: center;
 }
 
+.sign-up {
+    width: 100%;
+    padding: 15px;
+    font-size: 30px;
+    color: #3a336c;
+    text-align: center;
+    border-top: 3px #3a336c solid;
+}
+
 .main-menu {
     display: flex;
     justify-content: center;
@@ -56,4 +66,65 @@ body {
     color: #11355e;
     top: 30px;
     right: 30px;
+}
+
+
+.loader {
+	width: 100%;
+	height: 6px;
+	position: relative;
+	/*overflow: hidden;*/
+}
+.big {
+	height: 16px;
+	margin: 8px 0 0 0;
+}
+.loader > div {
+	position: absolute;
+	height: 100%;
+	left: 50%;
+}
+.green {
+	background: #27ae60;
+}
+.red {
+	background: #c0392b;
+}
+.blue {
+	background: #2980b9;
+}
+.yellow {
+	background: #f1c40f;
+}
+.sd0 {
+	animation: stretch 2.8s ease 0s ;
+}
+.sd05 {
+	animation: stretch 2.8s ease .4s ;
+}
+.sd1 {
+	animation: stretch 2.8s ease .8s ;
+}
+.sd15 {
+	animation: stretch 2.8s ease 1.2s ;
+}
+@-webkit-keyframes "stretch" {
+ 0% {
+   padding: 0 0 0 0;
+   left: 50%;
+   z-index: 4;
+ }
+ 25% {
+   z-index: 3;
+ }
+ 50% {
+   padding: 0 50% 0 50%;
+   left: 0;
+   z-index: 2;
+ }
+ 100% {
+   padding: 0 50% 0 50%;
+   left: 0;
+   z-index: 1;
+ }
 }

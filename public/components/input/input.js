@@ -1,7 +1,7 @@
 'use strict';
 
 import Block from '../block/block'
-import template from '../../templates/input.pug'
+import template from '../../templates/components/input.pug'
 
 export default class Input extends Block {
     constructor(options = {}) {
@@ -15,7 +15,7 @@ export default class Input extends Block {
     render() {
         this._updateHtml();
         this._drawLine();
-        this.listenToAnimate();
+        this.animate();
     }
 
     _updateHtml() {
@@ -29,41 +29,26 @@ export default class Input extends Block {
     }
 
     runAnimate() {
-        // var textDown = function() {
-        //     this.textPath.animate({
-        //         d: "M0 0 Q" + this.qCurve + " 40 " + 400 + " 0"
-        //     }, 150, mina.easeout);
-        // };
-        // var textUp = function() {
-        //     this.textPath.animate({
-        //         d: "M0 0 Q" + this.qCurve + " -30 " + 400 + " 0"
-        //     }, 150, mina.easeout);
-        // };
-        // var textSame = function() {
-        //     this.textPath.animate({
-        //         d: "M0 0 " + 400 + " 0"
-        //     }, 200, mina.easein);
-        // };
-        // // var textRun = function() {
         setTimeout(() => {
             this.textPath.animate({
                 d: "M0 0 Q" + this.qCurve + " 40 " + 400 + " 0"
             }, 150, mina.easeout);
         }, 200);
+
         setTimeout(() => {
             this.textPath.animate({
                 d: "M0 0 Q" + this.qCurve + " -30 " + 400 + " 0"
             }, 150, mina.easeout);
         }, 400);
+
         setTimeout(() => {
             this.textPath.animate({
                 d: "M0 0 " + 400 + " 0"
             }, 200, mina.easein);
         }, 600);
-        // };
-        // textRun();
     }
-    listenToAnimate() {
+
+    animate() {
         let input = this._el.querySelector('input');
 
         input.addEventListener('focus', event => {

@@ -3,6 +3,7 @@
 import Form from '../components/form/form'
 import LinkedButton from '../components/linkedButton/linkedButton'
 import View from '../modules/view'
+import template from '../templates/signin.pug'
 
 export default class SignInView extends View {
     constructor() {
@@ -10,8 +11,7 @@ export default class SignInView extends View {
     }
 
     init() {
-        this._el.classList.add('content', 'js-signin');
-
+        this.setClasses(['content', 'js-signin']);
         this.form = new Form({
 			formType: 'signIn',
             data: {
@@ -46,8 +46,10 @@ export default class SignInView extends View {
             classes: ['button', 'btn', 'btn-signup']
         });
 
-        this._el.appendChild(this.form._get());
-        this._el.appendChild(this.signUpBtn._get());
+        this._el.innerHTML = template();
+
+        this._el.querySelector('.form').appendChild(this.form._get());
+        this._el.querySelector('.sign-up-control').appendChild(this.signUpBtn._get());
         document.querySelector('.app').appendChild(this._el);
 
     }

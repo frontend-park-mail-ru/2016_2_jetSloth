@@ -9,7 +9,8 @@ export default class SignUpView extends View {
     }
 
     init() {
-        this._el.classList.add('content', 'js-signup');
+        this.setClasses(['content', 'js-signup']);
+
         this.form = new Form({
 			formType: 'signUp',
             data: {
