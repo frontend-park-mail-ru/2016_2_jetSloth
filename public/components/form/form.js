@@ -1,6 +1,4 @@
 'use strict';
-//наследующий класс должен релизовать метод Model createModel();
-//наследующий класс дложен 
 import Block from '../block/block'
 import Button from '../button/button'
 import Input from '../input/input'
