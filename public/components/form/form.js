@@ -1,17 +1,18 @@
 'use strict';
-
-import Router from '../../modules/router'
 import Block from '../block/block'
 import Button from '../button/button'
 import Input from '../input/input'
+import Router from '../../modules/router'
 import template from '../../templates/components/form.pug'
+import User from '../../models/user'
 
 
 export default class Form extends Block {
     constructor(options = {
-        data: {}
+        formType, data: {}
     }) {
         super('form');
+		this.formType = options.formType;
         this.data = options.data;
         this.render();
     }
@@ -101,8 +102,22 @@ export default class Form extends Block {
             event.preventDefault();
             this.isValidForm();
             if (this.isValidForm()) {
-                (new Router).go('/app');
-            }
+				let data = {
+					username: this._el.elements.username.value,
+					password: this._el.elements.password.value,
+					formType: this.formType
+				}
+				let user = new User(data);
+				user.sendUser()
+				.then(
+                	res=>{
+						res = JSON.parse(res);
+						(new Router).go('/app');
+					},
+					err=>{
+						alert("Произошла какая-то ошибка o_O");
+					});
+            	}
         });
 
         this.on('reset', event => {

@@ -9,7 +9,7 @@ export default class Model {
     get baseUrl() {
         //return 'https://monopolygames.herokuapp.com';
         //временно
-        return 'http://myhuapplication.herokuapp.com';
+        return 'http://127.0.0.1:3000';//'http://myhuapplication.herokuapp.com';
     }
 
     get defaults() {
@@ -41,15 +41,6 @@ export default class Model {
             });
     }
 
-    sendPost() {
-        return this.send('POST', this.attributes)
-            .then(json => JSON.parse(data))
-            .then(data => {
-                this.attributes = json;
-                return this.attributes;
-            });
-    }
-
     save() {
         const method = this.attributes.id ? 'PUT' : 'POST';
         return this.send(method, this.attributes)
@@ -67,12 +58,10 @@ export default class Model {
             });
     }
 
-    send(method, data) {
-        const url = this.url(data.id);
-
+    send(method, data, url) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
-            xhr.open(method, url, true);
+            xhr.open(method, this.baseUrl + url, true);
             xhr.setRequestHeader('Content-type', 'application/json');
 
             xhr.onreadystatechange = function () {
@@ -84,7 +73,6 @@ export default class Model {
                     }
                 }
             }
-
             xhr.send(JSON.stringify(data));
         });
     }
