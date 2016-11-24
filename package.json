@@ -1,14 +1,14 @@
 {
-  "name": "monopoly",
+  "name": "jetSloth",
   "version": "1.0.0",
-  "description": "retro game",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "karma start --single-run",
     "lint": "./node_modules/.bin/eslint public/**/*.js",
     "fest": "./node_modules/.bin/fest-build --dir=public/components/",
     "build": "babel server.js -o compiled.js",
-    "karma:start": "karma start",
+    "karma:start": "karma start --verbose",
     "karma:run": "karma run",
     "start": "node server.js",
     "dev": "nodemon server.js"
