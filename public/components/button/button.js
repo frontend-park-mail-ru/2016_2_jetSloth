@@ -6,6 +6,7 @@ export default class Button extends Block {
     constructor(options) {
         super('button', options);
         this._el.innerText = options.text || 'press me';
+        
         this.on('click', event => {
             this.animate();
         });

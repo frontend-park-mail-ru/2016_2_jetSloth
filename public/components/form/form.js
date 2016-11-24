@@ -50,7 +50,7 @@ export default class Form extends Block {
                 type: data.type,
                 label: data.label
             });
-            this._el.querySelector('.form__content').appendChild(field._get());
+            this._el.querySelector('.form__fields').append(field._get());
         });
     }
 
@@ -65,10 +65,9 @@ export default class Form extends Block {
                 classes: data.classes,
                 attrs: data.attrs
             });
-            this._el.querySelector('.js-controls').appendChild(control._get());
+            this._el.querySelector('.form__controls').appendChild(control._get());
         });
     }
-
 
     _setListeners() {
         let inputs = this._el.querySelectorAll('input');
@@ -162,21 +161,21 @@ export default class Form extends Block {
     }
 
 
-    // getFormData() {
-    //     let form = this._el.querySelector('form');
-    //     let elements = form.elements;
-    //     let fields = {};
-    //
-    //     Object.keys(elements).forEach(element => {
-    //         let name = elements[element].name;
-    //         let value = elements[element].value;
-    //
-    //         if (!name) {
-    //             return;
-    //         }
-    //         fields[name] = value;
-    //     });
-    //     return fields;
-    // }
-    //
+    getFormData() {
+        let form = this._el.querySelector('.form');
+        let elements = form.elements;
+        let fields = {};
+
+        Object.keys(elements).forEach(element => {
+            let name = elements[element].name;
+            let value = elements[element].value;
+
+            if (!name) {
+                return;
+            }
+            fields[name] = value;
+        });
+        return fields;
+    }
+
 }

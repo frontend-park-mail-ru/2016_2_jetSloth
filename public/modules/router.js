@@ -59,7 +59,7 @@ export default class Router {
      * @param {Object} [state={}] - Объект state, который передаётся в вызов метода navigate
      */
     onroute(pathname, state = {}) {
-        console.log(this.pathsHistory);
+        // console.log(this.pathsHistory);
         const route = this.routes.find(route => route.match(pathname));
         if (!route) {
             return;
@@ -111,4 +111,3 @@ export default class Router {
         this.history.forward();
     }
 }
-

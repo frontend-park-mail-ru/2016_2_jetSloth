@@ -7,8 +7,6 @@ export default class LinkedButton extends Button {
     constructor(options) {
         super(options);
         this.setLink(options.url);
-
-
     }
 
     setLink(url) {
@@ -16,8 +14,7 @@ export default class LinkedButton extends Button {
             this.animate();
             setTimeout(function() {
                 (new Router).go(url);
-            }, 1000);
-            // this.animate();
+            }, 1500);
         });
     }
 }

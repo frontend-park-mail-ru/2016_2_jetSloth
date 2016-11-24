@@ -10,15 +10,14 @@ export default class MainView extends View {
     }
 
     init() {
-        this._el.classList.add('content', 'js-main');
-
-        let background = new Block('img', {
+        this.setClasses(['content', 'js-main']);
+        this.background = new Block('img', {
             classes: ['main-background'],
             attrs: {
                 src: 'img/back.png'
             }
         });
-        let content = new Menu({
+        this.content = new Menu({
             el: this._el,
             items: [{
                 text: 'play',
@@ -27,7 +26,7 @@ export default class MainView extends View {
             }]
         });
 
-        this._el.appendChild(background._get());
+        this._el.appendChild(this.background._get());
 
         document.querySelector('.app').appendChild(this._el);
     }

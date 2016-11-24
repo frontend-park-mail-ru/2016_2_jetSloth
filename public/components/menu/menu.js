@@ -6,7 +6,7 @@ import Button from '../button/button'
 import LinkedButton from '../linkedButton/linkedButton'
 
 export default class Menu extends Block {
-    constructor(options = { items: [] }) {
+    constructor(options = {}) {
         super('div');
         this._el = options.el;
         this._items = options.items;

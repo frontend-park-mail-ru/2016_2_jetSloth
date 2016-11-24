@@ -3,13 +3,12 @@
 export default class Block {
     constructor(name, options = {}) {
         this._el = document.createElement(name);
+        this._options = options;
         this.setAttrs(options.attrs);
         this.setClasses(options.classes);
-        this._options = options;
     }
 
     setAttrs(attrs = {}) {
-        
         Object.keys(attrs).forEach(name => {
             this._el.setAttribute(name, attrs[name]);
         });
@@ -33,20 +32,10 @@ export default class Block {
         }
     }
 
-    /**
-     * Подписка на событие
-     * @param {string} type - имя события
-     * @param {function} callback - коллбек
-     */
     on(type, callback) {
         this._el.addEventListener(type, callback);
     }
 
-    /**
-     * Отписка от события
-     * @param {string} type - имя события
-     * @param {function} callback - коллбек
-     */
     stop(type, callback) {
         this._el.removeEventListener(type, callback);
     }
