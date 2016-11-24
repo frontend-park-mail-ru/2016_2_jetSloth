@@ -3,6 +3,7 @@
     height: 50px;
     width: 400px;
     margin: 50px auto;
+    font-family: 'Roboto Mono', monospace;
 }
 
 input {

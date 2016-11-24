@@ -5,16 +5,10 @@ const webpack = require('webpack');
 
 module.exports = {
     context: __dirname + '/public',
-    entry: {
-        'main': ['./main.js'],
-        'signin': ['./views/signin.js'],
-        'signup': ['./views/signup'],
-        'welcome': ['./views/main.js'],
-        'app': ['./views/app.js'],
-    },
+    entry: ['./main.js'],
     output: {
         path: __dirname + '/public/build',
-        filename: '[name].js'
+        filename: 'app.js'
     },
     watch: true,
     devtool: 'source-map',
