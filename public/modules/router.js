@@ -111,3 +111,4 @@ export default class Router {
         this.history.forward();
     }
 }
+window.Router = Router;

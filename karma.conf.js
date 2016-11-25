@@ -8,6 +8,7 @@ module.exports = function (config) {
 
 		files: [
 			'./public/build/*.js',
+			'./test/**/*.spec.js'
 		],
 
 		reporters: ['progress', 'coverage'],

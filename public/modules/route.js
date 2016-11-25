@@ -64,4 +64,5 @@ export default class Route {
         this.__router = router;
     }
 }
+window.Route = Route;
 
