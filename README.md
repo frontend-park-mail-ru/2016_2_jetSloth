@@ -13,11 +13,9 @@ npm i
 npm start
 
 # Developers
-
-AndrySar
-Kirnic
+AndrySar\n
+Kirnic/n
 DVPitakov
 
 # Mentor
-
 SchadkoAO
