@@ -52,6 +52,7 @@ export default class View {
      */
     hide(options = {}) {
         this._el.style.display = 'none';
+		this._el.hidden = true;
     }
 
     /**
@@ -119,3 +120,4 @@ export default class View {
         this.router = router;
     }
 }
+window.View = View;
