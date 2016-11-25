@@ -5135,7 +5135,7 @@
 			_this8.blocks.push(_this8.ub);
 			_this8.gs = new GameSquare(ctx, ui);
 			_this8.blocks.push(_this8.gs);
-			_this8.fg = new Figures(ctx, _this8.gs.blocks, ws);
+			_this8.fg = new Figures(ctx, _this8.gs.blocks, ws, time);
 			_this8.blocks.push(_this8.fg);
 			_this8.blocks.push(new AuctionMenue(ctx, ui, ws));
 			_this8.blocks.push(new TradeMenue(ctx, ui, ws));
@@ -5158,11 +5158,12 @@
 	var Figures = function (_Block8) {
 		(0, _inherits3.default)(Figures, _Block8);
 	
-		function Figures(ctx, blocks, ws) {
+		function Figures(ctx, blocks, ws, time) {
 			(0, _classCallCheck3.default)(this, Figures);
 	
 			var _this9 = (0, _possibleConstructorReturn3.default)(this, (Figures.__proto__ || (0, _getPrototypeOf2.default)(Figures)).call(this, ctx, 0, 0, 0, 0));
 	
+			_this9.time = time;
 			_this9.cur = 0;
 			_this9.wsFilter = 'players';
 			_this9.blocks = [];
@@ -5185,7 +5186,7 @@
 	
 				var i = 0;
 				this.blocks = players.map(function (player) {
-					return new Figure(ctx, _this10.bs, { num: i++, pos: 0 });
+					return new Figure(_this10.ctx, _this10.bs, _this10.time, { num: i++, pos: 0 });
 				});
 			}
 		}]);
@@ -5195,19 +5196,21 @@
 	var Figure = function (_Block9) {
 		(0, _inherits3.default)(Figure, _Block9);
 	
-		function Figure(ctx, blocks) {
-			var player = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : { num: 0, pos: 0 };
+		function Figure(ctx, blocks, time) {
+			var player = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : { num: 0, pos: 0 };
 			(0, _classCallCheck3.default)(this, Figure);
 	
 			var _this11 = (0, _possibleConstructorReturn3.default)(this, (Figure.__proto__ || (0, _getPrototypeOf2.default)(Figure)).call(this, ctx, blocks[player.pos].x, blocks[player.pos].y + player.num * 25, 20, 20));
 	
 			_this11.show();
+			_this11.time = time;
 			_this11.player = player;
 			_this11.steps = 0;
 			_this11.pos = _this11.player.pos;
 			_this11.num = _this11.player.num;
 			_this11.bs = blocks;
-			time.addBlock(_this11);
+			alert(_this11.time);
+			_this11.time.addBlock(_this11);
 			return _this11;
 		}
 	

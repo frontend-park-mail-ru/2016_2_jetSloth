@@ -217,7 +217,7 @@ export default class Root extends Block{
 		this.blocks.push(this.ub);
 		this.gs = new GameSquare(ctx, ui);
 		this.blocks.push(this.gs);
-		this.fg = new Figures(ctx, this.gs.blocks, ws);
+		this.fg = new Figures(ctx, this.gs.blocks, ws, time);
 		this.blocks.push(this.fg);	
 		this.blocks.push(new AuctionMenue(ctx, ui, ws));
 		this.blocks.push(new TradeMenue(ctx, ui, ws));
@@ -230,8 +230,9 @@ export default class Root extends Block{
 }
 
 class Figures extends Block{
-	constructor(ctx, blocks, ws) {
+	constructor(ctx, blocks, ws, time) {
 		super(ctx, 0,0,0,0);
+		this.time = time;
 		this.cur = 0;
 		this.wsFilter = 'players'
 		this.blocks = [];
@@ -246,20 +247,22 @@ class Figures extends Block{
 	onMessage(players) {
 		let i = 0;
 		this.blocks = players.map(player=>{
-			return new Figure(ctx, this.bs, {num: i++, pos: 0})
+			return new Figure(this.ctx, this.bs, this.time, {num: i++, pos: 0})
 		})
 	}
 }
 class Figure extends Block {
-	constructor(ctx, blocks, player = {num: 0, pos: 0}) {
+	constructor(ctx, blocks, time, player = {num: 0, pos: 0}) {
 		super(ctx, blocks[player.pos].x, blocks[player.pos].y + player.num * 25, 20, 20);
 		this.show();
+		this.time = time;
 		this.player = player;
 		this.steps = 0;
 		this.pos = this.player.pos;
 		this.num = this.player.num;
 		this.bs = blocks;
-		time.addBlock(this);
+		alert(this.time);
+		this.time.addBlock(this);
 	}
 	move(dt) {
 		if(this.steps > 0) {
