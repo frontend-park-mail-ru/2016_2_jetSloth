@@ -13,9 +13,11 @@ npm i
 npm start
 
 # Developers
+
 AndrySar
 Kirnic
 DVPitakov
 
-# Menthor
+# Mentor
+
 SchadkoAO
