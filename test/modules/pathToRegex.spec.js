@@ -1,4 +1,3 @@
-import pathToRegex from '../../public/modules/pathToRegex'
 'use strict';
 //let pathToRegex = function () {};
 
