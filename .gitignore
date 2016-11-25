@@ -5,6 +5,5 @@ public/api
 .travis.yml
 *.bak
 .tern-project
-public/build
 *.tmpl.js
 public/coverage
