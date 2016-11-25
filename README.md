@@ -13,8 +13,8 @@ npm i
 npm start
 
 # Developers
-AndrySar\n
-Kirnic/n
+AndrySar
+Kirnic
 DVPitakov
 
 # Mentor
