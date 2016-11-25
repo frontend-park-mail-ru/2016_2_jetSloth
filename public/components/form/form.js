@@ -9,10 +9,11 @@ import User from '../../models/user'
 
 export default class Form extends Block {
     constructor(options = {
-        formType, data: {}
+        formType,
+        data: {}
     }) {
         super('form');
-		this.formType = options.formType;
+        this.formType = options.formType;
         this.data = options.data;
         this.render();
     }
@@ -102,22 +103,19 @@ export default class Form extends Block {
             event.preventDefault();
             this.isValidForm();
             if (this.isValidForm()) {
-				let data = {
-					username: this._el.elements.username.value,
-					password: this._el.elements.password.value,
-					formType: this.formType
-				}
-				let user = new User(data);
-				user.sendUser()
-				.then(
-                	res=>{
-						res = JSON.parse(res);
-						(new Router).go('/app');
-					},
-					err=>{
-						alert("Произошла какая-то ошибка o_O");
-					});
-            	}
+                let data = this.getFormData();
+
+                let user = new User(data);
+                user.sendUser()
+                    .then(
+                        res => {
+                            res = JSON.parse(res);
+                            (new Router).go('/app');
+                        },
+                        err => {
+                            console.log('Произошла какая-то ошибка o_O');
+                        });
+            }
         });
 
         this.on('reset', event => {
@@ -177,19 +175,14 @@ export default class Form extends Block {
     }
 
     getFormData() {
-        let form = this._el.querySelector('.form');
+        let form = this._el;
         let elements = form.elements;
         let fields = {};
 
-        Object.keys(elements).forEach(element => {
-            let name = elements[element].name;
-            let value = elements[element].value;
+        fields.username = elements.username.value;
+        fields.password = elements.password.value;
+        fields.formType = this.formType;
 
-            if (!name) {
-                return;
-            }
-            fields[name] = value;
-        });
         return fields;
     }
 

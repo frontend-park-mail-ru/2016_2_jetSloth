@@ -1,5 +1,4 @@
 'use strict';
-
 const pathToRegex = function (pathname) {
 		let keyNames = [];
 		let parts = pathname
@@ -42,6 +41,4 @@ const pathToRegex = function (pathname) {
 		};
 	};
 window.pathToRegex = pathToRegex;
-export  {pathToRegex};
-
 
