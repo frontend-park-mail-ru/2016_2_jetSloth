@@ -31,7 +31,6 @@ export default class Menu extends Block {
                 attrs: item.attrs
             });
             this._el.querySelector('.menu').appendChild(control._get());
-
         });
     }
 }

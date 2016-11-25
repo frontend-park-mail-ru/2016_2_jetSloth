@@ -11,23 +11,24 @@ export default class MainView extends View {
 
     init() {
         this.setClasses(['content', 'js-main']);
-        this.background = new Block('img', {
-            classes: ['main-background'],
+
+        this.backgroundImg = new Block('img', {
+            classes: ['content__background-img', 'main-background-img'],
             attrs: {
                 src: 'img/back.png'
             }
         });
-        this.content = new Menu({
+
+        this.menu = new Menu({
             el: this._el,
             items: [{
                 text: 'play',
                 url: '/signin',
-                classes: ['button', 'btn', 'btn-play', 'btn-with-shadow']
+                classes: ['btn', 'btn-play', 'btn-with-shadow']
             }]
         });
-
-        this._el.appendChild(this.background._get());
-
+        
+        this._el.appendChild(this.backgroundImg._get());
         document.querySelector('.app').appendChild(this._el);
     }
 }

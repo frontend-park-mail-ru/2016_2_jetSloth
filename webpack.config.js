@@ -7,7 +7,7 @@ module.exports = {
     context: __dirname + '/public',
     entry: ['./main.js'],
     output: {
-        path: __dirname + '/public/build',
+        path: __dirname + '/public/build/js',
         filename: 'app.js'
     },
     watch: true,
@@ -17,14 +17,15 @@ module.exports = {
             test: /\.js$/,
             exclude: /node_modules/,
             loader: 'babel-loader'
-        },
-        {
+        }, {
             test: /\.pug$/,
             loader: 'pug-loader'
-        },
-        {
+        }, {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract("style", "css")
+        }, {
+            test: /\.styl$/,
+            loader: 'style-loader!css-loader!stylus-loader'
         }]
     },
     plugins: [

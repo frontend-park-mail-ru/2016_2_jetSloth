@@ -12,8 +12,9 @@ export default class SignInView extends View {
 
     init() {
         this.setClasses(['content', 'js-signin']);
-        this.form = new Form({
-			formType: 'signIn',
+        this.signInForm = new Form({
+            title: 'sign in',
+			action: 'signIn',
             data: {
                 fields: [{
                     name: 'username',
@@ -26,13 +27,13 @@ export default class SignInView extends View {
                 }],
                 controls: [{
                     text: 'enter',
-                    classes: ['button', 'btn', 'btn-submit'],
+                    classes: ['btn', 'btn-submit'],
                     attrs: {
                         type: 'submit'
                     }
                 }, {
                     text: 'reset',
-                    classes: ['button', 'btn', 'btn-reset'],
+                    classes: ['btn', 'btn-reset'],
                     attrs: {
                         type: 'reset'
                     }
@@ -43,12 +44,12 @@ export default class SignInView extends View {
         this.signUpBtn = new LinkedButton({
             text: 'sign up',
             url: '/signup',
-            classes: ['button', 'btn', 'btn-signup']
+            classes: ['btn', 'btn-signup']
         });
 
         this._el.innerHTML = template();
 
-        this._el.querySelector('.form').appendChild(this.form._get());
+        this._el.querySelector('.form').appendChild(this.signInForm._get());
         this._el.querySelector('.sign-up-control').appendChild(this.signUpBtn._get());
         document.querySelector('.app').appendChild(this._el);
 
@@ -56,6 +57,6 @@ export default class SignInView extends View {
 
     pause() {
         this.hide();
-        this.form.reset();
+        this.signInForm.reset();
     }
 }

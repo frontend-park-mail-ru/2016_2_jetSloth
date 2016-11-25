@@ -8,13 +8,11 @@ import User from '../../models/user'
 
 
 export default class Form extends Block {
-    constructor(options = {
-        formType,
-        data: {}
-    }) {
+    constructor(options = { action, data: {} }) {
         super('form');
-        this.formType = options.formType;
-        this.data = options.data;
+        this._action = options.action;
+        this._data = options.data;
+
         this.render();
     }
 
@@ -26,40 +24,40 @@ export default class Form extends Block {
     }
 
     reset() {
-        let inputs = this._el.querySelectorAll('input');
+        let fields = this._el.querySelectorAll('input');
 
-        inputs.forEach(input => {
-            let parent = input.parentElement;
+        fields.forEach(field => {
+            let parent = field.parentElement;
             let err = parent.parentElement.querySelector('.error');
             parent.classList.remove('active', 'valid', 'invalid');
-            input.value = '';
+            field.value = '';
             err.innerHTML = '';
         });
     }
 
     _updateHtml() {
-        this._el.innerHTML = template(this.data);
+        this._el.innerHTML = template(this._data);
     }
 
     _installFields() {
         let {
             fields = []
-        } = this.data;
+        } = this._data;
 
-        fields.forEach(data => {
-            let field = new Input({
-                name: data.name,
-                type: data.type,
-                label: data.label
+        fields.forEach(field => {
+            let input = new Input({
+                name: field.name,
+                type: field.type,
+                label: field.label
             });
-            this._el.querySelector('.form__fields').append(field._get());
+            this._el.querySelector('.form__fields').append(input._get());
         });
     }
 
     _installControls() {
         let {
             controls = []
-        } = this.data;
+        } = this._data;
 
         controls.forEach(data => {
             let control = new Button({
@@ -181,7 +179,7 @@ export default class Form extends Block {
 
         fields.username = elements.username.value;
         fields.password = elements.password.value;
-        fields.formType = this.formType;
+        fields.action = this._action;
 
         return fields;
     }

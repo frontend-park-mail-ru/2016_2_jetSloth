@@ -7,7 +7,7 @@ export default class Button extends Block {
         super('button', options);
         this._el.innerText = options.text || 'press me';
 
-        this.on('click', event => {
+        this.on('click', () => {
             this.animate();
         });
     }
@@ -34,7 +34,7 @@ export default class Button extends Block {
                 easeParams: [6],
                 delay: delay * 3
             });
-            
+
             setTimeout(resolve, 1200);
         });
     }

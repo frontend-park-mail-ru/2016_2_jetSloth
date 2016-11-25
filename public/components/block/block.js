@@ -3,7 +3,7 @@
 export default class Block {
     constructor(name, options = {}) {
         this._el = document.createElement(name);
-        this._options = options;
+
         this.setAttrs(options.attrs);
         this.setClasses(options.classes);
     }

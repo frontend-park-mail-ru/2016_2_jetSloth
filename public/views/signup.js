@@ -11,8 +11,9 @@ export default class SignUpView extends View {
     init() {
         this.setClasses(['content', 'js-signup']);
 
-        this.form = new Form({
-			formType: 'signUp',
+        this.signUpForm = new Form({
+            title: 'sign up',
+			action: 'signUp',
             data: {
                 fields: [{
                     name: 'username',
@@ -29,25 +30,25 @@ export default class SignUpView extends View {
                 }],
                 controls: [{
                     text: 'submit',
-                    classes: ['button', 'btn', 'btn-submit'],
+                    classes: ['btn', 'btn-submit'],
                     attrs: {
                         type: 'submit'
                     }
                 }, {
                     text: 'reset',
-                    classes: ['button', 'btn', 'btn-reset'],
+                    classes: ['btn', 'btn-reset'],
                     attrs: {
                         type: 'reset'
                     }
                 }]
             }
         });
-        this._el.appendChild(this.form._get());
+        this._el.appendChild(this.signUpForm._get());
         document.querySelector('.app').appendChild(this._el);
     }
 
     pause() {
         this.hide();
-        this.form.reset();
+        this.signUpForm.reset();
     }
 }

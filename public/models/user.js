@@ -2,10 +2,10 @@
 import Model from '../modules/model'
 
 export default class User extends Model {
-		
+
 	constructor(attributes) {
 		super(attributes);
-		this.tail = attributes.formType;
+		this.tail = attributes.action;
 	}
 	get defaults() {
 		return {
