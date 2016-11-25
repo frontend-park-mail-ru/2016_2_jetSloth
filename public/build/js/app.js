@@ -4863,7 +4863,7 @@
 		}, {
 			key: 'onMessage',
 			value: function onMessage(event) {
-				alert('here ' + event);
+				console.log('here ' + event);
 				this.show();
 			}
 		}, {
@@ -4966,7 +4966,7 @@
 	
 			var _this2 = (0, _possibleConstructorReturn3.default)(this, (AuctionMenue.__proto__ || (0, _getPrototypeOf2.default)(AuctionMenue)).call(this, ctx, 480, 200, 300, 100));
 	
-			alert(_this2.x + ' ' + _this2.y + ' ' + _this2.width + ' ' + _this2.height);
+			console.log(_this2.x + ' ' + _this2.y + ' ' + _this2.width + ' ' + _this2.height);
 			_this2.ws = ws;
 			_this2.wsFilter = 'auction';
 			_this2.blocks = [];
@@ -5146,7 +5146,7 @@
 		(0, _createClass3.default)(Root, [{
 			key: 'onMessage',
 			value: function onMessage(val) {
-				alert('here where');
+				console.log('here where');
 				this.fg.steps(val.firstDice + val.secondDice);
 			}
 		}]);

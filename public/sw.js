@@ -4,7 +4,7 @@ const CACHE_NAME = 'monopoly_serviceworker_v_1';
 const cacheUrls = [
 	'/',
 	'/build/css/main.css',
-	'/css/font-awesome.min.css',
+	'/build/css/font-awesome.min.css',
 	'/build/js/app.js'
 ];
 
