@@ -4536,7 +4536,7 @@
 	            this._el = document.createElement('canvas');
 	            this._el.setAttribute('width', 1200);
 	            this._el.setAttribute('height', 650);
-	            this.game = new _game2.default(this._el, 'ws://127.0.0.1:8081');
+	            this.game = new _game2.default(this._el, 'ws://pure-savannah-60680.herokuapp.com');
 	            document.querySelector('.app').appendChild(this._el);
 	        }
 	    }]);
@@ -4578,7 +4578,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Game = function Game(canvas) {
-		var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'ws://127.0.0.1';
+		var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'ws://pure-savannah-60680.herokuapp.com';
 		(0, _classCallCheck3.default)(this, Game);
 	
 		this._el = canvas;

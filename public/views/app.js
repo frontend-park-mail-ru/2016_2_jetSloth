@@ -15,7 +15,7 @@ export default class AppView extends View {
 		this._el = document.createElement('canvas');
 		this._el.setAttribute('width', 1200);
 		this._el.setAttribute('height', 650);
-        this.game = new Game(this._el, 'ws://127.0.0.1:8081');
+        this.game = new Game(this._el, 'ws://pure-savannah-60680.herokuapp.com');
         document.querySelector('.app').appendChild(this._el);
     }
 
