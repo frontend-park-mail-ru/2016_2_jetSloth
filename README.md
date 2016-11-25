@@ -17,5 +17,5 @@ AndrySar
 Kirnic
 DVPitakov
 
-# Menthor
+# Mentor
 SchadkoAO
