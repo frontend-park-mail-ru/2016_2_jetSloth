@@ -1055,9 +1055,8 @@
 	        key: 'init',
 	        value: function init() {
 	            this.setClasses(['content', 'js-signin']);
-	            this.signInForm = new _form2.default({
-	                title: 'sign in',
-	                action: 'signIn',
+	            this.form = new _form2.default({
+	                formType: 'signIn',
 	                data: {
 	                    fields: [{
 	                        name: 'username',
@@ -1070,13 +1069,13 @@
 	                    }],
 	                    controls: [{
 	                        text: 'enter',
-	                        classes: ['btn', 'btn-submit'],
+	                        classes: ['button', 'btn', 'btn-submit'],
 	                        attrs: {
 	                            type: 'submit'
 	                        }
 	                    }, {
 	                        text: 'reset',
-	                        classes: ['btn', 'btn-reset'],
+	                        classes: ['button', 'btn', 'btn-reset'],
 	                        attrs: {
 	                            type: 'reset'
 	                        }
@@ -1087,12 +1086,12 @@
 	            this.signUpBtn = new _linkedButton2.default({
 	                text: 'sign up',
 	                url: '/signup',
-	                classes: ['btn', 'btn-signup']
+	                classes: ['button', 'btn', 'btn-signup']
 	            });
 	
 	            this._el.innerHTML = (0, _signin2.default)();
 	
-	            this._el.querySelector('.form').appendChild(this.signInForm._get());
+	            this._el.querySelector('.form').appendChild(this.form._get());
 	            this._el.querySelector('.sign-up-control').appendChild(this.signUpBtn._get());
 	            document.querySelector('.app').appendChild(this._el);
 	        }
@@ -1100,7 +1099,7 @@
 	        key: 'pause',
 	        value: function pause() {
 	            this.hide();
-	            this.signInForm.reset();
+	            this.form.reset();
 	        }
 	    }]);
 	    return SignInView;
@@ -2183,14 +2182,16 @@
 	    (0, _inherits3.default)(Form, _Block);
 	
 	    function Form() {
-	        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { action: action, data: {} };
+	        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+	            formType: formType,
+	            data: {}
+	        };
 	        (0, _classCallCheck3.default)(this, Form);
 	
 	        var _this = (0, _possibleConstructorReturn3.default)(this, (Form.__proto__ || (0, _getPrototypeOf2.default)(Form)).call(this, 'form'));
 	
-	        _this._action = options.action;
-	        _this._data = options.data;
-	
+	        _this.formType = options.formType;
+	        _this.data = options.data;
 	        _this.render();
 	        return _this;
 	    }
@@ -2206,37 +2207,37 @@
 	    }, {
 	        key: 'reset',
 	        value: function reset() {
-	            var fields = this._el.querySelectorAll('input');
+	            var inputs = this._el.querySelectorAll('input');
 	
-	            fields.forEach(function (field) {
-	                var parent = field.parentElement;
+	            inputs.forEach(function (input) {
+	                var parent = input.parentElement;
 	                var err = parent.parentElement.querySelector('.error');
 	                parent.classList.remove('active', 'valid', 'invalid');
-	                field.value = '';
+	                input.value = '';
 	                err.innerHTML = '';
 	            });
 	        }
 	    }, {
 	        key: '_updateHtml',
 	        value: function _updateHtml() {
-	            this._el.innerHTML = (0, _form2.default)(this._data);
+	            this._el.innerHTML = (0, _form2.default)(this.data);
 	        }
 	    }, {
 	        key: '_installFields',
 	        value: function _installFields() {
 	            var _this2 = this;
 	
-	            var _data$fields = this._data.fields,
+	            var _data$fields = this.data.fields,
 	                fields = _data$fields === undefined ? [] : _data$fields;
 	
 	
-	            fields.forEach(function (field) {
-	                var input = new _input2.default({
-	                    name: field.name,
-	                    type: field.type,
-	                    label: field.label
+	            fields.forEach(function (data) {
+	                var field = new _input2.default({
+	                    name: data.name,
+	                    type: data.type,
+	                    label: data.label
 	                });
-	                _this2._el.querySelector('.form__fields').append(input._get());
+	                _this2._el.querySelector('.form__fields').append(field._get());
 	            });
 	        }
 	    }, {
@@ -2244,7 +2245,7 @@
 	        value: function _installControls() {
 	            var _this3 = this;
 	
-	            var _data$controls = this._data.controls,
+	            var _data$controls = this.data.controls,
 	                controls = _data$controls === undefined ? [] : _data$controls;
 	
 	
@@ -2371,7 +2372,7 @@
 	
 	            fields.username = elements.username.value;
 	            fields.password = elements.password.value;
-	            fields.action = this._action;
+	            fields.formType = this.formType;
 	
 	            return fields;
 	        }
@@ -2411,7 +2412,7 @@
 	        (0, _classCallCheck3.default)(this, Block);
 	
 	        this._el = document.createElement(name);
-	
+	        this._options = options;
 	        this.setAttrs(options.attrs);
 	        this.setClasses(options.classes);
 	    }
@@ -2555,7 +2556,7 @@
 	
 	        _this._el.innerText = options.text || 'press me';
 	
-	        _this.on('click', function () {
+	        _this.on('click', function (event) {
 	            _this.animate();
 	        });
 	        return _this;
@@ -3320,10 +3321,10 @@
 	        (0, _classCallCheck3.default)(this, Input);
 	
 	        var _this = (0, _possibleConstructorReturn3.default)(this, (Input.__proto__ || (0, _getPrototypeOf2.default)(Input)).call(this, 'div', {
-	            classes: ['input-wrap']
+	            classes: ['form-wrap']
 	        }));
 	
-	        _this._field = options;
+	        _this.fields = options;
 	        _this.render();
 	        return _this;
 	    }
@@ -3333,19 +3334,19 @@
 	        value: function render() {
 	            this._updateHtml();
 	            this._drawLine();
-	            this._setAnimation();
+	            this.animate();
 	        }
 	    }, {
 	        key: '_updateHtml',
 	        value: function _updateHtml() {
-	            this._el.innerHTML = (0, _input2.default)(this._field);
+	            this._el.innerHTML = (0, _input2.default)(this.fields);
 	        }
 	    }, {
 	        key: '_drawLine',
 	        value: function _drawLine() {
-	            this._line = Snap(this._el.querySelector('.line'));
-	            this._qCurve = 400 / 2;
-	            this._textPath = this._line.path("M0 0 " + 400 + " 0");
+	            this.svgText = Snap(this._el.querySelector('.line'));
+	            this.qCurve = 400 / 2;
+	            this.textPath = this.svgText.path("M0 0 " + 400 + " 0");
 	        }
 	    }, {
 	        key: 'runAnimate',
@@ -3353,31 +3354,31 @@
 	            var _this2 = this;
 	
 	            setTimeout(function () {
-	                _this2._textPath.animate({
-	                    d: "M0 0 Q" + _this2._qCurve + " 40 " + 400 + " 0"
+	                _this2.textPath.animate({
+	                    d: "M0 0 Q" + _this2.qCurve + " 40 " + 400 + " 0"
 	                }, 150, mina.easeout);
 	            }, 200);
 	
 	            setTimeout(function () {
-	                _this2._textPath.animate({
-	                    d: "M0 0 Q" + _this2._qCurve + " -30 " + 400 + " 0"
+	                _this2.textPath.animate({
+	                    d: "M0 0 Q" + _this2.qCurve + " -30 " + 400 + " 0"
 	                }, 150, mina.easeout);
 	            }, 400);
 	
 	            setTimeout(function () {
-	                _this2._textPath.animate({
+	                _this2.textPath.animate({
 	                    d: "M0 0 " + 400 + " 0"
 	                }, 200, mina.easein);
 	            }, 600);
 	        }
 	    }, {
-	        key: '_setAnimation',
-	        value: function _setAnimation() {
+	        key: 'animate',
+	        value: function animate() {
 	            var _this3 = this;
 	
 	            var input = this._el.querySelector('input');
 	
-	            input.addEventListener('focus', function () {
+	            input.addEventListener('focus', function (event) {
 	                _this3.runAnimate();
 	            });
 	        }
@@ -3393,7 +3394,7 @@
 
 	var pug = __webpack_require__(120);
 	
-	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;;var locals_for_with = (locals || {});(function (label, name, type) {pug_html = pug_html + "\u003Cdiv class=\"input-field\"\u003E\u003Clabel" + (pug.attr("for", `${name}`, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = label) ? "" : pug_interp)) + "\u003C\u002Flabel\u003E\u003Cinput" + (pug.attr("type", `${type}`, true, true)+pug.attr("name", `${name}`, true, true)+" autocomplete=\"off\"") + "\u003E\u003C\u002Fdiv\u003E\u003Cp class=\"error\"\u003E\u003C\u002Fp\u003E\u003Csvg class=\"line\"\u003E\u003C\u002Fsvg\u003E";}.call(this,"label" in locals_for_with?locals_for_with.label:typeof label!=="undefined"?label:undefined,"name" in locals_for_with?locals_for_with.name:typeof name!=="undefined"?name:undefined,"type" in locals_for_with?locals_for_with.type:typeof type!=="undefined"?type:undefined));;return pug_html;};
+	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;;var locals_for_with = (locals || {});(function (label, name, type) {pug_html = pug_html + "\u003Cdiv class=\"input\"\u003E\u003Clabel" + (pug.attr("for", `${name}`, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = label) ? "" : pug_interp)) + "\u003C\u002Flabel\u003E\u003Cinput" + (pug.attr("type", `${type}`, true, true)+pug.attr("name", `${name}`, true, true)+" autocomplete=\"off\"") + "\u003E\u003C\u002Fdiv\u003E\u003Cp class=\"error\"\u003E\u003C\u002Fp\u003E\u003Csvg class=\"line\"\u003E\u003C\u002Fsvg\u003E";}.call(this,"label" in locals_for_with?locals_for_with.label:typeof label!=="undefined"?label:undefined,"name" in locals_for_with?locals_for_with.name:typeof name!=="undefined"?name:undefined,"type" in locals_for_with?locals_for_with.type:typeof type!=="undefined"?type:undefined));;return pug_html;};
 	module.exports = template;
 
 /***/ },
@@ -3715,7 +3716,7 @@
 	
 			var _this = (0, _possibleConstructorReturn3.default)(this, (User.__proto__ || (0, _getPrototypeOf2.default)(User)).call(this, attributes));
 	
-			_this.tail = attributes.action;
+			_this.tail = attributes.formType;
 			return _this;
 		}
 	
@@ -4184,7 +4185,7 @@
 
 	var pug = __webpack_require__(120);
 	
-	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv class=\"form\"\u003E\u003C\u002Fdiv\u003E\u003Cp class=\"or-block\"\u003EOR\u003C\u002Fp\u003E\u003Cdiv class=\"sign-up-control\"\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
+	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv class=\"form\"\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"sign-up\"\u003E\u003Cp\u003EOR\u003C\u002Fp\u003E\u003Cdiv class=\"sign-up-control\"\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
 	module.exports = template;
 
 /***/ },
@@ -4240,9 +4241,8 @@
 	        value: function init() {
 	            this.setClasses(['content', 'js-signup']);
 	
-	            this.signUpForm = new _form2.default({
-	                title: 'sign up',
-	                action: 'signUp',
+	            this.form = new _form2.default({
+	                formType: 'signUp',
 	                data: {
 	                    fields: [{
 	                        name: 'username',
@@ -4259,27 +4259,27 @@
 	                    }],
 	                    controls: [{
 	                        text: 'submit',
-	                        classes: ['btn', 'btn-submit'],
+	                        classes: ['button', 'btn', 'btn-submit'],
 	                        attrs: {
 	                            type: 'submit'
 	                        }
 	                    }, {
 	                        text: 'reset',
-	                        classes: ['btn', 'btn-reset'],
+	                        classes: ['button', 'btn', 'btn-reset'],
 	                        attrs: {
 	                            type: 'reset'
 	                        }
 	                    }]
 	                }
 	            });
-	            this._el.appendChild(this.signUpForm._get());
+	            this._el.appendChild(this.form._get());
 	            document.querySelector('.app').appendChild(this._el);
 	        }
 	    }, {
 	        key: 'pause',
 	        value: function pause() {
 	            this.hide();
-	            this.signUpForm.reset();
+	            this.form.reset();
 	        }
 	    }]);
 	    return SignUpView;
@@ -4343,24 +4343,23 @@
 	        key: 'init',
 	        value: function init() {
 	            this.setClasses(['content', 'js-main']);
-	
-	            this.backgroundImg = new _block2.default('img', {
-	                classes: ['content__background-img', 'main-background-img'],
+	            this.background = new _block2.default('img', {
+	                classes: ['main-background'],
 	                attrs: {
 	                    src: 'img/back.png'
 	                }
 	            });
-	
-	            this.menu = new _menu2.default({
+	            this.content = new _menu2.default({
 	                el: this._el,
 	                items: [{
 	                    text: 'play',
 	                    url: '/signin',
-	                    classes: ['btn', 'btn-play', 'btn-with-shadow']
+	                    classes: ['button', 'btn', 'btn-play', 'btn-with-shadow']
 	                }]
 	            });
 	
-	            this._el.appendChild(this.backgroundImg._get());
+	            this._el.appendChild(this.background._get());
+	
 	            document.querySelector('.app').appendChild(this._el);
 	        }
 	    }]);
@@ -4470,7 +4469,7 @@
 
 	var pug = __webpack_require__(120);
 	
-	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv class=\"menu\"\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
+	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv class=\"menu main-menu\"\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
 	module.exports = template;
 
 /***/ },
@@ -4503,15 +4502,11 @@
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
-	var _game = __webpack_require__(135);
-	
-	var _game2 = _interopRequireDefault(_game);
-	
 	var _view = __webpack_require__(128);
 	
 	var _view2 = _interopRequireDefault(_view);
 	
-	var _app = __webpack_require__(140);
+	var _app = __webpack_require__(135);
 	
 	var _app2 = _interopRequireDefault(_app);
 	
@@ -4533,10 +4528,13 @@
 	        key: 'init',
 	        value: function init() {
 	            this.setClasses(['content', 'js-app']);
-	            this._el = document.createElement('canvas');
-	            this._el.setAttribute('width', 1200);
-	            this._el.setAttribute('height', 650);
-	            this.game = new _game2.default(this._el, 'ws://127.0.0.1:8081');
+	            this.block = new _block2.default('div');
+	            this.block.setClasses(['pam-pam']);
+	
+	            this._el.innerHTML = (0, _app2.default)();
+	
+	            this._el.querySelector('.block').appendChild(this.block._get());
+	
 	            document.querySelector('.app').appendChild(this._el);
 	        }
 	    }]);
@@ -4547,719 +4545,6 @@
 
 /***/ },
 /* 135 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _classCallCheck2 = __webpack_require__(3);
-	
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _timemanager = __webpack_require__(136);
-	
-	var _timemanager2 = _interopRequireDefault(_timemanager);
-	
-	var _uimanager = __webpack_require__(137);
-	
-	var _uimanager2 = _interopRequireDefault(_uimanager);
-	
-	var _wsmanager = __webpack_require__(138);
-	
-	var _wsmanager2 = _interopRequireDefault(_wsmanager);
-	
-	var _elements = __webpack_require__(139);
-	
-	var _elements2 = _interopRequireDefault(_elements);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Game = function Game(canvas) {
-		var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'ws://127.0.0.1';
-		(0, _classCallCheck3.default)(this, Game);
-	
-		this._el = canvas;
-		this.ctx = canvas.getContext('2d');
-		this.ctx.strokeRect(0, 0, this._el.width, this._el.height);
-		this.ws = new _wsmanager2.default(root);
-		this.ui = new _uimanager2.default(this.ctx, this._el);
-		this.time = new _timemanager2.default(this.ctx);
-		this.root = new _elements2.default(this._el, this.ctx, this.ui, this.ws, this.time);
-		this.ws.start();
-	};
-	
-	exports.default = Game;
-
-/***/ },
-/* 136 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _classCallCheck2 = __webpack_require__(3);
-	
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(4);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var TimeManager = function () {
-		function TimeManager(cfx) {
-			(0, _classCallCheck3.default)(this, TimeManager);
-	
-			this.listeners = [];
-			this.isStopped = true;
-		}
-	
-		(0, _createClass3.default)(TimeManager, [{
-			key: "start",
-			value: function start(root) {
-				this.root = root;
-				this.isStopped = false;
-				this.startLoop();
-			}
-		}, {
-			key: "startLoop",
-			value: function startLoop() {
-				var time = void 0;
-				var isStopped = this.isStopped;
-				var exec = this.exec.bind(this);
-				function step() {
-					var now = Date.now();
-					var dt = now - (time || now);
-					time = now;
-					if (!isStopped) {
-						requestAnimationFrame(step);
-					}
-					exec(dt);
-				}
-				step();
-			}
-		}, {
-			key: "exec",
-			value: function exec(dt) {
-				var keys = this.keys;
-				this.root.clear();
-				this.listeners.forEach(function (listener) {
-					listener.update(dt);
-				});
-				this.root.update(dt);
-				this.root.draw();
-			}
-		}, {
-			key: "addBlock",
-			value: function addBlock(block) {
-				this.listeners.push(block);
-			}
-		}]);
-		return TimeManager;
-	}();
-	
-	exports.default = TimeManager;
-
-/***/ },
-/* 137 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _classCallCheck2 = __webpack_require__(3);
-	
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(4);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var UIManager = function () {
-		function UIManager(ctx, example) {
-			var _this = this;
-	
-			(0, _classCallCheck3.default)(this, UIManager);
-	
-			this.clickable = [];
-			example.addEventListener('click', function (event) {
-				_this.clickable.forEach(function (el) {
-					el.unSelect();
-					if (el.x < event.clientX && el.y < event.clientY && el.x + el.width > event.clientX && el.y + el.height > event.clientY) {
-						el.onClick(event.clientX - el.x, event.clientY - el.y);
-					}
-				});
-			});
-		}
-	
-		(0, _createClass3.default)(UIManager, [{
-			key: 'addBlock',
-			value: function addBlock(block) {
-				this.clickable.push(block);
-			}
-		}]);
-		return UIManager;
-	}();
-	
-	exports.default = UIManager;
-	
-	window.UIManger = UIManager;
-
-/***/ },
-/* 138 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _classCallCheck2 = __webpack_require__(3);
-	
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(4);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var WSManager = function () {
-		function WSManager(url) {
-			var _this = this;
-	
-			(0, _classCallCheck3.default)(this, WSManager);
-	
-			this.listeners = [];
-			this.ready = false;
-			this.socket = new WebSocket(url);
-			this.socket.onerror = function (err) {};
-			this.socket.onopen = function () {
-				if (this.ready) this.send({ action: 'ready' });
-			};
-			this.socket.onclose = function () {};
-			this.socket.onmessage = function (msg) {
-				var obj = JSON.parse(msg.data);
-				_this.listeners.forEach(function (el) {
-					if (el.wsFilter != null && el.wsFilter == obj.action) {
-						el.onMessage(obj.data);
-					}
-				});
-			};
-		}
-	
-		(0, _createClass3.default)(WSManager, [{
-			key: 'addBlock',
-			value: function addBlock(block) {
-				this.listeners.push(block);
-			}
-		}, {
-			key: 'start',
-			value: function start() {
-				try {
-					this.send({ action: 'ready' });
-				} catch (err) {};
-				this.ready = true;
-			}
-		}, {
-			key: 'send',
-			value: function send(msg) {
-				this.socket.send(msg);
-			}
-		}]);
-		return WSManager;
-	}();
-	
-	exports.default = WSManager;
-
-/***/ },
-/* 139 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _getPrototypeOf = __webpack_require__(48);
-	
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-	
-	var _possibleConstructorReturn2 = __webpack_require__(53);
-	
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-	
-	var _inherits2 = __webpack_require__(88);
-	
-	var _inherits3 = _interopRequireDefault(_inherits2);
-	
-	var _classCallCheck2 = __webpack_require__(3);
-	
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(4);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Block = function () {
-		function Block(ctx, x, y, width, height, text) {
-			(0, _classCallCheck3.default)(this, Block);
-	
-			this.x = x;
-			this.y = y;
-			this.ctx = ctx;
-			this.text = text;
-			this.width = width;
-			this.height = height;
-			this.isVisiable = true;
-			this.isHidden = false;
-			this.isSelected = false;
-		}
-	
-		(0, _createClass3.default)(Block, [{
-			key: 'select',
-			value: function select() {
-				if (this.isVisiable) {
-					this.isSelected = true;
-					this.clear();
-				}
-			}
-		}, {
-			key: 'unSelect',
-			value: function unSelect() {
-				if (this.isVisiable) {
-					this.isSelected = false;
-					this.clear();
-				}
-			}
-		}, {
-			key: 'onReady',
-			value: function onReady() {}
-		}, {
-			key: 'onClick',
-			value: function onClick() {
-				if (this.isVisiable) {
-					this.select();
-					this.onReady();
-				}
-				return this.isVisiable;
-			}
-		}, {
-			key: 'onMessage',
-			value: function onMessage(event) {
-				alert('here ' + event);
-				this.show();
-			}
-		}, {
-			key: 'hide',
-			value: function hide() {
-				this.isHidden = true;
-				this._hide();
-			}
-		}, {
-			key: '_hide',
-			value: function _hide() {
-				this.isVisiable = false;
-				this.clear();
-				if (this.blocks != null) {
-					this.blocks.forEach(function (el) {
-						el._hide();
-					});
-				}
-			}
-		}, {
-			key: 'clear',
-			value: function clear() {
-				this.ctx.clearRect(this.x - 1, this.y - 1, this.width + 2, this.height + 2);
-			}
-		}, {
-			key: 'show',
-			value: function show() {
-				this.isHidden = false;
-				this._show();
-			}
-		}, {
-			key: '_show',
-			value: function _show() {
-				if (this.isHidden == false) {
-					this.isVisiable = true;
-					if (this.blocks != null) {
-						this.blocks.forEach(function (el) {
-							el._show();
-						});
-					}
-				}
-			}
-		}, {
-			key: 'draw',
-			value: function draw() {
-				if (this.isVisiable) {
-					if (this.isSelected) {
-						this.ctx.fillStyle = this.isSelected ? '#5500FF' : '#55FFFF';
-						this.ctx.fillRect(this.x, this.y, this.width, this.height);
-					} else {
-						this.ctx.fillStyle = this.isSelected ? '#5500FF' : '#55FFFF';
-						this.ctx.strokeRect(this.x, this.y, this.width, this.height);
-					}
-					if (this.text != null) {
-						this.ctx.fillStyle = "#00F";
-						this.ctx.font = "italic 15pt Arial";
-						this.ctx.fillText(this.text, this.x + 10, this.y + this.height - 10);
-					}
-					if (this.blocks != null) {
-						this.blocks.forEach(function (el) {
-							el.draw();
-						});
-					}
-				}
-			}
-		}, {
-			key: 'update',
-			value: function update(time) {
-				this.move && this.move();
-			}
-		}]);
-		return Block;
-	}();
-	
-	var User = function (_Block) {
-		(0, _inherits3.default)(User, _Block);
-	
-		function User(ctx, num, data, parent) {
-			(0, _classCallCheck3.default)(this, User);
-	
-			var _this = (0, _possibleConstructorReturn3.default)(this, (User.__proto__ || (0, _getPrototypeOf2.default)(User)).call(this, ctx, 10, 10 + 80 * num, 300, 60, data && data.name));
-	
-			_this.num = num;
-			_this.pos = 0;
-			return _this;
-		}
-	
-		(0, _createClass3.default)(User, [{
-			key: 'onReady',
-			value: function onReady() {}
-		}]);
-		return User;
-	}(Block);
-	
-	var AuctionMenue = function (_Block2) {
-		(0, _inherits3.default)(AuctionMenue, _Block2);
-	
-		function AuctionMenue(ctx, ui, ws) {
-			(0, _classCallCheck3.default)(this, AuctionMenue);
-	
-			var _this2 = (0, _possibleConstructorReturn3.default)(this, (AuctionMenue.__proto__ || (0, _getPrototypeOf2.default)(AuctionMenue)).call(this, ctx, 480, 200, 300, 100));
-	
-			alert(_this2.x + ' ' + _this2.y + ' ' + _this2.width + ' ' + _this2.height);
-			_this2.ws = ws;
-			_this2.wsFilter = 'auction';
-			_this2.blocks = [];
-			_this2.w = 120;
-			_this2.h = 30;
-			_this2.blocks.push(new Block(ctx, _this2.x + 10, _this2.y + _this2.height - _this2.h - 10, _this2.w, _this2.h, 'Yes'));
-			_this2.blocks.push(new Block(ctx, _this2.x + _this2.width - 10 - _this2.w, _this2.y + _this2.height - _this2.h - 10, _this2.w, _this2.h, 'Not'));
-			_this2.blocks.forEach(function (el) {
-				el.onReady = function () {
-					_this2.hide();
-				};
-				ui.addBlock(el);
-			});
-			_this2.hide();
-			ws.addBlock(_this2);
-			return _this2;
-		}
-	
-		return AuctionMenue;
-	}(Block);
-	
-	var TradeMenue = function (_Block3) {
-		(0, _inherits3.default)(TradeMenue, _Block3);
-	
-		function TradeMenue(ctx, ui, ws) {
-			(0, _classCallCheck3.default)(this, TradeMenue);
-	
-			var _this3 = (0, _possibleConstructorReturn3.default)(this, (TradeMenue.__proto__ || (0, _getPrototypeOf2.default)(TradeMenue)).call(this, ctx, 480, 200, 300, 300));
-	
-			_this3.blocks = [];
-			_this3.wsFilter = 'trade';
-			_this3.w = 120;
-			_this3.h = 30;
-			_this3.blocks.push(new Block(ctx, _this3.x + 10, _this3.y + _this3.height - _this3.h - 10, _this3.w, _this3.h));
-			_this3.blocks.push(new Block(ctx, _this3.x + _this3.width - 10 - _this3.w, _this3.y + _this3.height - _this3.h - 10, _this3.w, _this3.h));
-			_this3.blocks.forEach(function (el) {
-				ui.addBlock(el);
-			});
-			_this3.hide();
-			ws.addBlock(_this3);
-			return _this3;
-		}
-	
-		return TradeMenue;
-	}(Block);
-	
-	var OkMenue = function (_Block4) {
-		(0, _inherits3.default)(OkMenue, _Block4);
-	
-		function OkMenue(ctx, ui, ws) {
-			(0, _classCallCheck3.default)(this, OkMenue);
-	
-			var _this4 = (0, _possibleConstructorReturn3.default)(this, (OkMenue.__proto__ || (0, _getPrototypeOf2.default)(OkMenue)).call(this, ctx, 480, 200, 300, 300));
-	
-			_this4.blocks = [];
-			_this4.wsFilter = 'ok';
-			_this4.w = 120;
-			_this4.h = 30;
-			_this4.blocks.push(new Block(ctx, _this4.x + _this4.width / 2 - _this4.w / 2, _this4.y + _this4.height - _this4.h - 10, _this4.w, _this4.h));
-			_this4.blocks.forEach(function (el) {
-				ui.addBlock(el);
-			});
-			_this4.hide();
-			ws.addBlock(_this4);
-			return _this4;
-		}
-	
-		return OkMenue;
-	}(Block);
-	
-	var GameSquare = function (_Block5) {
-		(0, _inherits3.default)(GameSquare, _Block5);
-	
-		function GameSquare(ctx, ui) {
-			(0, _classCallCheck3.default)(this, GameSquare);
-	
-			var _this5 = (0, _possibleConstructorReturn3.default)(this, (GameSquare.__proto__ || (0, _getPrototypeOf2.default)(GameSquare)).call(this, ctx, 350, 10, 610, 610));
-	
-			_this5.blocks = [];
-			_this5.w = 50;
-			_this5.h = 80;
-			var j = 0;
-			_this5.blocks.push(new Block(ctx, _this5.x, _this5.y, _this5.h, _this5.h, j++));
-			for (var i = 0; i < 9; i++) {
-				_this5.blocks.push(new Block(ctx, _this5.x + _this5.h + i * _this5.w, _this5.y + 0, _this5.w, _this5.h, j++));
-			}
-			_this5.blocks.push(new Block(ctx, _this5.x + 9 * _this5.w + _this5.h, _this5.y, _this5.h, _this5.h, j++));
-			for (var i = 0; i < 9; i++) {
-				_this5.blocks.push(new Block(ctx, _this5.x + 9 * _this5.w + _this5.h, _this5.y + _this5.h + _this5.w * i, _this5.h, _this5.w, j++));
-			}
-			_this5.blocks.push(new Block(ctx, _this5.x + 9 * _this5.w + _this5.h, _this5.y + 9 * _this5.w + _this5.h, _this5.h, _this5.h, j++));
-			for (var i = 8; i >= 0; i--) {
-				_this5.blocks.push(new Block(ctx, _this5.x + _this5.h + i * _this5.w, _this5.y + 9 * _this5.w + _this5.h, _this5.w, _this5.h, j++));
-			}
-			_this5.blocks.push(new Block(ctx, _this5.x, _this5.y + 9 * _this5.w + _this5.h, _this5.h, _this5.h, j++));
-			for (var i = 8; i >= 0; i--) {
-				_this5.blocks.push(new Block(ctx, _this5.x + 0, _this5.y + _this5.h + _this5.w * i, _this5.h, _this5.w, j++));
-			}
-			_this5.blocks.forEach(function (el) {
-				ui.addBlock(el);
-			});
-			return _this5;
-		}
-	
-		(0, _createClass3.default)(GameSquare, [{
-			key: 'getPlants',
-			value: function getPlants() {
-				return this.blocks;
-			}
-		}]);
-		return GameSquare;
-	}(Block);
-	
-	var UsersBox = function (_Block6) {
-		(0, _inherits3.default)(UsersBox, _Block6);
-	
-		function UsersBox(ctx, ui, ws) {
-			(0, _classCallCheck3.default)(this, UsersBox);
-	
-			var _this6 = (0, _possibleConstructorReturn3.default)(this, (UsersBox.__proto__ || (0, _getPrototypeOf2.default)(UsersBox)).call(this, ctx, 10, 10, 300, 650));
-	
-			_this6.blocks = [];
-			_this6.ui = ui;
-			_this6.ws = ws;
-			_this6.wsFilter = 'players';
-			ws.addBlock(_this6);
-			return _this6;
-		}
-	
-		(0, _createClass3.default)(UsersBox, [{
-			key: 'onMessage',
-			value: function onMessage(msg) {
-				var _this7 = this;
-	
-				var i = 0;
-				this.blocks = msg.map(function (el) {
-					var block = new User(_this7.ctx, i++, el);
-					_this7.ui.addBlock(block);
-					block.show();
-					return block;
-				});
-			}
-		}, {
-			key: 'getUsers',
-			value: function getUsers() {
-				return this.blocks;
-			}
-		}]);
-		return UsersBox;
-	}(Block);
-	
-	var Root = function (_Block7) {
-		(0, _inherits3.default)(Root, _Block7);
-	
-		function Root(obj, ctx, ui, ws, time) {
-			(0, _classCallCheck3.default)(this, Root);
-	
-			var _this8 = (0, _possibleConstructorReturn3.default)(this, (Root.__proto__ || (0, _getPrototypeOf2.default)(Root)).call(this, ctx, 0, 0, obj.width, obj.height));
-	
-			time.start(_this8);
-			_this8.ws = ws;
-			_this8.wsFilter = 'dice';
-			_this8.blocks = [];
-			_this8.ctx = ctx;
-			_this8.ub = new UsersBox(ctx, ui, ws);
-			_this8.blocks.push(_this8.ub);
-			_this8.gs = new GameSquare(ctx, ui);
-			_this8.blocks.push(_this8.gs);
-			_this8.fg = new Figures(ctx, _this8.gs.blocks, ws);
-			_this8.blocks.push(_this8.fg);
-			_this8.blocks.push(new AuctionMenue(ctx, ui, ws));
-			_this8.blocks.push(new TradeMenue(ctx, ui, ws));
-			_this8.ws.addBlock(_this8);
-			return _this8;
-		}
-	
-		(0, _createClass3.default)(Root, [{
-			key: 'onMessage',
-			value: function onMessage(val) {
-				alert('here where');
-				this.fg.steps(val.firstDice + val.secondDice);
-			}
-		}]);
-		return Root;
-	}(Block);
-	
-	exports.default = Root;
-	
-	var Figures = function (_Block8) {
-		(0, _inherits3.default)(Figures, _Block8);
-	
-		function Figures(ctx, blocks, ws) {
-			(0, _classCallCheck3.default)(this, Figures);
-	
-			var _this9 = (0, _possibleConstructorReturn3.default)(this, (Figures.__proto__ || (0, _getPrototypeOf2.default)(Figures)).call(this, ctx, 0, 0, 0, 0));
-	
-			_this9.cur = 0;
-			_this9.wsFilter = 'players';
-			_this9.blocks = [];
-			_this9.bs = blocks;
-			_this9.ws = ws;
-			_this9.ws.addBlock(_this9);
-			return _this9;
-		}
-	
-		(0, _createClass3.default)(Figures, [{
-			key: 'steps',
-			value: function steps(val) {
-				this.blocks[this.cur].steps += val;
-				this.cur = (this.cur + 1) % this.blocks.length;
-			}
-		}, {
-			key: 'onMessage',
-			value: function onMessage(players) {
-				var _this10 = this;
-	
-				var i = 0;
-				this.blocks = players.map(function (player) {
-					return new Figure(ctx, _this10.bs, { num: i++, pos: 0 });
-				});
-			}
-		}]);
-		return Figures;
-	}(Block);
-	
-	var Figure = function (_Block9) {
-		(0, _inherits3.default)(Figure, _Block9);
-	
-		function Figure(ctx, blocks) {
-			var player = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : { num: 0, pos: 0 };
-			(0, _classCallCheck3.default)(this, Figure);
-	
-			var _this11 = (0, _possibleConstructorReturn3.default)(this, (Figure.__proto__ || (0, _getPrototypeOf2.default)(Figure)).call(this, ctx, blocks[player.pos].x, blocks[player.pos].y + player.num * 25, 20, 20));
-	
-			_this11.show();
-			_this11.player = player;
-			_this11.steps = 0;
-			_this11.pos = _this11.player.pos;
-			_this11.num = _this11.player.num;
-			_this11.bs = blocks;
-			time.addBlock(_this11);
-			return _this11;
-		}
-	
-		(0, _createClass3.default)(Figure, [{
-			key: 'move',
-			value: function move(dt) {
-				if (this.steps > 0) {
-					if (this.bs[(this.pos + 1) % 40].x > this.x) {
-						this.x += 2;
-						if (this.bs[(this.pos + 1) % 40].x <= this.x) {
-							this.pos += 1;
-							this.pos = this.pos % 40;
-							this.x = this.bs[this.pos].x;
-							this.y = this.bs[this.pos].y + this.num * 25;
-							this.steps -= 1;
-						}
-					} else if (this.bs[(this.pos + 1) % 40].x < this.x) {
-						this.x -= 2;
-						if (this.bs[(this.pos + 1) % 40].x >= this.x) {
-							this.pos += 1;
-							this.pos = this.pos % 40;
-							this.x = this.bs[this.pos].x;
-							this.y = this.bs[this.pos].y + this.num * 25;
-							this.steps -= 1;
-						}
-					} else if (this.bs[(this.pos + 1) % 40].y > this.y - this.num * 25) {
-						this.y += 2;
-						if (this.bs[(this.pos + 1) % 40].y <= this.y - this.num * 25) {
-							this.pos += 1;
-							this.pos = this.pos % 40;
-							this.x = this.bs[this.pos].x;
-							this.y = this.bs[this.pos].y + this.num * 25;
-							this.steps -= 1;
-						}
-					} else if (this.bs[(this.pos + 1) % 40].y < this.y - this.num * 25) {
-						this.y -= 2;
-						if (this.bs[(this.pos + 1) % 40].y >= this.y - this.num * 25) {
-							this.pos += 1;
-							this.pos = this.pos % 40;
-							this.x = this.bs[this.pos].x;
-							this.y = this.bs[this.pos].y + this.num * 25;
-							this.steps -= 1;
-						}
-					}
-				}
-			}
-		}]);
-		return Figure;
-	}(Block);
-
-/***/ },
-/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var pug = __webpack_require__(120);
