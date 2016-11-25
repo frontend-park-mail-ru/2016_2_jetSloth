@@ -31,7 +31,7 @@ class Block {
 		return this.isVisiable;
 	}
 	onMessage(event) {
-		alert('here ' + event);
+		console.log('here ' + event);
 		this.show();
 	}
 	hide() {
@@ -103,7 +103,7 @@ class User extends Block{
 class AuctionMenue extends Block{
 		constructor(ctx, ui, ws) {
 			super(ctx, 480, 200, 300, 100)
-			alert(`${this.x} ${this.y} ${this.width} ${this.height}`);
+			console.log(`${this.x} ${this.y} ${this.width} ${this.height}`);
 			this.ws = ws;
 			this.wsFilter = 'auction';
 			this.blocks = [];
@@ -224,7 +224,7 @@ export default class Root extends Block{
 		this.ws.addBlock(this);
 	}
 	onMessage(val) {
-		alert('here where');
+		console.log('here where');
 		this.fg.steps(val.firstDice + val.secondDice);
 	}
 }
