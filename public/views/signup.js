@@ -13,7 +13,7 @@ export default class SignUpView extends View {
 
         this.signUpForm = new Form({
             title: 'sign up',
-			action: 'signUp',
+			action: 'signup',
             data: {
                 fields: [{
                     name: 'username',

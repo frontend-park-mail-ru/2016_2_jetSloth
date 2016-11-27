@@ -14,7 +14,7 @@ export default class SignInView extends View {
         this.setClasses(['content', 'js-signin']);
         this.signInForm = new Form({
             title: 'sign in',
-			action: 'signIn',
+			action: 'signin',
             data: {
                 fields: [{
                     name: 'username',

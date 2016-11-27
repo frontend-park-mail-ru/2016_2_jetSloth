@@ -1057,7 +1057,7 @@
 	            this.setClasses(['content', 'js-signin']);
 	            this.signInForm = new _form2.default({
 	                title: 'sign in',
-	                action: 'signIn',
+	                action: 'signin',
 	                data: {
 	                    fields: [{
 	                        name: 'username',
@@ -4240,7 +4240,7 @@
 	
 	            this.signUpForm = new _form2.default({
 	                title: 'sign up',
-	                action: 'signUp',
+	                action: 'signup',
 	                data: {
 	                    fields: [{
 	                        name: 'username',
