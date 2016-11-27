@@ -7,9 +7,7 @@ export default class Model {
     }
 
     get baseUrl() {
-        //return 'https://monopolygames.herokuapp.com';
-        //временно
-        return 'https://monopolygames.herokuapp.com';//'http://myhuapplication.herokuapp.com';
+        return 'https://monopolygames.herokuapp.com';
     }
 
     get defaults() {
