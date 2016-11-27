@@ -3868,9 +3868,7 @@
 	    }, {
 	        key: 'baseUrl',
 	        get: function get() {
-	            //return 'https://monopolygames.herokuapp.com';
-	            //временно
-	            return 'http://127.0.0.1:3000'; //'http://myhuapplication.herokuapp.com';
+	            return 'https://monopolygames.herokuapp.com';
 	        }
 	    }, {
 	        key: 'defaults',
