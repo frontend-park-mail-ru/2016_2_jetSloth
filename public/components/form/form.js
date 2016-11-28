@@ -104,15 +104,16 @@ export default class Form extends Block {
                 let data = this.getFormData();
 
                 let user = new User(data);
-                user.sendUser()
-                    .then(
-                        res => {
-                            res = JSON.parse(res);
-                            (new Router).go('/app');
-                        },
-                        err => {
-                            console.log('Произошла какая-то ошибка o_O');
-                        });
+                console.log(user);
+                // user.sendUser()
+                //     .then(
+                //         res => {
+                //             res = JSON.parse(res);
+                //             (new Router).go('/app');
+                //         },
+                //         err => {
+                //             console.log('Произошла какая-то ошибка o_O');
+                //         });
             }
         });
 

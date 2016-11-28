@@ -2295,12 +2295,16 @@
 	                    var data = _this4.getFormData();
 	
 	                    var user = new _user2.default(data);
-	                    user.sendUser().then(function (res) {
-	                        res = JSON.parse(res);
-	                        new _router2.default().go('/app');
-	                    }, function (err) {
-	                        console.log('Произошла какая-то ошибка o_O');
-	                    });
+	                    console.log(user);
+	                    // user.sendUser()
+	                    //     .then(
+	                    //         res => {
+	                    //             res = JSON.parse(res);
+	                    //             (new Router).go('/app');
+	                    //         },
+	                    //         err => {
+	                    //             console.log('Произошла какая-то ошибка o_O');
+	                    //         });
 	                }
 	            });
 	
