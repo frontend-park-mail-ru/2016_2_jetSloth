@@ -4,11 +4,11 @@ export default class UIManager {
 		example.addEventListener('click', event => {
 				this.clickable.forEach(el=>{
 					el.unSelect();
-					if (el.x < event.clientX 
-						&& el.y < event.clientY
-						&& (el.x + el.width) > event.clientX 
-						&& (el.y + el.height) > event.clientY) {
-						el.onClick(event.clientX - el.x, event.clientY - el.y);
+					if (el.x < event.pageX 
+						&& el.y < event.pageY
+						&& (el.x + el.width) > event.pageX 
+						&& (el.y + el.height) > event.pageY) {
+						el.onClick(event.pageX - el.x, event.pageY - el.y);
 					}
 				})
 		})

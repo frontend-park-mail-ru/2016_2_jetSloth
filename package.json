@@ -57,6 +57,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
     "mocha": "^3.1.2",
+    "npm-install-webpack-plugin": "^4.0.4",
     "phantomjs-prebuilt": "^2.1.13",
     "pug": "^2.0.0-beta6",
     "pug-filters": "^1.2.4",
