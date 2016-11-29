@@ -1,9 +1,9 @@
 'use strict';
 
-import Form from '../components/form/form'
-import LinkedButton from '../components/linkedButton/linkedButton'
-import View from '../modules/view'
-import template from '../templates/signin.pug'
+import Form from '../../components/form/form'
+import LinkedButton from '../../components/linkedButton/linkedButton'
+import View from '../../modules/view'
+import template from './signin.pug'
 
 export default class SignInView extends View {
     constructor() {
@@ -14,26 +14,31 @@ export default class SignInView extends View {
         this.setClasses(['content', 'js-signin']);
         this.signInForm = new Form({
             title: 'sign in',
+            classes: ['form', 'form-signin'],
 			action: 'signin',
             data: {
                 fields: [{
-                    name: 'username',
-                    type: 'text',
-                    label: 'Enter username'
+                    label: 'Enter username',
+                    attrs: {
+                        name: 'username',
+                        type: 'text'
+                    }
                 }, {
-                    name: 'password',
-                    type: 'password',
-                    label: 'Enter password'
+                    label: 'Enter password',
+                    attrs: {
+                        name: 'password',
+                        type: 'password'
+                    }
                 }],
                 controls: [{
                     text: 'enter',
-                    classes: ['btn', 'btn-submit'],
+                    classes: ['btn', 'btn_submit'],
                     attrs: {
                         type: 'submit'
                     }
                 }, {
                     text: 'reset',
-                    classes: ['btn', 'btn-reset'],
+                    classes: ['btn', 'btn_reset'],
                     attrs: {
                         type: 'reset'
                     }
@@ -44,12 +49,11 @@ export default class SignInView extends View {
         this.signUpBtn = new LinkedButton({
             text: 'sign up',
             url: '/signup',
-            classes: ['btn', 'btn-signup']
+            classes: ['btn', 'btn_signup']
         });
 
         this._el.innerHTML = template();
-
-        this._el.querySelector('.form').appendChild(this.signInForm._get());
+        this._el.querySelector('.form_sign-in').appendChild(this.signInForm._get());
         this._el.querySelector('.sign-up-control').appendChild(this.signUpBtn._get());
         document.querySelector('.app').appendChild(this._el);
 
@@ -57,6 +61,6 @@ export default class SignInView extends View {
 
     pause() {
         this.hide();
-        this.signInForm.reset();
+        this.signInForm.resetForm();
     }
 }

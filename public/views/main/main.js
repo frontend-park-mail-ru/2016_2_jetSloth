@@ -1,8 +1,8 @@
 'use strict';
 
-import View from '../modules/view'
-import Block from '../components/block/block'
-import Menu from '../components/menu/menu'
+import View from '../../modules/view'
+import Block from '../../components/block/block'
+import Menu from '../../components/menu/menu'
 
 export default class MainView extends View {
     constructor() {
@@ -24,10 +24,10 @@ export default class MainView extends View {
             items: [{
                 text: 'play',
                 url: '/signin',
-                classes: ['btn', 'btn-play', 'btn-with-shadow']
+                classes: ['btn', 'btn_play', 'btn_with_shadow']
             }]
         });
-        
+
         this._el.appendChild(this.backgroundImg._get());
         document.querySelector('.app').appendChild(this._el);
     }

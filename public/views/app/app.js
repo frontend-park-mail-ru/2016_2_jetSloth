@@ -1,9 +1,9 @@
 'use strict';
 
-import Game from '../components/game/game'
-import View from '../modules/view'
-import template from '../templates/app.pug'
-import Block from '../components/block/block'
+import Game from '../../components/game/game'
+import View from '../../modules/view'
+import template from './app.pug'
+import Block from '../../components/block/block'
 
 
 export default class AppView extends View {

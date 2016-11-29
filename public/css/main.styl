@@ -1,10 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Architects+Daughter");
 @import url('https://fonts.googleapis.com/css?family=Bungee+Inline');
-
-@import "input.styl"
-@import "form.styl"
-@import "button.styl"
-
+@import url('https://fonts.googleapis.com/css?family=Slackey');
+@import '../components/button/button.styl'
+@import '../components/form/form.styl'
+@import '../components/form/__input/__input.styl'
 
 *
     margin: 0
@@ -13,11 +12,6 @@
 
     &:focus
         outline: none
-
-.or-block
-    font-family: 'Roboto Mono', monospace
-    font-size: 40px
-    color: #ffffff
 
 body
     background: #f1c40f
@@ -29,6 +23,7 @@ body
     min-width: 400px
 
 .content
+    display: flex
     position: relative
 
 .js-main, .js-signup
@@ -40,9 +35,8 @@ body
     align-content: space-between
     align-items: center
 
-
-
 .content__background-img
+    animation: down-up infinite ease-in-out alternate 1s
     position: relative
     top: 100px
 
@@ -59,59 +53,62 @@ body
 
 .loader
 	width: 100%
-	height: 6px
+	height: 8px
 	position: relative
 	overflow: hidden;
 
-.big
-	height: 16px
-	margin: 8px 0 0 0
-
-.loader
-     div
+.loader div
 	position: absolute
 	height: 100%
 	left: 50%
 
-.green
+.loader__green
 	background: #27ae60
 
-.red
+.loader__red
 	background: #c0392b
 
-.blue
+.loader__blue
 	background: #2980b9
 
-.yellow
-	background: #f1c40f
+.loader__violet
+	background: #51249a
 
-.sd0
+.wave1
 	animation: stretch 2.8s ease 0s
 
-.sd05
+.wave2
 	animation: stretch 2.8s ease .4s
 
-.sd1
+.wave3
 	animation: stretch 2.8s ease .8s
 
-.sd15
+.wave4
 	animation: stretch 2.8s ease 1.2s
 
-@-webkit-keyframes "stretch"
- 0%
-   padding: 0 0 0 0
-   left: 50%
-   z-index: 4
 
- 25%
-   z-index: 3
+@-webkit-keyframes 'down-up'
+    0%
+        padding: 0 0 0 0
+    100%
+        padding: 10px 0 0 0
 
- 50%
-   padding: 0 50% 0 50%
-   left: 0
-   z-index: 2
 
- 100%
-   padding: 0 50% 0 50%
-   left: 0
-   z-index: 1
+@-webkit-keyframes 'stretch'
+    0%
+       padding: 0 0 0 0
+       left: 50%
+       z-index: 4
+
+    25%
+       z-index: 3
+
+    50%
+       padding: 0 50% 0 50%
+       left: 0
+       z-index: 2
+
+    100%
+       padding: 0 50% 0 50%
+       left: 0
+       z-index: 1

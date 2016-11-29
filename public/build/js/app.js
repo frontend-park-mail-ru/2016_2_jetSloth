@@ -1057,26 +1057,31 @@
 	            this.setClasses(['content', 'js-signin']);
 	            this.signInForm = new _form2.default({
 	                title: 'sign in',
+	                classes: ['form', 'form-signin'],
 	                action: 'signin',
 	                data: {
 	                    fields: [{
-	                        name: 'username',
-	                        type: 'text',
-	                        label: 'Enter username'
+	                        label: 'Enter username',
+	                        attrs: {
+	                            name: 'username',
+	                            type: 'text'
+	                        }
 	                    }, {
-	                        name: 'password',
-	                        type: 'password',
-	                        label: 'Enter password'
+	                        label: 'Enter password',
+	                        attrs: {
+	                            name: 'password',
+	                            type: 'password'
+	                        }
 	                    }],
 	                    controls: [{
 	                        text: 'enter',
-	                        classes: ['btn', 'btn-submit'],
+	                        classes: ['btn', 'btn_submit'],
 	                        attrs: {
 	                            type: 'submit'
 	                        }
 	                    }, {
 	                        text: 'reset',
-	                        classes: ['btn', 'btn-reset'],
+	                        classes: ['btn', 'btn_reset'],
 	                        attrs: {
 	                            type: 'reset'
 	                        }
@@ -1087,12 +1092,11 @@
 	            this.signUpBtn = new _linkedButton2.default({
 	                text: 'sign up',
 	                url: '/signup',
-	                classes: ['btn', 'btn-signup']
+	                classes: ['btn', 'btn_signup']
 	            });
 	
 	            this._el.innerHTML = (0, _signin2.default)();
-	
-	            this._el.querySelector('.form').appendChild(this.signInForm._get());
+	            this._el.querySelector('.form_sign-in').appendChild(this.signInForm._get());
 	            this._el.querySelector('.sign-up-control').appendChild(this.signUpBtn._get());
 	            document.querySelector('.app').appendChild(this._el);
 	        }
@@ -1100,7 +1104,7 @@
 	        key: 'pause',
 	        value: function pause() {
 	            this.hide();
-	            this.signInForm.reset();
+	            this.signInForm.resetForm();
 	        }
 	    }]);
 	    return SignInView;
@@ -2133,6 +2137,10 @@
 	    value: true
 	});
 	
+	var _keys = __webpack_require__(97);
+	
+	var _keys2 = _interopRequireDefault(_keys);
+	
 	var _getPrototypeOf = __webpack_require__(48);
 	
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -2153,7 +2161,7 @@
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
-	var _block = __webpack_require__(97);
+	var _block = __webpack_require__(100);
 	
 	var _block2 = _interopRequireDefault(_block);
 	
@@ -2186,10 +2194,10 @@
 	        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { action: action, data: {} };
 	        (0, _classCallCheck3.default)(this, Form);
 	
-	        var _this = (0, _possibleConstructorReturn3.default)(this, (Form.__proto__ || (0, _getPrototypeOf2.default)(Form)).call(this, 'form'));
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (Form.__proto__ || (0, _getPrototypeOf2.default)(Form)).call(this, 'form', options));
 	
-	        _this._action = options.action;
-	        _this._data = options.data;
+	        _this.action = options.action;
+	        _this.data = options.data;
 	
 	        _this.render();
 	        return _this;
@@ -2199,54 +2207,40 @@
 	        key: 'render',
 	        value: function render() {
 	            this._updateHtml();
-	            this._installFields();
-	            this._installControls();
+	            this._initFields();
+	            this._initControls();
 	            this._setListeners();
-	        }
-	    }, {
-	        key: 'reset',
-	        value: function reset() {
-	            var fields = this._el.querySelectorAll('input');
-	
-	            fields.forEach(function (field) {
-	                var parent = field.parentElement;
-	                var err = parent.parentElement.querySelector('.error');
-	                parent.classList.remove('active', 'valid', 'invalid');
-	                field.value = '';
-	                err.innerHTML = '';
-	            });
 	        }
 	    }, {
 	        key: '_updateHtml',
 	        value: function _updateHtml() {
-	            this._el.innerHTML = (0, _form2.default)(this._data);
+	            this._el.innerHTML = (0, _form2.default)();
 	        }
 	    }, {
-	        key: '_installFields',
-	        value: function _installFields() {
+	        key: '_initFields',
+	        value: function _initFields() {
 	            var _this2 = this;
 	
-	            var _data$fields = this._data.fields,
+	            var _data$fields = this.data.fields,
 	                fields = _data$fields === undefined ? [] : _data$fields;
 	
-	
-	            fields.forEach(function (field) {
+	            this.fields = {};
+	            fields.forEach(function (data) {
 	                var input = new _input2.default({
-	                    name: field.name,
-	                    type: field.type,
-	                    label: field.label
+	                    label: data.label,
+	                    attrs: data.attrs
 	                });
-	                _this2._el.querySelector('.form__fields').append(input._get());
+	                _this2.fields[data.attrs.name] = input;
+	                _this2._el.querySelector('.js-fields').appendChild(input._get());
 	            });
 	        }
 	    }, {
-	        key: '_installControls',
-	        value: function _installControls() {
+	        key: '_initControls',
+	        value: function _initControls() {
 	            var _this3 = this;
 	
-	            var _data$controls = this._data.controls,
+	            var _data$controls = this.data.controls,
 	                controls = _data$controls === undefined ? [] : _data$controls;
-	
 	
 	            controls.forEach(function (data) {
 	                var control = new _button2.default({
@@ -2254,7 +2248,7 @@
 	                    classes: data.classes,
 	                    attrs: data.attrs
 	                });
-	                _this3._el.querySelector('.form__controls').appendChild(control._get());
+	                _this3._el.querySelector('.js-controls').appendChild(control._get());
 	            });
 	        }
 	    }, {
@@ -2262,109 +2256,77 @@
 	        value: function _setListeners() {
 	            var _this4 = this;
 	
-	            var inputs = this._el.querySelectorAll('input');
-	
-	            inputs.forEach(function (input) {
-	                var parent = input.parentElement;
-	
-	                input.addEventListener('focus', function () {
-	                    parent.classList.add('active');
-	
-	                    input.addEventListener('blur', function () {
-	                        if (input.value.length === 0) {
-	                            parent.classList.remove('active');
-	                        } else {
-	                            _this4.validate(input);
-	                        }
-	                    });
-	
-	                    parent.classList.remove('valid', 'invalid');
-	                });
-	            });
-	
-	            this.on('click', function (event) {
-	                if (event.target.classList.contains("close")) {
-	                    new _router2.default().go('/');
-	                }
-	            });
-	
-	            this.on('submit', function (event) {
-	                event.preventDefault();
-	                _this4.isValidForm();
-	                if (_this4.isValidForm()) {
-	                    var data = _this4.getFormData();
-	
-	                    var user = new _user2.default(data);
-	                    console.log(user);
-	                    // user.sendUser()
-	                    //     .then(
-	                    //         res => {
-	                    //             res = JSON.parse(res);
-	                    //             (new Router).go('/app');
-	                    //         },
-	                    //         err => {
-	                    //             console.log('Произошла какая-то ошибка o_O');
-	                    //         });
-	                }
-	            });
-	
 	            this.on('reset', function (event) {
 	                event.preventDefault();
-	                _this4.reset();
+	                _this4.resetForm();
 	            });
-	        }
-	    }, {
-	        key: 'isValidForm',
-	        value: function isValidForm() {
-	            var fields = this._el.querySelectorAll('.input');
-	            var valid = true;
-	            fields.forEach(function (field) {
-	                if (!field.classList.contains('valid')) {
-	                    valid = false;
-	                }
+	            this.on('submit', function (event) {
+	                event.preventDefault();
 	            });
-	            return valid;
+	
+	            this._el.querySelector('.close').addEventListener('click', function () {
+	                new _router2.default().go('/');
+	            });
+	
+	            (0, _keys2.default)(this.fields).forEach(function (name) {
+	                _this4.fields[name].field.addEventListener('focus', function () {
+	                    _this4.fields[name].active();
+	                });
+	                _this4.fields[name].field.addEventListener('blur', function () {
+	                    _this4.validate();
+	                });
+	            });
 	        }
 	    }, {
 	        key: 'validate',
-	        value: function validate(input) {
-	            var parent = input.parentElement;
-	            var err = parent.parentElement.querySelector('.error');
-	            var ErrMsg = this.notValid(input);
+	        value: function validate() {
+	            this.action === 'signin' ? this.signInCheck() : this.signUpCheck();
+	        }
+	    }, {
+	        key: 'signInCheck',
+	        value: function signInCheck() {
+	            var username = this.fields['username'];
+	            var password = this.fields['password'];
 	
-	            if (ErrMsg) {
-	                parent.classList.add('invalid');
-	                parent.style.transformOrigin = "center";
-	                err.innerHTML = ErrMsg;
-	            } else {
-	                parent.classList.add('valid');
-	                parent.style.transformOrigin = "bottom";
-	                err.innerHTML = '';
-	            }
+	            username.isEmpty() ? username.resetActive() : this.isValidUsername(username);
+	            password.isEmpty() ? password.resetActive() : this.isValidPassword(password);
 	        }
 	    }, {
-	        key: 'notValid',
-	        value: function notValid(input) {
-	            return input.name === 'username' ? this.checkName() : input.name === 'password' ? this.checkPsw() : input.name === 'password2' ? this.confirmPsw() : null;
+	        key: 'signUpCheck',
+	        value: function signUpCheck() {
+	            var username = this.fields['username'];
+	            var password = this.fields['password'];
+	            var password2 = this.fields['password2'];
+	
+	            username.isEmpty() ? username.resetActive() : this.isValidUsername(username);
+	            password.isEmpty() ? password.resetActive() : this.isValidPassword(password);
+	            password2.isEmpty() ? password2.resetActive() : this.isSamePasswords(password, password2);
 	        }
 	    }, {
-	        key: 'checkName',
-	        value: function checkName() {
-	            var _username = this._el.elements.username;
-	            return _username.value.length > 5 ? null : 'Username must contain at least 6 symbols!';
+	        key: 'isValidUsername',
+	        value: function isValidUsername(username) {
+	            var re = /^\w{6,10}$/;
+	            re.test(username.field.value) ? username.valid() : username.invalid('Bad name. It should contain 6-10 symbols!');
 	        }
 	    }, {
-	        key: 'checkPsw',
-	        value: function checkPsw() {
-	            var _password = this._el.elements.password;
-	            return _password.value.length > 5 ? null : 'Password must contain at least 6 symbols!';
+	        key: 'isValidPassword',
+	        value: function isValidPassword(password) {
+	            var re = /^\w{6,20}$/;
+	            re.test(password.field.value) ? password.valid() : password.invalid('Bad password. It should contain 6-20 symbols!');
 	        }
 	    }, {
-	        key: 'confirmPsw',
-	        value: function confirmPsw() {
-	            var _password = this._el.elements.password;
-	            var _password2 = this._el.elements.password2;
-	            return _password.value === _password2.value && _password.value.length > 5 ? null : 'Passwords aren\'t coincided!';
+	        key: 'isSamePasswords',
+	        value: function isSamePasswords(password1, password2) {
+	            password1.field.value === password2.field.value ? password2.valid() : password2.invalid('Passwords doesn\'t match! Please, try again.');
+	        }
+	    }, {
+	        key: 'resetForm',
+	        value: function resetForm() {
+	            var _this5 = this;
+	
+	            (0, _keys2.default)(this.fields).forEach(function (name) {
+	                _this5.fields[name].reset();
+	            });
 	        }
 	    }, {
 	        key: 'getFormData',
@@ -2389,13 +2351,40 @@
 /* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = { "default": __webpack_require__(98), __esModule: true };
+
+/***/ },
+/* 98 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(99);
+	module.exports = __webpack_require__(10).Object.keys;
+
+/***/ },
+/* 99 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.14 Object.keys(O)
+	var toObject = __webpack_require__(45)
+	  , $keys    = __webpack_require__(28);
+	
+	__webpack_require__(52)('keys', function(){
+	  return function keys(it){
+	    return $keys(toObject(it));
+	  };
+	});
+
+/***/ },
+/* 100 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	
-	var _keys = __webpack_require__(98);
+	var _keys = __webpack_require__(97);
 	
 	var _keys2 = _interopRequireDefault(_keys);
 	
@@ -2483,33 +2472,6 @@
 	exports.default = Block;
 
 /***/ },
-/* 98 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(99), __esModule: true };
-
-/***/ },
-/* 99 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(100);
-	module.exports = __webpack_require__(10).Object.keys;
-
-/***/ },
-/* 100 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.2.14 Object.keys(O)
-	var toObject = __webpack_require__(45)
-	  , $keys    = __webpack_require__(28);
-	
-	__webpack_require__(52)('keys', function(){
-	  return function keys(it){
-	    return $keys(toObject(it));
-	  };
-	});
-
-/***/ },
 /* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2543,7 +2505,7 @@
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
-	var _block = __webpack_require__(97);
+	var _block = __webpack_require__(100);
 	
 	var _block2 = _interopRequireDefault(_block);
 	
@@ -3306,7 +3268,7 @@
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
-	var _block = __webpack_require__(97);
+	var _block = __webpack_require__(100);
 	
 	var _block2 = _interopRequireDefault(_block);
 	
@@ -3324,10 +3286,10 @@
 	        (0, _classCallCheck3.default)(this, Input);
 	
 	        var _this = (0, _possibleConstructorReturn3.default)(this, (Input.__proto__ || (0, _getPrototypeOf2.default)(Input)).call(this, 'div', {
-	            classes: ['input-wrap']
+	            classes: ['input__wrap']
 	        }));
 	
-	        _this._field = options;
+	        _this.data = options;
 	        _this.render();
 	        return _this;
 	    }
@@ -3336,18 +3298,103 @@
 	        key: 'render',
 	        value: function render() {
 	            this._updateHtml();
+	            this._setItems();
 	            this._drawLine();
-	            this._setAnimation();
+	            this._animate();
 	        }
 	    }, {
 	        key: '_updateHtml',
 	        value: function _updateHtml() {
-	            this._el.innerHTML = (0, _input2.default)(this._field);
+	            this._el.innerHTML = (0, _input2.default)(this.data);
+	        }
+	    }, {
+	        key: '_setItems',
+	        value: function _setItems() {
+	            this.wrap = this._el.querySelector('.form__input');
+	            this.field = this._el.querySelector('input');
+	            this.name = this.field.name;
+	            this.error = this._el.querySelector('.input__error');
+	        }
+	    }, {
+	        key: 'active',
+	        value: function active() {
+	            this.setActive();
+	            this.resetValid();
+	            this.resetInvalid();
+	        }
+	    }, {
+	        key: 'valid',
+	        value: function valid() {
+	            this.resetInvalid();
+	            this.setValid();
+	        }
+	    }, {
+	        key: 'invalid',
+	        value: function invalid(errText) {
+	            this.resetValid();
+	            this.setInvalid(errText);
+	        }
+	    }, {
+	        key: 'reset',
+	        value: function reset() {
+	            this.resetActive();
+	            this.resetValid();
+	            this.resetInvalid();
+	            this.resetValue();
+	        }
+	    }, {
+	        key: 'setValid',
+	        value: function setValid() {
+	            this.wrap.classList.add('valid');
+	            this.wrap.style.transformOrigin = "bottom";
+	        }
+	    }, {
+	        key: 'resetValid',
+	        value: function resetValid() {
+	            this.wrap.classList.remove('valid');
+	        }
+	    }, {
+	        key: 'setInvalid',
+	        value: function setInvalid(errText) {
+	            this.wrap.classList.add('invalid');
+	            this.wrap.style.transformOrigin = "center";
+	            this.error.innerHTML = errText;
+	        }
+	    }, {
+	        key: 'resetInvalid',
+	        value: function resetInvalid() {
+	            this.wrap.classList.remove('invalid');
+	            this.error.innerHTML = '';
+	        }
+	    }, {
+	        key: 'setActive',
+	        value: function setActive() {
+	            this.wrap.classList.add('active');
+	        }
+	    }, {
+	        key: 'resetActive',
+	        value: function resetActive() {
+	            this.wrap.classList.remove('active');
+	        }
+	    }, {
+	        key: 'getValue',
+	        value: function getValue() {
+	            return this.field.value;
+	        }
+	    }, {
+	        key: 'resetValue',
+	        value: function resetValue() {
+	            this.field.value = '';
+	        }
+	    }, {
+	        key: 'isEmpty',
+	        value: function isEmpty() {
+	            return this.field.value === '' ? true : false;
 	        }
 	    }, {
 	        key: '_drawLine',
 	        value: function _drawLine() {
-	            this._line = Snap(this._el.querySelector('.line'));
+	            this._line = Snap(this._el.querySelector('.input__line'));
 	            this._qCurve = 400 / 2;
 	            this._textPath = this._line.path("M0 0 " + 400 + " 0");
 	        }
@@ -3375,13 +3422,11 @@
 	            }, 600);
 	        }
 	    }, {
-	        key: '_setAnimation',
-	        value: function _setAnimation() {
+	        key: '_animate',
+	        value: function _animate() {
 	            var _this3 = this;
 	
-	            var input = this._el.querySelector('input');
-	
-	            input.addEventListener('focus', function () {
+	            this.field.addEventListener('focus', function () {
 	                _this3.runAnimate();
 	            });
 	        }
@@ -3397,7 +3442,7 @@
 
 	var pug = __webpack_require__(120);
 	
-	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;;var locals_for_with = (locals || {});(function (label, name, type) {pug_html = pug_html + "\u003Cdiv class=\"input-field\"\u003E\u003Clabel" + (pug.attr("for", `${name}`, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = label) ? "" : pug_interp)) + "\u003C\u002Flabel\u003E\u003Cinput" + (pug.attr("type", `${type}`, true, true)+pug.attr("name", `${name}`, true, true)+" autocomplete=\"off\"") + "\u003E\u003C\u002Fdiv\u003E\u003Cp class=\"error\"\u003E\u003C\u002Fp\u003E\u003Csvg class=\"line\"\u003E\u003C\u002Fsvg\u003E";}.call(this,"label" in locals_for_with?locals_for_with.label:typeof label!=="undefined"?label:undefined,"name" in locals_for_with?locals_for_with.name:typeof name!=="undefined"?name:undefined,"type" in locals_for_with?locals_for_with.type:typeof type!=="undefined"?type:undefined));;return pug_html;};
+	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;;var locals_for_with = (locals || {});(function (attrs, label) {pug_html = pug_html + "\u003Cdiv class=\"form__input\"\u003E\u003Clabel" + (pug.attr("for", `${attrs.name}`, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = label) ? "" : pug_interp)) + "\u003C\u002Flabel\u003E\u003Cinput" + (pug.attr("type", `${attrs.type}`, true, true)+pug.attr("name", `${attrs.name}`, true, true)+" autocomplete=\"off\"") + "\u003E\u003C\u002Fdiv\u003E\u003Cp class=\"input__error\"\u003E\u003C\u002Fp\u003E\u003Csvg class=\"input__line\"\u003E\u003C\u002Fsvg\u003E";}.call(this,"attrs" in locals_for_with?locals_for_with.attrs:typeof attrs!=="undefined"?attrs:undefined,"label" in locals_for_with?locals_for_with.label:typeof label!=="undefined"?label:undefined));;return pug_html;};
 	module.exports = template;
 
 /***/ },
@@ -3672,7 +3717,7 @@
 
 	var pug = __webpack_require__(120);
 	
-	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Ci class=\"fa fa-5x fa-times close\" aria-hidden=\"true\"\u003E\u003C\u002Fi\u003E\u003Cform class=\"form\"\u003E\u003Cdiv class=\"form__fields\"\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"form__controls\"\u003E\u003C\u002Fdiv\u003E\u003C\u002Fform\u003E";;return pug_html;};
+	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Ci class=\"fa fa-5x fa-times close\" aria-hidden=\"true\"\u003E\u003C\u002Fi\u003E\u003Cdiv class=\"js-fields\"\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"js-controls\"\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
 	module.exports = template;
 
 /***/ },
@@ -3771,7 +3816,7 @@
 	
 	var _typeof3 = _interopRequireDefault(_typeof2);
 	
-	var _keys = __webpack_require__(98);
+	var _keys = __webpack_require__(97);
 	
 	var _keys2 = _interopRequireDefault(_keys);
 	
@@ -3911,6 +3956,10 @@
 	    value: true
 	});
 	
+	var _promise = __webpack_require__(102);
+	
+	var _promise2 = _interopRequireDefault(_promise);
+	
 	var _getPrototypeOf = __webpack_require__(48);
 	
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -3959,9 +4008,38 @@
 	            var _this2 = this;
 	
 	            this.on('click', function () {
-	                _this2.animate().then(function () {
+	                _this2.loader().then(function () {
 	                    new _router2.default().go(url);
+	                }).then(function () {
+	                    _this2.resetLoader();
 	                });
+	            });
+	        }
+	    }, {
+	        key: 'loader',
+	        value: function loader() {
+	            var _this3 = this;
+	
+	            return new _promise2.default(function (resolve, reject) {
+	                _this3._el.disabled = true;
+	                var loader = document.querySelector('.loader');
+	                loader.children.forEach = [].forEach;
+	                var index = 1;
+	                loader.children.forEach(function (wave) {
+	                    wave.classList.add('wave' + index++);
+	                });
+	                setTimeout(resolve, 3000);
+	            });
+	        }
+	    }, {
+	        key: 'resetLoader',
+	        value: function resetLoader() {
+	            this._el.disabled = false;
+	            var loader = document.querySelector('.loader');
+	            loader.children.forEach = [].forEach;
+	            var index = 1;
+	            loader.children.forEach(function (wave) {
+	                wave.classList.remove('wave' + index++);
 	            });
 	        }
 	    }]);
@@ -3980,7 +4058,7 @@
 	    value: true
 	});
 	
-	var _keys = __webpack_require__(98);
+	var _keys = __webpack_require__(97);
 	
 	var _keys2 = _interopRequireDefault(_keys);
 	
@@ -4186,7 +4264,7 @@
 
 	var pug = __webpack_require__(120);
 	
-	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv class=\"form\"\u003E\u003C\u002Fdiv\u003E\u003Cp class=\"or-block\"\u003EOR\u003C\u002Fp\u003E\u003Cdiv class=\"sign-up-control\"\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
+	function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv class=\"form_sign-in\"\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"sign-up-control\"\u003E\u003Ch1\u003EOR\u003C\u002Fh1\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
 	module.exports = template;
 
 /***/ },
@@ -4244,30 +4322,37 @@
 	
 	            this.signUpForm = new _form2.default({
 	                title: 'sign up',
+	                classes: ['form', 'form-signup'],
 	                action: 'signup',
 	                data: {
 	                    fields: [{
-	                        name: 'username',
-	                        type: 'text',
-	                        label: 'Enter username'
+	                        label: 'Enter username',
+	                        attrs: {
+	                            name: 'username',
+	                            type: 'text'
+	                        }
 	                    }, {
-	                        name: 'password',
-	                        type: 'password',
-	                        label: 'Enter password'
+	                        label: 'Enter password',
+	                        attrs: {
+	                            name: 'password',
+	                            type: 'password'
+	                        }
 	                    }, {
-	                        name: 'password2',
-	                        type: 'password',
-	                        label: 'Repeat password'
+	                        label: 'Repeat password',
+	                        attrs: {
+	                            name: 'password2',
+	                            type: 'password'
+	                        }
 	                    }],
 	                    controls: [{
 	                        text: 'submit',
-	                        classes: ['btn', 'btn-submit'],
+	                        classes: ['btn', 'btn_submit'],
 	                        attrs: {
 	                            type: 'submit'
 	                        }
 	                    }, {
 	                        text: 'reset',
-	                        classes: ['btn', 'btn-reset'],
+	                        classes: ['btn', 'btn_reset'],
 	                        attrs: {
 	                            type: 'reset'
 	                        }
@@ -4281,7 +4366,7 @@
 	        key: 'pause',
 	        value: function pause() {
 	            this.hide();
-	            this.signUpForm.reset();
+	            this.signUpForm.resetForm();
 	        }
 	    }]);
 	    return SignUpView;
@@ -4323,7 +4408,7 @@
 	
 	var _view2 = _interopRequireDefault(_view);
 	
-	var _block = __webpack_require__(97);
+	var _block = __webpack_require__(100);
 	
 	var _block2 = _interopRequireDefault(_block);
 	
@@ -4358,7 +4443,7 @@
 	                items: [{
 	                    text: 'play',
 	                    url: '/signin',
-	                    classes: ['btn', 'btn-play', 'btn-with-shadow']
+	                    classes: ['btn', 'btn_play', 'btn_with_shadow']
 	                }]
 	            });
 	
@@ -4401,7 +4486,7 @@
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
-	var _block = __webpack_require__(97);
+	var _block = __webpack_require__(100);
 	
 	var _block2 = _interopRequireDefault(_block);
 	
@@ -4517,7 +4602,7 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _block = __webpack_require__(97);
+	var _block = __webpack_require__(100);
 	
 	var _block2 = _interopRequireDefault(_block);
 	

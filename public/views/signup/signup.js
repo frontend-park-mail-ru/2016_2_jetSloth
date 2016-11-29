@@ -1,7 +1,7 @@
 'use strict';
 
-import Form from '../components/form/form'
-import View from '../modules/view'
+import Form from '../../components/form/form'
+import View from '../../modules/view'
 
 export default class SignUpView extends View {
     constructor() {
@@ -13,30 +13,37 @@ export default class SignUpView extends View {
 
         this.signUpForm = new Form({
             title: 'sign up',
-			action: 'signup',
+            classes: ['form', 'form-signup'],
+            action: 'signup',
             data: {
                 fields: [{
-                    name: 'username',
-                    type: 'text',
-                    label: 'Enter username'
+                    label: 'Enter username',
+                    attrs: {
+                        name: 'username',
+                        type: 'text'
+                    }
                 }, {
-                    name: 'password',
-                    type: 'password',
-                    label: 'Enter password'
+                    label: 'Enter password',
+                    attrs: {
+                        name: 'password',
+                        type: 'password'
+                    }
                 }, {
-                    name: 'password2',
-                    type: 'password',
-                    label: 'Repeat password'
+                    label: 'Repeat password',
+                    attrs: {
+                        name: 'password2',
+                        type: 'password'
+                    }
                 }],
                 controls: [{
                     text: 'submit',
-                    classes: ['btn', 'btn-submit'],
+                    classes: ['btn', 'btn_submit'],
                     attrs: {
                         type: 'submit'
                     }
                 }, {
                     text: 'reset',
-                    classes: ['btn', 'btn-reset'],
+                    classes: ['btn', 'btn_reset'],
                     attrs: {
                         type: 'reset'
                     }
@@ -49,6 +56,6 @@ export default class SignUpView extends View {
 
     pause() {
         this.hide();
-        this.signUpForm.reset();
+        this.signUpForm.resetForm();
     }
 }

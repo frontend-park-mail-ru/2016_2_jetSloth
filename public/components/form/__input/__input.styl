@@ -1,4 +1,4 @@
-.input-wrap
+.input__wrap
     position: relative
     height: 50px
     width: 400px
@@ -45,17 +45,23 @@ label
     color: #ffffff
     transition: all 0.5s ease 0.6s
 
+.valid label
+    color: #4CAF50
+
+.invalid label
+    color: #ff5252
+
 .active+svg
     stroke: #ffffff
     transition: stroke 0.4s ease 0.6s
 
-.input-field
+.form__input
     height: 100%
     width: 100%
     position: relative
     overflow: hidden
 
-.input-field:before
+.form__input:before
     content: ""
     position: absolute
     height: 26px
@@ -67,7 +73,7 @@ label
     transform: rotate(0deg)
     transition: transform 0.4s ease, bottom 0.4s ease 0.3s, background-color 0.2s ease 0.6s
 
-.input-field:after
+.form__input:after
     content: ""
     position: absolute
     height: 26px
@@ -114,6 +120,6 @@ label
     transition: bottom 0.4s ease, visibility 0.4s ease 0.3s, transform 0.4s ease 0.3s
 
 
-.error
-    color: #9d1717
+.input__error
+    color: #ff5252
     padding-top: 10px

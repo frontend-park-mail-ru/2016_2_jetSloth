@@ -1,10 +1,10 @@
 'use strict';
 
 import Router from './modules/router.js'
-import SignInView from './views/signin.js'
-import SignUpView from './views/signup.js'
-import MainView from './views/main.js'
-import AppView from './views/app.js'
+import SignInView from './views/signin/signin.js'
+import SignUpView from './views/signup/signup.js'
+import MainView from './views/main/main.js'
+import AppView from './views/app/app.js'
 
 
 window.onload = function () {
