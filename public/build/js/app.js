@@ -4623,7 +4623,8 @@
 	            this._el = document.createElement('canvas');
 	            this._el.setAttribute('width', 1200);
 	            this._el.setAttribute('height', 650);
-	            this.game = new _game2.default(this._el, 'ws://pure-savannah-60680.herokuapp.com');
+	            console.log(window.location.host);
+	            this.game = new _game2.default(this._el, 'ws://' + window.location.host);
 	            document.querySelector('.app').appendChild(this._el);
 	        }
 	    }]);
@@ -4665,7 +4666,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Game = function Game(canvas) {
-		var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'ws://pure-savannah-60680.herokuapp.com';
+		var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'ws://127.0.0.1:4000';
 		(0, _classCallCheck3.default)(this, Game);
 	
 		this._el = canvas;
@@ -4841,8 +4842,8 @@
 			this.socket.onmessage = function (msg) {
 				var obj = JSON.parse(msg.data);
 				_this.listeners.forEach(function (el) {
-					if (el.wsFilter != null && el.wsFilter == obj.action) {
-						el.onMessage(obj.data);
+					if (el.wsFilter != null && el.wsFilter.test(obj.action)) {
+						el.onMessage(obj.data, obj.action);
 					}
 				});
 			};
@@ -4882,6 +4883,10 @@
 		value: true
 	});
 	
+	var _stringify = __webpack_require__(125);
+	
+	var _stringify2 = _interopRequireDefault(_stringify);
+	
 	var _getPrototypeOf = __webpack_require__(48);
 	
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -4904,10 +4909,16 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var COLORS = ['#11FF11', '#FF1111', '#1111FF', '#1FF111', '#111FF1', '#1F1F11', '#11F1F1', '#F1F1F1'];
+	
+	var COLORS_BACK = ['#11AA11', '#AA1111', '#1111AA', '#1AA111', '#111AA1', '#1A1A11', '#11A1A1', '#A1A1A1'];
+	
 	var Block = function () {
 		function Block(ctx, x, y, width, height, text) {
+			var color = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : '#55FFFF';
 			(0, _classCallCheck3.default)(this, Block);
 	
+			this.color = color;
 			this.x = x;
 			this.y = y;
 			this.ctx = ctx;
@@ -4917,6 +4928,7 @@
 			this.isVisiable = true;
 			this.isHidden = false;
 			this.isSelected = false;
+			this.isEnable = true;
 		}
 	
 		(0, _createClass3.default)(Block, [{
@@ -4941,7 +4953,7 @@
 		}, {
 			key: 'onClick',
 			value: function onClick() {
-				if (this.isVisiable) {
+				if (this.isVisiable && this.isEnable) {
 					this.select();
 					this.onReady();
 				}
@@ -4950,7 +4962,7 @@
 		}, {
 			key: 'onMessage',
 			value: function onMessage(event) {
-				console.log('here ' + event);
+				alert('here ' + event);
 				this.show();
 			}
 		}, {
@@ -4998,11 +5010,16 @@
 			value: function draw() {
 				if (this.isVisiable) {
 					if (this.isSelected) {
-						this.ctx.fillStyle = this.isSelected ? '#5500FF' : '#55FFFF';
+						this.ctx.fillStyle = this.color;
 						this.ctx.fillRect(this.x, this.y, this.width, this.height);
 					} else {
-						this.ctx.fillStyle = this.isSelected ? '#5500FF' : '#55FFFF';
-						this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+						if (this.isEnable) {
+							this.ctx.fillStyle = '#5500FF';
+							this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+						} else {
+							this.ctx.fillStyle = '#111111';
+							this.ctx.fillRect(this.x, this.y, this.width, this.height);
+						}
 					}
 					if (this.text != null) {
 						this.ctx.fillStyle = "#00F";
@@ -5025,70 +5042,127 @@
 		return Block;
 	}();
 	
-	var User = function (_Block) {
-		(0, _inherits3.default)(User, _Block);
+	var Field = function (_Block) {
+		(0, _inherits3.default)(Field, _Block);
 	
-		function User(ctx, num, data, parent) {
-			(0, _classCallCheck3.default)(this, User);
+		function Field(ctx, x, y, width, height, num, owner, fld) {
+			(0, _classCallCheck3.default)(this, Field);
 	
-			var _this = (0, _possibleConstructorReturn3.default)(this, (User.__proto__ || (0, _getPrototypeOf2.default)(User)).call(this, ctx, 10, 10 + 80 * num, 300, 60, data && data.name));
+			var _this = (0, _possibleConstructorReturn3.default)(this, (Field.__proto__ || (0, _getPrototypeOf2.default)(Field)).call(this, ctx, x, y, width, height, num));
 	
+			_this.fld = fld;
 			_this.num = num;
-			_this.pos = 0;
+			_this.isSelected = true;
+			_this.owner = -1;
 			return _this;
 		}
 	
+		(0, _createClass3.default)(Field, [{
+			key: 'onReady',
+			value: function onReady() {
+				this.fld.showFld(this.num);
+			}
+		}, {
+			key: 'draw',
+			value: function draw() {
+				if (this.isVisiable) {
+					if (this.owner >= 0) {
+						this.ctx.fillStyle = COLORS_BACK[this.owner];
+						this.ctx.fillRect(this.x, this.y, this.width, this.height);
+						this.ctx.fillStyle = '#0';
+						this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+					} else {
+						this.ctx.fillStyle = '#5500FF';
+						this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+					}
+					if (this.text != null) {
+						this.ctx.fillStyle = "#00F";
+						this.ctx.font = "italic 15pt Arial";
+						this.ctx.fillText(this.text, this.x + 10, this.y + this.height - 10);
+					}
+					if (this.blocks != null) {
+						this.blocks.forEach(function (el) {
+							el.draw();
+						});
+					}
+				}
+			}
+		}]);
+		return Field;
+	}(Block);
+	
+	var User = function (_Block2) {
+		(0, _inherits3.default)(User, _Block2);
+	
+		function User(ctx, num, data, parent) {
+			var cash = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 5000;
+			(0, _classCallCheck3.default)(this, User);
+	
+			var _this2 = (0, _possibleConstructorReturn3.default)(this, (User.__proto__ || (0, _getPrototypeOf2.default)(User)).call(this, ctx, 10, 10 + 80 * num, 300, 60, data));
+	
+			_this2.cash = cash;
+			_this2.blocks = [];
+			_this2.num = num;
+			_this2.pos = 0;
+			_this2.moneyField = new Block(ctx, 200, 10 + 80 * num, 110, 60, _this2.cash);
+			_this2.blocks.push(_this2.moneyField);
+			return _this2;
+		}
+	
 		(0, _createClass3.default)(User, [{
+			key: 'addCash',
+			value: function addCash(sum) {
+				this.cash += sum;
+				this.moneyField.text = this.cash;
+			}
+		}, {
+			key: 'setCash',
+			value: function setCash(cash) {
+				console.log("++>" + cash);
+				this.cash = cash;
+				this.moneyField.text = this.cash;
+			}
+		}, {
 			key: 'onReady',
 			value: function onReady() {}
 		}]);
 		return User;
 	}(Block);
 	
-	var AuctionMenue = function (_Block2) {
-		(0, _inherits3.default)(AuctionMenue, _Block2);
+	var AuctionMenue = function (_Block3) {
+		(0, _inherits3.default)(AuctionMenue, _Block3);
 	
 		function AuctionMenue(ctx, ui, ws) {
 			(0, _classCallCheck3.default)(this, AuctionMenue);
 	
-			var _this2 = (0, _possibleConstructorReturn3.default)(this, (AuctionMenue.__proto__ || (0, _getPrototypeOf2.default)(AuctionMenue)).call(this, ctx, 480, 200, 300, 100));
+			var _this3 = (0, _possibleConstructorReturn3.default)(this, (AuctionMenue.__proto__ || (0, _getPrototypeOf2.default)(AuctionMenue)).call(this, ctx, 480, 200, 300, 100));
 	
-			console.log(_this2.x + ' ' + _this2.y + ' ' + _this2.width + ' ' + _this2.height);
-			_this2.ws = ws;
-			_this2.wsFilter = 'auction';
-			_this2.blocks = [];
-			_this2.w = 120;
-			_this2.h = 30;
-			_this2.blocks.push(new Block(ctx, _this2.x + 10, _this2.y + _this2.height - _this2.h - 10, _this2.w, _this2.h, 'Yes'));
-			_this2.blocks.push(new Block(ctx, _this2.x + _this2.width - 10 - _this2.w, _this2.y + _this2.height - _this2.h - 10, _this2.w, _this2.h, 'Not'));
-			_this2.blocks.forEach(function (el) {
-				el.onReady = function () {
-					_this2.hide();
-				};
-				ui.addBlock(el);
-			});
-			_this2.hide();
-			ws.addBlock(_this2);
-			return _this2;
-		}
-	
-		return AuctionMenue;
-	}(Block);
-	
-	var TradeMenue = function (_Block3) {
-		(0, _inherits3.default)(TradeMenue, _Block3);
-	
-		function TradeMenue(ctx, ui, ws) {
-			(0, _classCallCheck3.default)(this, TradeMenue);
-	
-			var _this3 = (0, _possibleConstructorReturn3.default)(this, (TradeMenue.__proto__ || (0, _getPrototypeOf2.default)(TradeMenue)).call(this, ctx, 480, 200, 300, 300));
-	
+			_this3.ws = ws;
+			_this3.wsFilter = /auction/;
 			_this3.blocks = [];
-			_this3.wsFilter = 'trade';
 			_this3.w = 120;
 			_this3.h = 30;
-			_this3.blocks.push(new Block(ctx, _this3.x + 10, _this3.y + _this3.height - _this3.h - 10, _this3.w, _this3.h));
-			_this3.blocks.push(new Block(ctx, _this3.x + _this3.width - 10 - _this3.w, _this3.y + _this3.height - _this3.h - 10, _this3.w, _this3.h));
+			_this3.textField = new Block(ctx, _this3.x + 10, _this3.y + 10, _this3.width - 20, 40, 'Купить предприятие');
+			_this3.blocks.push(_this3.textField);
+			_this3.yes = new Block(ctx, _this3.x + 10, _this3.y + _this3.height - _this3.h - 10, _this3.w, _this3.h, 'Купить');
+			_this3.yes.onReady = function () {
+				ws.send((0, _stringify2.default)({
+					action: "auction.yes",
+					data: 0
+				}));
+				_this3.hide();
+			};
+	
+			_this3.blocks.push(_this3.yes);
+			_this3.not = new Block(ctx, _this3.x + _this3.width - 10 - _this3.w, _this3.y + _this3.height - _this3.h - 10, _this3.w, _this3.h, 'Отказаться');
+			_this3.not.onReady = function () {
+				ws.send((0, _stringify2.default)({
+					action: "auction.not",
+					data: 0
+				}));
+				_this3.hide();
+			};
+			_this3.blocks.push(_this3.not);
 			_this3.blocks.forEach(function (el) {
 				ui.addBlock(el);
 			});
@@ -5097,22 +5171,55 @@
 			return _this3;
 		}
 	
-		return TradeMenue;
+		(0, _createClass3.default)(AuctionMenue, [{
+			key: 'onMessage',
+			value: function onMessage(event) {
+				this.yes.isSelceted = false;
+				this.textField.text = '\u041A\u0443\u043F\u0438\u0442\u044C ' + event.field + ' \u0437\u0430 ' + event.cost + '$';
+				if (event.enable) {
+					this.yes.isEnable = true;
+				} else {
+					this.yes.isEnable = false;
+				}
+				this.show();
+			}
+		}]);
+		return AuctionMenue;
 	}(Block);
 	
-	var OkMenue = function (_Block4) {
-		(0, _inherits3.default)(OkMenue, _Block4);
+	var FieldMenue = function (_Block4) {
+		(0, _inherits3.default)(FieldMenue, _Block4);
 	
-		function OkMenue(ctx, ui, ws) {
-			(0, _classCallCheck3.default)(this, OkMenue);
+		function FieldMenue(ctx, ui, ws) {
+			(0, _classCallCheck3.default)(this, FieldMenue);
 	
-			var _this4 = (0, _possibleConstructorReturn3.default)(this, (OkMenue.__proto__ || (0, _getPrototypeOf2.default)(OkMenue)).call(this, ctx, 480, 200, 300, 300));
+			var _this4 = (0, _possibleConstructorReturn3.default)(this, (FieldMenue.__proto__ || (0, _getPrototypeOf2.default)(FieldMenue)).call(this, ctx, 480, 200, 300, 100));
 	
+			_this4.ws = ws;
+			_this4.field = 0;
 			_this4.blocks = [];
-			_this4.wsFilter = 'ok';
 			_this4.w = 120;
 			_this4.h = 30;
-			_this4.blocks.push(new Block(ctx, _this4.x + _this4.width / 2 - _this4.w / 2, _this4.y + _this4.height - _this4.h - 10, _this4.w, _this4.h));
+			_this4.textField = new Block(ctx, _this4.x + 10, _this4.y + 10, _this4.width - 20, 40, 'Field menue');
+			_this4.blocks.push(_this4.textField);
+			_this4.upgrage = new Block(ctx, _this4.x + 10, _this4.y + _this4.height - _this4.h - 10, _this4.w, _this4.h, 'Улучшить');
+			_this4.upgrage.onReady = function () {
+				ws.send((0, _stringify2.default)({
+					action: "field.upgrade",
+					data: _this4.field
+				}));
+				_this4.hide();
+			};
+			_this4.blocks.push(_this4.upgrage);
+			_this4.zalozhit = new Block(ctx, _this4.x + _this4.width - 10 - _this4.w, _this4.y + _this4.height - _this4.h - 10, _this4.w, _this4.h, 'Заложить');
+			_this4.zalozhit.onReady = function () {
+				ws.send((0, _stringify2.default)({
+					action: "field.zalozhit",
+					data: _this4.field
+				}));
+				_this4.hide();
+			};
+			_this4.blocks.push(_this4.zalozhit);
 			_this4.blocks.forEach(function (el) {
 				ui.addBlock(el);
 			});
@@ -5121,44 +5228,174 @@
 			return _this4;
 		}
 	
-		return OkMenue;
+		(0, _createClass3.default)(FieldMenue, [{
+			key: 'showFld',
+			value: function showFld(val) {
+				this.field = val;
+				this.textField.text = this.field;
+				this.show();
+			}
+		}]);
+		return FieldMenue;
 	}(Block);
 	
-	var GameSquare = function (_Block5) {
-		(0, _inherits3.default)(GameSquare, _Block5);
+	var TradeMenue = function (_Block5) {
+		(0, _inherits3.default)(TradeMenue, _Block5);
 	
-		function GameSquare(ctx, ui) {
-			(0, _classCallCheck3.default)(this, GameSquare);
+		function TradeMenue(ctx, ui) {
+			(0, _classCallCheck3.default)(this, TradeMenue);
 	
-			var _this5 = (0, _possibleConstructorReturn3.default)(this, (GameSquare.__proto__ || (0, _getPrototypeOf2.default)(GameSquare)).call(this, ctx, 350, 10, 610, 610));
+			var _this5 = (0, _possibleConstructorReturn3.default)(this, (TradeMenue.__proto__ || (0, _getPrototypeOf2.default)(TradeMenue)).call(this, ctx, 480, 200, 300, 300));
 	
 			_this5.blocks = [];
-			_this5.w = 50;
-			_this5.h = 80;
-			var j = 0;
-			_this5.blocks.push(new Block(ctx, _this5.x, _this5.y, _this5.h, _this5.h, j++));
-			for (var i = 0; i < 9; i++) {
-				_this5.blocks.push(new Block(ctx, _this5.x + _this5.h + i * _this5.w, _this5.y + 0, _this5.w, _this5.h, j++));
-			}
-			_this5.blocks.push(new Block(ctx, _this5.x + 9 * _this5.w + _this5.h, _this5.y, _this5.h, _this5.h, j++));
-			for (var i = 0; i < 9; i++) {
-				_this5.blocks.push(new Block(ctx, _this5.x + 9 * _this5.w + _this5.h, _this5.y + _this5.h + _this5.w * i, _this5.h, _this5.w, j++));
-			}
-			_this5.blocks.push(new Block(ctx, _this5.x + 9 * _this5.w + _this5.h, _this5.y + 9 * _this5.w + _this5.h, _this5.h, _this5.h, j++));
-			for (var i = 8; i >= 0; i--) {
-				_this5.blocks.push(new Block(ctx, _this5.x + _this5.h + i * _this5.w, _this5.y + 9 * _this5.w + _this5.h, _this5.w, _this5.h, j++));
-			}
-			_this5.blocks.push(new Block(ctx, _this5.x, _this5.y + 9 * _this5.w + _this5.h, _this5.h, _this5.h, j++));
-			for (var i = 8; i >= 0; i--) {
-				_this5.blocks.push(new Block(ctx, _this5.x + 0, _this5.y + _this5.h + _this5.w * i, _this5.h, _this5.w, j++));
-			}
+			_this5.wsFilter = /trade/;
+			_this5.w = 120;
+			_this5.h = 30;
+			_this5.blocks.push(new Block(ctx, _this5.x + 10, _this5.y + _this5.height - _this5.h - 10, _this5.w, _this5.h));
+			_this5.blocks.push(new Block(ctx, _this5.x + _this5.width - 10 - _this5.w, _this5.y + _this5.height - _this5.h - 10, _this5.w, _this5.h));
 			_this5.blocks.forEach(function (el) {
 				ui.addBlock(el);
 			});
+			_this5.hide();
+			ws.addBlock(_this5);
 			return _this5;
 		}
 	
+		return TradeMenue;
+	}(Block);
+	
+	var PayMenue = function (_Block6) {
+		(0, _inherits3.default)(PayMenue, _Block6);
+	
+		function PayMenue(ctx, ui, ws) {
+			(0, _classCallCheck3.default)(this, PayMenue);
+	
+			var _this6 = (0, _possibleConstructorReturn3.default)(this, (PayMenue.__proto__ || (0, _getPrototypeOf2.default)(PayMenue)).call(this, ctx, 480, 200, 300, 100));
+	
+			_this6.ws = ws;
+			_this6.wsFilter = /pay/;
+			_this6.blocks = [];
+			_this6.w = 120;
+			_this6.h = 30;
+			_this6.textField = new Block(ctx, _this6.x + 10, _this6.y + 10, _this6.width - 20, 40, 'Need Pay');
+			_this6.blocks.push(_this6.textField);
+			_this6.yes = new Block(ctx, _this6.x + 10, _this6.y + _this6.height - _this6.h - 10, _this6.w, _this6.h, 'Pay');
+			_this6.yes.onReady = function () {
+				ws.send((0, _stringify2.default)({
+					action: "pay",
+					data: 0
+				}));
+				_this6.hide();
+			};
+	
+			_this6.blocks.push(_this6.yes);
+			_this6.not = new Block(ctx, _this6.x + _this6.width - 10 - _this6.w, _this6.y + _this6.height - _this6.h - 10, _this6.w, _this6.h, 'Not pay');
+			_this6.not.onReady = function () {
+				ws.send((0, _stringify2.default)({
+					action: "notPay",
+					data: 0
+				}));
+				_this6.hide();
+			};
+			_this6.blocks.push(_this6.not);
+			_this6.blocks.forEach(function (el) {
+				ui.addBlock(el);
+			});
+			_this6.hide();
+			ws.addBlock(_this6);
+			return _this6;
+		}
+	
+		(0, _createClass3.default)(PayMenue, [{
+			key: 'onMessage',
+			value: function onMessage(event) {
+				this.yes.isSelceted = false;
+				this.textField.text = 'Need pay ' + event.cost;
+				if (event.enable) {
+					this.yes.isEnable = true;
+				} else {
+					this.yes.isEnable = false;
+				}
+				this.show();
+			}
+		}]);
+		return PayMenue;
+	}(Block);
+	
+	var MyStepMenue = function (_Block7) {
+		(0, _inherits3.default)(MyStepMenue, _Block7);
+	
+		function MyStepMenue(ctx, ui, ws) {
+			(0, _classCallCheck3.default)(this, MyStepMenue);
+	
+			var _this7 = (0, _possibleConstructorReturn3.default)(this, (MyStepMenue.__proto__ || (0, _getPrototypeOf2.default)(MyStepMenue)).call(this, ctx, 480, 200, 300, 300));
+	
+			_this7.blocks = [];
+			_this7.wsFilter = /myStep/;
+			_this7.w = 120;
+			_this7.h = 30;
+			var el = new Block(ctx, _this7.x + _this7.width / 2 - _this7.w / 2, _this7.y + _this7.height - _this7.h - 10, _this7.w, _this7.h, "Roll Dice");
+			el.onReady = function () {
+				ws.send((0, _stringify2.default)({ action: "rollDice", data: null }));
+				_this7.hide();
+			};
+			_this7.blocks.push(new Block(ctx, _this7.x + 10, _this7.y + 10, _this7.width - 20, _this7.height - 80, "Roll Dice"));
+			_this7.blocks.push(el);
+			_this7.blocks.forEach(function (el) {
+				ui.addBlock(el);
+			});
+			_this7.hide();
+			ws.addBlock(_this7);
+			return _this7;
+		}
+	
+		return MyStepMenue;
+	}(Block);
+	
+	var GameSquare = function (_Block8) {
+		(0, _inherits3.default)(GameSquare, _Block8);
+	
+		function GameSquare(ctx, ui, fld) {
+			(0, _classCallCheck3.default)(this, GameSquare);
+	
+			var _this8 = (0, _possibleConstructorReturn3.default)(this, (GameSquare.__proto__ || (0, _getPrototypeOf2.default)(GameSquare)).call(this, ctx, 350, 10, 610, 610));
+	
+			_this8.fld = fld;
+			_this8.blocks = [];
+			_this8.w = 50;
+			_this8.h = 80;
+			var j = 0;
+			_this8.blocks.push(new Field(ctx, _this8.x, _this8.y, _this8.h, _this8.h, j++, -1, _this8.fld));
+			for (var i = 0; i < 9; i++) {
+				_this8.blocks.push(new Field(ctx, _this8.x + _this8.h + i * _this8.w, _this8.y + 0, _this8.w, _this8.h, j++, -1, _this8.fld));
+			}
+			_this8.blocks.push(new Field(ctx, _this8.x + 9 * _this8.w + _this8.h, _this8.y, _this8.h, _this8.h, j++, -1, _this8.fld));
+			for (var i = 0; i < 9; i++) {
+				_this8.blocks.push(new Field(ctx, _this8.x + 9 * _this8.w + _this8.h, _this8.y + _this8.h + _this8.w * i, _this8.h, _this8.w, j++, -1, _this8.fld));
+			}
+			_this8.blocks.push(new Field(ctx, _this8.x + 9 * _this8.w + _this8.h, _this8.y + 9 * _this8.w + _this8.h, _this8.h, _this8.h, j++, -1, _this8.fld));
+			for (var i = 8; i >= 0; i--) {
+				_this8.blocks.push(new Field(ctx, _this8.x + _this8.h + i * _this8.w, _this8.y + 9 * _this8.w + _this8.h, _this8.w, _this8.h, j++, -1, _this8.fld));
+			}
+			_this8.blocks.push(new Field(ctx, _this8.x, _this8.y + 9 * _this8.w + _this8.h, _this8.h, _this8.h, j++, -1, _this8.fld));
+			for (var i = 8; i >= 0; i--) {
+				_this8.blocks.push(new Field(ctx, _this8.x + 0, _this8.y + _this8.h + _this8.w * i, _this8.h, _this8.w, j++, -1, _this8.fld));
+			}
+			_this8.blocks.forEach(function (el) {
+				ui.addBlock(el);
+			});
+			return _this8;
+		}
+	
 		(0, _createClass3.default)(GameSquare, [{
+			key: 'update',
+			value: function update(obj) {
+				console.log('update(obj)');
+				var field = obj.field;
+				var owner = obj.owner;
+				this.blocks[field].owner = owner;
+			}
+		}, {
 			key: 'getPlants',
 			value: function getPlants() {
 				return this.blocks;
@@ -5167,34 +5404,48 @@
 		return GameSquare;
 	}(Block);
 	
-	var UsersBox = function (_Block6) {
-		(0, _inherits3.default)(UsersBox, _Block6);
+	var UsersBox = function (_Block9) {
+		(0, _inherits3.default)(UsersBox, _Block9);
 	
 		function UsersBox(ctx, ui, ws) {
 			(0, _classCallCheck3.default)(this, UsersBox);
 	
-			var _this6 = (0, _possibleConstructorReturn3.default)(this, (UsersBox.__proto__ || (0, _getPrototypeOf2.default)(UsersBox)).call(this, ctx, 10, 10, 300, 650));
+			var _this9 = (0, _possibleConstructorReturn3.default)(this, (UsersBox.__proto__ || (0, _getPrototypeOf2.default)(UsersBox)).call(this, ctx, 10, 10, 300, 650));
 	
-			_this6.blocks = [];
-			_this6.ui = ui;
-			_this6.ws = ws;
-			_this6.wsFilter = 'players';
-			ws.addBlock(_this6);
-			return _this6;
+			_this9.blocks = [];
+			_this9.ui = ui;
+			_this9.ws = ws;
+			_this9.cte = ctx;
+			_this9.wsFilter = /gameState|moneyState|buyField/;
+			ws.addBlock(_this9);
+			return _this9;
 		}
 	
 		(0, _createClass3.default)(UsersBox, [{
 			key: 'onMessage',
-			value: function onMessage(msg) {
-				var _this7 = this;
+			value: function onMessage(msg, act) {
+				var _this10 = this;
 	
-				var i = 0;
-				this.blocks = msg.map(function (el) {
-					var block = new User(_this7.ctx, i++, el);
-					_this7.ui.addBlock(block);
-					block.show();
-					return block;
-				});
+				if (act == 'gameState') {
+					(function () {
+						var i = 0;
+						_this10.blocks = msg.names.map(function (el) {
+							var block = new User(_this10.ctx, i++, el);
+							_this10.ui.addBlock(block);
+							block.show();
+							return block;
+						});
+					})();
+				} else if (act == 'moneyState') {
+					var _i = 0;
+					console.log("I AM HERE");
+					for (_i = 0; _i < msg.length; _i++) {
+						this.blocks[_i].setCash(msg[_i]);
+					}
+				} else if (act == 'buyField') {
+					console.log('here');
+					this.blocks[msg.owner].addCash(-msg.cost);
+				}
 			}
 		}, {
 			key: 'getUsers',
@@ -5205,36 +5456,43 @@
 		return UsersBox;
 	}(Block);
 	
-	var Root = function (_Block7) {
-		(0, _inherits3.default)(Root, _Block7);
+	var Root = function (_Block10) {
+		(0, _inherits3.default)(Root, _Block10);
 	
 		function Root(obj, ctx, ui, ws, time) {
 			(0, _classCallCheck3.default)(this, Root);
 	
-			var _this8 = (0, _possibleConstructorReturn3.default)(this, (Root.__proto__ || (0, _getPrototypeOf2.default)(Root)).call(this, ctx, 0, 0, obj.width, obj.height));
+			var _this11 = (0, _possibleConstructorReturn3.default)(this, (Root.__proto__ || (0, _getPrototypeOf2.default)(Root)).call(this, ctx, 0, 0, obj.width, obj.height));
 	
-			time.start(_this8);
-			_this8.ws = ws;
-			_this8.wsFilter = 'dice';
-			_this8.blocks = [];
-			_this8.ctx = ctx;
-			_this8.ub = new UsersBox(ctx, ui, ws);
-			_this8.blocks.push(_this8.ub);
-			_this8.gs = new GameSquare(ctx, ui);
-			_this8.blocks.push(_this8.gs);
-			_this8.fg = new Figures(ctx, _this8.gs.blocks, ws, time);
-			_this8.blocks.push(_this8.fg);
-			_this8.blocks.push(new AuctionMenue(ctx, ui, ws));
-			_this8.blocks.push(new TradeMenue(ctx, ui, ws));
-			_this8.ws.addBlock(_this8);
-			return _this8;
+			time.start(_this11);
+			_this11.ws = ws;
+			_this11.wsFilter = /step|buyField/;
+			_this11.blocks = [];
+			_this11.ctx = ctx;
+			_this11.ub = new UsersBox(ctx, ui, ws);
+			_this11.blocks.push(_this11.ub);
+			_this11.fld = new FieldMenue(ctx, ui, ws);
+			_this11.blocks.push(_this11.fld);
+			_this11.gs = new GameSquare(ctx, ui, _this11.fld);
+			_this11.blocks.push(_this11.gs);
+			_this11.fg = new Figures(ctx, _this11.gs.blocks, ws, time);
+			_this11.blocks.push(_this11.fg);
+			_this11.blocks.push(new AuctionMenue(ctx, ui, ws));
+			//this.blocks.push(new TradeMenue(ctx, ui));
+			_this11.blocks.push(new MyStepMenue(ctx, ui, ws));
+			_this11.blocks.push(new PayMenue(ctx, ui, ws));
+			_this11.ws.addBlock(_this11);
+			return _this11;
 		}
 	
 		(0, _createClass3.default)(Root, [{
 			key: 'onMessage',
-			value: function onMessage(val) {
-				console.log('here where');
-				this.fg.steps(val.firstDice + val.secondDice);
+			value: function onMessage(val, action) {
+				if (action == 'step') {
+					this.fg.steps(val.step);
+				} else if (action == 'buyField') {
+					this.gs.update(val);
+				}
 			}
 		}]);
 		return Root;
@@ -5242,22 +5500,23 @@
 	
 	exports.default = Root;
 	
-	var Figures = function (_Block8) {
-		(0, _inherits3.default)(Figures, _Block8);
+	var Figures = function (_Block11) {
+		(0, _inherits3.default)(Figures, _Block11);
 	
 		function Figures(ctx, blocks, ws, time) {
 			(0, _classCallCheck3.default)(this, Figures);
 	
-			var _this9 = (0, _possibleConstructorReturn3.default)(this, (Figures.__proto__ || (0, _getPrototypeOf2.default)(Figures)).call(this, ctx, 0, 0, 0, 0));
+			var _this12 = (0, _possibleConstructorReturn3.default)(this, (Figures.__proto__ || (0, _getPrototypeOf2.default)(Figures)).call(this, ctx, 0, 0, 0, 0));
 	
-			_this9.time = time;
-			_this9.cur = 0;
-			_this9.wsFilter = 'players';
-			_this9.blocks = [];
-			_this9.bs = blocks;
-			_this9.ws = ws;
-			_this9.ws.addBlock(_this9);
-			return _this9;
+			_this12.time = time;
+			_this12.cur = 0;
+			_this12.ws = ws;
+			_this12.ctx = ctx;
+			_this12.wsFilter = /gameState|step/;
+			_this12.blocks = [];
+			_this12.bs = blocks;
+			ws.addBlock(_this12);
+			return _this12;
 		}
 	
 		(0, _createClass3.default)(Figures, [{
@@ -5268,37 +5527,42 @@
 			}
 		}, {
 			key: 'onMessage',
-			value: function onMessage(players) {
-				var _this10 = this;
+			value: function onMessage(data, action) {
+				var _this13 = this;
 	
-				var i = 0;
-				this.blocks = players.map(function (player) {
-					return new Figure(_this10.ctx, _this10.bs, _this10.time, { num: i++, pos: 0 });
-				});
+				if (action == "gameState") {
+					(function () {
+						var i = 0;
+						_this13.blocks = data.names.map(function (player) {
+							return new Figure(_this13.ctx, _this13.bs, { num: i++, pos: 0 }, _this13.time);
+						});
+					})();
+				} else if (action == "step") {}
 			}
 		}]);
 		return Figures;
 	}(Block);
 	
-	var Figure = function (_Block9) {
-		(0, _inherits3.default)(Figure, _Block9);
+	var Figure = function (_Block12) {
+		(0, _inherits3.default)(Figure, _Block12);
 	
-		function Figure(ctx, blocks, time) {
-			var player = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : { num: 0, pos: 0 };
+		function Figure(ctx, blocks) {
+			var player = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : { num: 0, pos: 0 };
+			var time = arguments[3];
 			(0, _classCallCheck3.default)(this, Figure);
 	
-			var _this11 = (0, _possibleConstructorReturn3.default)(this, (Figure.__proto__ || (0, _getPrototypeOf2.default)(Figure)).call(this, ctx, blocks[player.pos].x, blocks[player.pos].y + player.num * 25, 20, 20));
+			var _this14 = (0, _possibleConstructorReturn3.default)(this, (Figure.__proto__ || (0, _getPrototypeOf2.default)(Figure)).call(this, ctx, blocks[player.pos].x, blocks[player.pos].y + player.num * 25, 20, 20, "", COLORS[player.num]));
 	
-			_this11.show();
-			_this11.time = time;
-			_this11.player = player;
-			_this11.steps = 0;
-			_this11.pos = _this11.player.pos;
-			_this11.num = _this11.player.num;
-			_this11.bs = blocks;
-			alert(_this11.time);
-			_this11.time.addBlock(_this11);
-			return _this11;
+			_this14.time = time;
+			_this14.isSelected = true;
+			_this14.show();
+			_this14.player = player;
+			_this14.steps = 0;
+			_this14.pos = _this14.player.pos;
+			_this14.num = _this14.player.num;
+			_this14.bs = blocks;
+			_this14.time.addBlock(_this14);
+			return _this14;
 		}
 	
 		(0, _createClass3.default)(Figure, [{
@@ -5306,7 +5570,7 @@
 			value: function move(dt) {
 				if (this.steps > 0) {
 					if (this.bs[(this.pos + 1) % 40].x > this.x) {
-						this.x += 2;
+						this.x += 5;
 						if (this.bs[(this.pos + 1) % 40].x <= this.x) {
 							this.pos += 1;
 							this.pos = this.pos % 40;
@@ -5315,7 +5579,7 @@
 							this.steps -= 1;
 						}
 					} else if (this.bs[(this.pos + 1) % 40].x < this.x) {
-						this.x -= 2;
+						this.x -= 5;
 						if (this.bs[(this.pos + 1) % 40].x >= this.x) {
 							this.pos += 1;
 							this.pos = this.pos % 40;
@@ -5324,7 +5588,7 @@
 							this.steps -= 1;
 						}
 					} else if (this.bs[(this.pos + 1) % 40].y > this.y - this.num * 25) {
-						this.y += 2;
+						this.y += 5;
 						if (this.bs[(this.pos + 1) % 40].y <= this.y - this.num * 25) {
 							this.pos += 1;
 							this.pos = this.pos % 40;
@@ -5333,7 +5597,7 @@
 							this.steps -= 1;
 						}
 					} else if (this.bs[(this.pos + 1) % 40].y < this.y - this.num * 25) {
-						this.y -= 2;
+						this.y -= 5;
 						if (this.bs[(this.pos + 1) % 40].y >= this.y - this.num * 25) {
 							this.pos += 1;
 							this.pos = this.pos % 40;

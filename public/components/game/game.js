@@ -5,7 +5,7 @@ import Root from '../game/elements'
 
 
 export default class Game{
-	constructor(canvas, root = 'ws://pure-savannah-60680.herokuapp.com') {
+	constructor(canvas, root = 'ws://127.0.0.1:4000') {
 		this._el = canvas;
 		this.ctx = canvas.getContext('2d');
 		this.ctx.strokeRect(0,0, this._el.width, this._el.height);

@@ -1,18 +1,7 @@
-'use strict';
+var WebSocketServer = new require('ws');
 
-const parser = require('body-parser');
-const technoDoc = require('techno-gendoc');
-const path = require('path');
-var server = require('http').createServer()
-  , url = require('url')
-  , WebSocketServer = require('ws').Server
-  , wss = new WebSocketServer({ server: server })
-  , express = require('express')
-  , app = express()
-  , port = process.env.PORT || 4000;
- 
-['/', '/signin', '/signup', '/app'].forEach((paths) => { app.use(paths, express.static('public', {maxAge: 1})); });
- 
+var webSocketServer = new WebSocketServer.Server({port: process.env.PORT || 8081});
+
 class Player {
 	constructor(con) {
 		this.money = 5000;
@@ -332,7 +321,7 @@ class Game {
 
 let games = [];
 let players = [];
-wss.on('connection', function(ws) {
+webSocketServer.on('connection', function(ws) {
 	let myNum = players.length;
 	players.push(new Player(ws));
 	if (players.length == 2) {
@@ -362,8 +351,3 @@ wss.on('connection', function(ws) {
   	});
   ws.on('close', function() {});
 });
- 
-server.on('request', app);
-server.listen(port, function () { console.log('Listening on ' + server.address().port) });
-
-

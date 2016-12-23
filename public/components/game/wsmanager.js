@@ -14,8 +14,8 @@ export default class WSManager {
 		this.socket.onmessage = msg => {
 			let obj = JSON.parse(msg.data);
 			this.listeners.forEach(el => {
-				if(el.wsFilter != null && el.wsFilter == obj.action) {
-					el.onMessage(obj.data);
+				if(el.wsFilter != null && el.wsFilter.test(obj.action)) {
+					el.onMessage(obj.data, obj.action);
 				}
 			});
 		}
