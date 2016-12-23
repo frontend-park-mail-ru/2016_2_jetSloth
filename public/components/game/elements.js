@@ -7,7 +7,7 @@ const COLORS = [
 		'#1F1F11',
 		'#11F1F1',
 		'#F1F1F1'
-	]
+	];
 
 const COLORS_BACK = [
 		'#11AA11',
@@ -18,7 +18,7 @@ const COLORS_BACK = [
 		'#1A1A11',
 		'#11A1A1',
 		'#A1A1A1'
-	]
+	];
 
 class Block {
 	constructor(ctx, x, y, width, height, text, color = '#55FFFF') {

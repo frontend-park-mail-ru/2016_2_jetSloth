@@ -1,5 +1,6 @@
 export default class WSManager {
 	constructor(url) {
+		console.log("here");
 		this.listeners = [];
 		this.ready = false;
 		this.socket = new WebSocket(url);

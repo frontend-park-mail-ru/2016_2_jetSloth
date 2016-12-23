@@ -56,14 +56,16 @@ export default class Form extends Block {
             this._el.querySelector('.js-controls').appendChild(control._get());
         })
     }
-
+	
     _setListeners() {
         this.on('reset', event => {
             event.preventDefault();
             this.resetForm();
         })
+		
         this.on('submit', event => {
-            event.preventDefault();
+			event.preventDefault();
+    		(new Router).go('/gameGate');
         })
 
         this._el.querySelector('.close').addEventListener('click', () =>{

@@ -154,6 +154,30 @@ class Game {
 			}))
 		});
 	}
+	msgFail() {
+		player.con.send(JSON.stringify({
+			action: "fail",
+			data: {
+				player: this.curPlayer,
+			}
+		}))
+	}
+	msgWin() {
+		player.con.send(JSON.stringify({
+			action: "fail",
+			data: {
+				player: this.curPlayer,
+			}
+		}))
+	}
+	msgStart() {
+	    this.players.forEach(player => {
+            player.con.send(JSON.stringify({
+                action: "start",
+                data: null
+            }))
+        })
+    }
 	msgRollDice() {
 		console.log("msgRollDice()");
 		this.players.forEach(player => {
@@ -162,7 +186,7 @@ class Game {
 				data: {
 					firstDice: this.firstDice,
 					secondDice: this.secondDice,
-					player: this.currPlayer
+					player: this.curPlayer
 				}
 			}))
 		});
@@ -224,7 +248,7 @@ class Game {
 					field: this.afield,
 					enable: this.players[this.acurPlayer].money >= this.fields[this.players[this.curPlayer].pos].cost
 				}
-			}));
+		}));
 	}
 
 	rollDice() {
@@ -260,18 +284,18 @@ class Game {
 	pay() {
 		console.log("pay()");
 		let val = this.fields[this.players[this.curPlayer].pos].payCost();
-		console.log("==>" + val)
+		console.log("==>" + val);
 		this.players[this.curPlayer].addMoney(-val);
 		this.players[this.fields[this.players[this.curPlayer].pos].owner].addMoney(val);
 		this.msgMoneyState();
 		this.nextPlayer();
 	}
 	msgMoneyState(){
-		console.log("moneyState")
+		console.log("moneyState");
 		let cashs = [];
 		this.players.forEach(player => {
 			cashs.push(player.money);
-		})
+		});
 		this.players.forEach(player => {
 			player.con.send(JSON.stringify({
 				action: "moneyState",
@@ -330,30 +354,109 @@ class Game {
 }
 
 
-let games = [];
-let players = [];
-wss.on('connection', function(ws) {
-	let myNum = players.length;
-	players.push(new Player(ws));
-	if (players.length == 2) {
-		games.push(new Game(players));
-		games[0].start();
+let games = {};
+let players = {};
+let openGames = {};
+class DB {
+    constructor() {
+        this.users = []
+    }
+    rating() {
+    	return users.map(user => {return user.stars});
 	}
+}
+
+let db = new DB();
+
+class OpenGame {
+    constructor(count, authorConnection, playerID, playerName) {
+        this.players = [];
+        this.players.push(new Player(authorConnection, playerID, playerName));
+        this.count = count;
+    }
+
+    addPlayer(playerConnection, playerID, playerName) {
+        this.players.push(new Player(playerConnection, playerId, playerName));
+    }
+
+    isReady() {
+        return this.players.length == this.count
+    }
+
+    toGame() {
+        if (isReady) {
+            return new Game(this.players);
+        }
+        console.log("OpenGame can not make Game");
+    }
+    deletePlayer(id) {
+    	for(i = 0; i < this.players.length; i++) {
+    		if(this.players[i].id == id) {
+    			this.players.splice(i, 1);
+				return;
+			}
+		}
+	}
+}
+
+let lastId = 0;
+let lastCurGameId = 0;
+let lastGameId = 0;
+wss.on('connection', function(ws) {
+	let openGame;
+	let myNum = players.length;
+	let curGame = null;
+	let curGameId;
+	let gameId;
+	let id = lastId++;
  	ws.on('message', function(userMsg) {
 		userMsg = JSON.parse(userMsg);
-		if (userMsg.action == "rollDice") {
-			games[0].rollDice();
+		if (userMsg.action == "createGame") {
+			curGame = new OpenGame(userMsg.data, ws, id);
+			curGameId = lastCurGameId++;
+			openGames[curGameId] = curGame;
+		}
+		else if (userMsg.action == "joinGame") {
+			openGames[userMsg.data].addPlayer(ws, "MyName", id);
+			Object.keys(openGames).forEach(openGame => {
+				openGame.deletePlayer(id);
+			})
+            if (openGames[userMsg.data].isReady()) {
+                curGame = openGames[userMsg.data];
+                curGame = curGame.toGame();
+				gameId = lastGameId;
+                games[gameId] = curGame;
+                curGame.msgStart();
+            }
+		}
+		else if (userMsg.action == "rating") {
+			ws.send(JSON.stringify({
+				action: "rating",
+				data: db.rating()
+			}));
+		}
+		else if (userMsg.action == "openGamesStrtus") {
+			ws.send(
+				JSON.stringify({
+					action: "openGames",
+					data: openGames
+				})
+			);
+		}
+		else if (userMsg.action == "rollDice") {
+			games[gameId].rollDice();
 		}
 		else if (userMsg.action == "auction.yes") {
-			games[0].buyField(myNum);
+			games[gameId].buyField(myNum);
 		}
 		else if (userMsg.action == "auction.not") {
-			games[0].notBuyField(myNum);
+			games[gameId].notBuyField(myNum);
 		}
 		else if (userMsg.action == "pay") {
-			games[0].pay();
+			games[gameId].pay();
 		}
 		else if (userMsg.action == "province.zalozhit") {
+			console.log("zalozhit");
 		}
 		else if (userMsg.action == "province.update") {
 		}
