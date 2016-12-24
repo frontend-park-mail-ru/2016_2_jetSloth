@@ -262,7 +262,6 @@ class Game {
 	move() {
 		console.log("move()")
 		this.stepLen = this.firstDice + this.secondDice;
-		console.log(this.stepLen);
 		this.players[this.curPlayer].move(this.stepLen);
 		this.msgMove();
 		this.event();
@@ -284,7 +283,6 @@ class Game {
 	pay() {
 		console.log("pay()");
 		let val = this.fields[this.players[this.curPlayer].pos].payCost();
-		console.log("==>" + val);
 		this.players[this.curPlayer].addMoney(-val);
 		this.players[this.fields[this.players[this.curPlayer].pos].owner].addMoney(val);
 		this.msgMoneyState();
@@ -314,8 +312,6 @@ class Game {
 			while ((!this.players[this.acurPlayer].isActive) && (this.acurPlayer != this.abecomer)) {
 				this.acurPlayer = Math.floor((this.acurPlayer + 1) % this.playersCount);
 			}
-			console.log(this.acurPlayer);
-			console.log(this.abecomer);
 			if (this.acurPlayer == this.abecomer) {
 				this.acurPlayer = -1;
 				this.nextPlayer();
@@ -376,7 +372,7 @@ class OpenGame {
     }
 
     addPlayer(playerConnection, playerID, playerName) {
-        this.players.push(new Player(playerConnection, playerId, playerName));
+        this.players.push(new Player(playerConnection, playerID, playerName));
     }
 
     isReady() {
@@ -384,12 +380,13 @@ class OpenGame {
     }
 
     toGame() {
-        if (isReady) {
+        if (this.isReady()) {
             return new Game(this.players);
         }
         console.log("OpenGame can not make Game");
     }
     deletePlayer(id) {
+		var i;
     	for(i = 0; i < this.players.length; i++) {
     		if(this.players[i].id == id) {
     			this.players.splice(i, 1);
@@ -404,29 +401,41 @@ let lastCurGameId = 0;
 let lastGameId = 0;
 wss.on('connection', function(ws) {
 	let openGame;
-	let myNum = players.length;
-	let curGame = null;
+	let myNum;
+	let curGame = {};
 	let curGameId;
 	let gameId;
 	let id = lastId++;
  	ws.on('message', function(userMsg) {
-		userMsg = JSON.parse(userMsg);
+		try {
+			userMsg = JSON.parse(userMsg);
+		}
+		catch(err) {
+			userMsg = {action: "err", data: "err"}
+		}
 		if (userMsg.action == "createGame") {
-			curGame = new OpenGame(userMsg.data, ws, id);
+			myNum = 0;
+			curGame = new OpenGame(userMsg.data, ws, id, 'Anon');
 			curGameId = lastCurGameId++;
+			gameId = lastGameId++;
 			openGames[curGameId] = curGame;
 		}
 		else if (userMsg.action == "joinGame") {
-			openGames[userMsg.data].addPlayer(ws, "MyName", id);
-			Object.keys(openGames).forEach(openGame => {
-				openGame.deletePlayer(id);
+			myNum = 1;
+			curGameId = userMsg.data;
+			gameId = userMsg.data;
+			openGames[userMsg.data].addPlayer(ws, id, "MyName");
+			Object.keys(openGames).forEach((num,ind) => {
+				openGames[num].deletePlayer(id);
 			})
             if (openGames[userMsg.data].isReady()) {
                 curGame = openGames[userMsg.data];
                 curGame = curGame.toGame();
-				gameId = lastGameId;
+				console.log(curGame);
                 games[gameId] = curGame;
+				delete openGames[userMsg.data];
                 curGame.msgStart();
+				curGame.start();
             }
 		}
 		else if (userMsg.action == "rating") {
@@ -435,11 +444,15 @@ wss.on('connection', function(ws) {
 				data: db.rating()
 			}));
 		}
-		else if (userMsg.action == "openGamesStrtus") {
+		else if (userMsg.action == "openGamesStatus") {
 			ws.send(
 				JSON.stringify({
 					action: "openGames",
-					data: openGames
+					data: Object.keys(openGames).map(
+						(p1,p2) => {
+							return [p1]
+						}
+					)
 				})
 			);
 		}

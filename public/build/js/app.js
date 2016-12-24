@@ -124,6 +124,7 @@
 			console.log("here");
 			this.listeners = [];
 			this.ready = false;
+			this.otherListeners = [];
 			this.socket = new WebSocket(url);
 			this.socket.onerror = function (err) {};
 			this.socket.onopen = function () {
@@ -131,16 +132,30 @@
 			};
 			this.socket.onclose = function () {};
 			this.socket.onmessage = function (msg) {
+				console.log(msg);
 				var obj = JSON.parse(msg.data);
 				_this.listeners.forEach(function (el) {
 					if (el.wsFilter != null && el.wsFilter.test(obj.action)) {
 						el.onMessage(obj.data, obj.action);
 					}
 				});
+				_this.otherListeners.forEach(function (listener) {
+					if (listener.reg.test(obj.action)) {
+						listener.callback(obj.data);
+					}
+				});
 			};
 		}
 	
 		(0, _createClass3.default)(WSManager, [{
+			key: 'myOn',
+			value: function myOn(reg, callback) {
+				this.otherListeners.push({
+					reg: reg,
+					callback: callback
+				});
+			}
+		}, {
 			key: 'addBlock',
 			value: function addBlock(block) {
 				this.listeners.push(block);
@@ -4512,12 +4527,16 @@
 	    (0, _createClass3.default)(GameGateView, [{
 	        key: 'init',
 	        value: function init() {
+	            var _this2 = this;
+	
 	            this.setClasses(['content', 'js-gameGate']);
 	            this._el = document.createElement('div');
-	            this._el.setAttribute('width', 1400);
-	            this._el.setAttribute('height', 650);
 	            this.game = new _gameGate2.default(this._el);
 	            document.querySelector('.gameGate').appendChild(this._el);
+	            wsm.myOn(/start/, function (msg) {
+	                new Router().go('/app');
+	                _this2.game.active = false;
+	            });
 	        }
 	    }]);
 	    return GameGateView;
@@ -4529,23 +4548,101 @@
 /* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 	
+	var _stringify = __webpack_require__(126);
+	
+	var _stringify2 = _interopRequireDefault(_stringify);
+	
+	var _getPrototypeOf = __webpack_require__(49);
+	
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+	
 	var _classCallCheck2 = __webpack_require__(3);
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
+	var _createClass2 = __webpack_require__(4);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(54);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(89);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _block = __webpack_require__(101);
+	
+	var _block2 = _interopRequireDefault(_block);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var GameGate = function GameGate() {
-		(0, _classCallCheck3.default)(this, GameGate);
+	var GameGate = function (_Block) {
+		(0, _inherits3.default)(GameGate, _Block);
 	
-		this.val = 0;
-	};
+		function GameGate(options) {
+			(0, _classCallCheck3.default)(this, GameGate);
+	
+			var _this = (0, _possibleConstructorReturn3.default)(this, (GameGate.__proto__ || (0, _getPrototypeOf2.default)(GameGate)).call(this, 'options', options));
+	
+			_this._el = options;
+			_this.active = true;
+			_this.fn();
+			wsm.myOn(/openGames/, function (data) {
+				_this._el.innerHTML = '';
+				_this.mainForm = document.createElement('form');
+				data.forEach(function (el) {
+					var domObj = document.createElement('button');
+					domObj.setAttribute("class", "btn btn_submit");
+					domObj.setAttribute("name", 'in' + el[0]);
+					domObj.innerHTML = 'Вступить';
+					_this.mainForm.appendChild(domObj);
+				});
+				_this.newGameButton = document.createElement('button');
+				_this.newGameButton.setAttribute("class", "btn btn_submit");
+				_this.newGameButton.setAttribute("name", 'newGame');
+				_this.newGameButton.innerHTML = 'Создать игру';
+				_this.mainForm.appendChild(_this.newGameButton);
+				_this._el.appendChild(_this.mainForm);
+				_this.mainForm.addEventListener("click", function (event) {
+					event.preventDefault();
+					if (event.target.name == 'newGame') {
+						wsm.send((0, _stringify2.default)({
+							action: 'createGame',
+							data: 2
+						}));
+					} else {
+						console.log(event.target.name);
+						wsm.send((0, _stringify2.default)({
+							action: 'joinGame',
+							data: 0
+						}));
+					}
+				});
+			});
+			return _this;
+		}
+	
+		(0, _createClass3.default)(GameGate, [{
+			key: 'fn',
+			value: function fn() {
+				if (this.active) {
+					window.wsm.send((0, _stringify2.default)({
+						action: 'openGamesStatus',
+						data: null }));
+					setTimeout(this.fn.bind(this), 1000);
+				}
+			}
+		}]);
+		return GameGate;
+	}(_block2.default);
 	
 	exports.default = GameGate;
 
@@ -5112,6 +5209,7 @@
 			key: 'draw',
 			value: function draw() {
 				if (this.isVisiable) {
+					this.ctx.fillStyle = '#FFFFFF';
 					if (this.isSelected) {
 						this.ctx.fillStyle = this.color;
 						this.ctx.fillRect(this.x, this.y, this.width, this.height);

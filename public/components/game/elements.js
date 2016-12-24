@@ -90,6 +90,7 @@ class Block {
 	}
 	draw() {
 		if(this.isVisiable) {
+			this.ctx.fillStyle = '#FFFFFF';
 			if(this.isSelected) {
 				this.ctx.fillStyle = this.color;
 				this.ctx.fillRect(this.x,this.y,this.width, this.height);
