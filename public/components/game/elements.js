@@ -55,7 +55,6 @@ class Block {
 		return this.isVisiable;
 	}
 	onMessage(event) {
-		alert('here ' + event);
 		this.show();
 	}
 	hide() {

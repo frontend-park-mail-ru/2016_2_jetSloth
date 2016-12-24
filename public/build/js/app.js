@@ -5162,7 +5162,6 @@
 		}, {
 			key: 'onMessage',
 			value: function onMessage(event) {
-				alert('here ' + event);
 				this.show();
 			}
 		}, {
@@ -5210,6 +5209,7 @@
 			value: function draw() {
 				if (this.isVisiable) {
 					this.ctx.fillStyle = '#FFFFFF';
+					this.ctx.fillRect(this.x, this.y, this.width, this.height);
 					if (this.isSelected) {
 						this.ctx.fillStyle = this.color;
 						this.ctx.fillRect(this.x, this.y, this.width, this.height);
