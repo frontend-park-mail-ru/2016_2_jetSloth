@@ -91,6 +91,7 @@ class Block {
 	draw() {
 		if(this.isVisiable) {
 			this.ctx.fillStyle = '#FFFFFF';
+			this.ctx.fillRect(this.x,this.y,this.width, this.height);
 			if(this.isSelected) {
 				this.ctx.fillStyle = this.color;
 				this.ctx.fillRect(this.x,this.y,this.width, this.height);
