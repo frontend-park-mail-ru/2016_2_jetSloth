@@ -1,3 +1,9 @@
 node_modules/
-public/coverage/
-.idea/
+public/api
+*.idea/*
+*.log
+.travis.yml
+*.bak
+.tern-project
+*.tmpl.js
+public/coverage

@@ -2,59 +2,36 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Monopoly</title>
-    <link rel="stylesheet" href="/css/milligram.min.css" />
-    <link rel="stylesheet" href="/css/main.css" />
 
-    <link rel="stylesheet" href="/components/button/button.css" />
-    <link rel="stylesheet" href="/components/form/input.css" />
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+    <link rel="stylesheet" href="build/css/font-awesome.min.css">
+    <link rel="stylesheet" href="build/css/main.css">
+
+    <script src="build/js/app.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <script src="components/form/__input/snap.svg-min.js"></script>
+
+
 </head>
 
 <body>
 
-    <header>
-        <h1>MONOPOLY</h1>
-    </header>
+    <div class="loader">
+        <div class="loader__green"></div>
+        <div class="loader__red"></div>
+        <div class="loader__violet"></div>
+        <div class="loader__blue"></div>
+    </div>
 
-	<script src="/modules/pathToRegex.js"></script>
-	<script src="/modules/view.js"></script>
-	<script src="/modules/model.js"></script>
-	<script src="/modules/route.js"></script>
-	<script src="/modules/router.js"></script>
-
-    <div class="js-game" hidden="hidden"></div>
-	<div class="js-pregame" hidden="hidden"></div>
-	<div class="js-main" hidden="hidden"></div>
-    <div class="js-signin" hidden="hidden"></div>
-    <div class="js-signup" hidden="hidden"></div>
-	<div class="js-rating" hidden="hidden"></div>
-
-	<script src="/models/rating.js"></script>
-	<script src="/models/avaliableGames.js"></script>
-	<script src="/models/signIn.js"></script>
-	<script src="/models/signUp.js"></script>
-
-	<script src="/components/block/block.js"></script>
-    <script src="/components/button/button.js"></script>
-	<script src="/components/game/game.js"></script>
-	<script src="/components/rating/rating.js"></script>
-	<script src="/components/pregame/pregame.js"></script>
-	<script src="/components/main/main.js"></script>
-	<script src="/components/form/form.tmpl.js"></script>
-	<script src="/components/form/form.js"></script>
-	<script src="/components/signIn/signIn.js"></script>
-	<script src="/components/signUp/signUp.js"></script>
-
-	<script src="views/main.js"></script>
-	<script src="views/game.js"></script>
-	<script src="views/pregame.js"></script>
-	<script src="views/rating.js"></script>
-	<script src="views/signIn.js"></script>
-	<script src="views/signUp.js"></script>
-
-    <script src="/libs/technolibs/index.js"></script>
-    <script src="main.js"></script>
+    <div class="app"></div>
+	<div class="gameGate"></div>
 
 </body>
 

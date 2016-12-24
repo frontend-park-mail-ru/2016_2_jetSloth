@@ -1,82 +1,143 @@
-(function () {
-	'use strict';
+'use strict';
+import Block from '../block/block'
+import Button from '../button/button'
+import Input from './__input/__input.js'
+import Router from '../../modules/router'
+import template from './form.pug'
+import User from '../../models/user'
 
-	// import
-	const Block = window.Block;
-	const Button = window.Button;
 
-	class Form extends Block {
+export default class Form extends Block {
+    constructor(options = { action, data: {} }) {
+        super('form', options);
 
-		/**
-		 * Конструктор класса Form
-		 */
-		constructor(options = {data: {}}) {
-			super('form');
-			this.template = window.fest['form/form.tmpl'];
-			this.data = options.data;
-			this._el = options.el;
-			this.render();
-		}
+        this.action = options.action;
+        this.data = options.data;
 
-		/**
-		 * Обновляем HTML
-		 */
-		render() {
-			this._updateHtml();
-			this._installControls();
-		}
+        this.render();
+    }
 
-		/**
-		 * Обнуляем форму
-		 */
-		reset() {
-			this._el.querySelector('form').reset();
-		}
+    render() {
+        this._updateHtml();
+        this._initFields();
+        this._initControls();
+        this._setListeners();
+    }
 
-		/**
-		 * Обновить html компонента
-		 */
-		_updateHtml() {
-			this._el.innerHTML = this.template(this.data);
-		}
+    _updateHtml() {
+        this._el.innerHTML = template();
+    }
 
-		/**
-		 * Вставить управляющие элементы в форму
-		 */
-		_installControls() {
-			let {controls = []} = this.data;
+    _initFields() {
+        let {
+            fields = []
+        } = this.data;
+        this.fields = {};
+        fields.forEach(data => {
+            let input = new Input({
+                label: data.label,
+                attrs: data.attrs
+            })
+            this.fields[data.attrs.name] = input;
+            this._el.querySelector('.js-fields').appendChild(input._get());
+        })
+    }
 
-			controls.forEach(data => {
-				let control = new Button({text: data.text});
-				this._el.querySelector('.js-controls').appendChild(control._get());
-			});
-		}
+    _initControls() {
+        let {
+            controls = []
+        } = this.data;
+        controls.forEach(data => {
+            let control = new Button({
+                text: data.text,
+                classes: data.classes,
+                attrs: data.attrs
+            })
+            this._el.querySelector('.js-controls').appendChild(control._get());
+        })
+    }
+	
+    _setListeners() {
+        this.on('reset', event => {
+            event.preventDefault();
+            this.resetForm();
+        })
+		
+        this.on('submit', event => {
+			event.preventDefault();
+    		(new Router).go('/gameGate');
+        })
 
-		/**
-		 * Взять данные формы
-		 * @return {object}
-		 */
-		getFormData() {
-			let form = this._el.querySelector('form');
-			let elements = form.elements;
-			let fields = {};
+        this._el.querySelector('.close').addEventListener('click', () =>{
+            (new Router).go('/');
+        })
 
-			Object.keys(elements).forEach(element => {
-				let name = elements[element].name;
-				let value = elements[element].value;
+        Object.keys(this.fields).forEach(name => {
+            this.fields[name].field.addEventListener('focus', () => {
+                this.fields[name].active();
+            })
+            this.fields[name].field.addEventListener('blur', () => {
+                this.validate();
 
-				if (!name) {
-					return;
-				}
+            })
+        })
+    }
 
-				fields[name] = value;
-			});
+    validate() {
+        this.action === 'signin' ? this.signInCheck() : this.signUpCheck();
+    }
 
-			return fields;
-		}
+    signInCheck() {
+        let username = this.fields['username'];
+        let password = this.fields['password'];
 
-	}
+        username.isEmpty() ? username.resetActive() : this.isValidUsername(username);
+        password.isEmpty() ? password.resetActive() : this.isValidPassword(password);
+    }
 
-	//export
-	window.Form = Form;
-})();
+    signUpCheck() {
+        let username = this.fields['username'];
+        let password = this.fields['password'];
+        let password2 = this.fields['password2'];
+
+        username.isEmpty() ? username.resetActive() : this.isValidUsername(username);
+        password.isEmpty() ? password.resetActive() : this.isValidPassword(password);
+        password2.isEmpty() ? password2.resetActive() : this.isSamePasswords(password, password2);
+    }
+
+    isValidUsername(username) {
+        let re = /^\w{6,10}$/;
+        re.test(username.field.value) ? username.valid() :
+            username.invalid('Bad name. It should contain 6-10 symbols!');
+    }
+
+    isValidPassword(password) {
+        let re = /^\w{6,20}$/;
+        re.test(password.field.value) ? password.valid() :
+            password.invalid('Bad password. It should contain 6-20 symbols!');
+    }
+
+    isSamePasswords(password1, password2) {
+        password1.field.value === password2.field.value ? password2.valid() :
+            password2.invalid('Passwords doesn\'t match! Please, try again.');
+    }
+
+    resetForm() {
+        Object.keys(this.fields).forEach(name => {
+            this.fields[name].reset();
+        })
+    }
+
+    getFormData() {
+        let form = this._el;
+        let elements = form.elements;
+        let fields = {};
+
+        fields.username = elements.username.value;
+        fields.password = elements.password.value;
+        fields.action = this._action;
+
+        return fields;
+    }
+
+}

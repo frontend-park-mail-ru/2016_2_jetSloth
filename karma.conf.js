@@ -1,38 +1,58 @@
-module.exports = function (config) {
-	'use strict';
-	config.set({
+let webpackConfig = require('./webpack.config.js');
 
-		basePath: '',
+module.exports = function(config) {
+    'use strict';
+    config.set({
 
-		frameworks: ['jasmine'],
+        basePath: '',
 
-		files: [
-			'./public/components/**/*.js',
-			'./public/modules/**/*.js',
-			'./public/views/**/*.js',
-			'./test/**/*.spec.js'
-		],
 
-		reporters: ['progress', 'coverage'],
-		preprocessors: {
-			'./public/components/**/*.js': ['coverage'],
-			'./public/modules/**/*.js': ['coverage'],
-			'./public/views/**/*.js': ['coverage']
-		},
+        frameworks: ['jasmine'],
 
-		port: 9876,
-		colors: true,
-		autoWatch: false,
-		singleRun: false,
 
-		// level of logging
-		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel: config.LOG_INFO,
+        files: [
+            // './public/build/*.js',
+            './test/**/*.spec.js'
+        ],
 
-		browsers: ['Chrome'],
-		coverageReporter: {
-			type: 'html',
-			dir: 'public/coverage/'
-		}
-	});
+        reporters: ['progress', 'coverage'],
+        preprocessors: {
+            './test/**/*.spec.js': ['webpack'],
+            // './public/build/*.js': ['coverage']
+        },
+
+        port: 9876,
+        colors: true,
+        autoWatch: false,
+        singleRun: false,
+
+        // level of logging
+        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+        logLevel: config.LOG_INFO,
+
+        webpack: webpackConfig,
+        webpackMiddleware: {
+            noInfo: true
+        },
+
+        plugins: [
+            'karma-jasmine',
+            'karma-chrome-launcher',
+            'karma-coverage',
+            'karma-webpack'
+        ],
+
+        customLaunchers: {
+            Chrome_travis_ci: {
+                base: 'Chrome',
+                flags: ['--no-sandbox']
+            }
+        },
+
+        browsers: ['Chrome'],
+        coverageReporter: {
+            type: 'html',
+            dir: 'public/coverage/'
+        }
+    });
 };

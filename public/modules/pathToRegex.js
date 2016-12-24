@@ -1,8 +1,5 @@
-(function () {
-	'use strict';
-
-	// TODO сделать так, чтобы все тесты проходили
-	const pathToRegex = function (pathname) {
+'use strict';
+const pathToRegex = function (pathname) {
 		let keyNames = [];
 		let parts = pathname
 			.split('/')
@@ -43,9 +40,5 @@
 			return null;
 		};
 	};
+window.pathToRegex = pathToRegex;
 
-
-	// export
-	window.pathToRegex = pathToRegex;
-
-})();

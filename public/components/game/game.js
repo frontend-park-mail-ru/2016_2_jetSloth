@@ -1,27 +1,17 @@
-(function() {
-    'use strict';
-    class Game {
-        constructor(options) {
-            this.el = options.el;
-            this.backImg = document.createElement('img');
-            this.backImg.setAttribute('src', '/components/game/gameBackGround.jpg');
+import TimeManager from '../game/timemanager'
+import UIManager from '../game/uimanager'
+import Root from '../game/elements'
 
-            this.info = document.createElement('div');
-            this.el.appendChild(this.info);
-            this.el.appendChild(this.backImg);
-            this.render();
-            // this.el.addEventListener('onchange', function(event){});
-        }
 
-        render() {
-            //this.el.classList.add('button');
-            //this.setAttrs(this.attrs);
-            return this;
-        }
-        start(session) {
-            this.info.innerHTML = "<h1>your session: " + session + "</h1>";
-
-        }
-    }
-    window.Game = Game;
-})();
+export default class Game{
+	constructor(canvas) {
+		this._el = canvas;
+		this.ctx = canvas.getContext('2d');
+		this.ctx.strokeRect(0,0, this._el.width, this._el.height);
+		this.ws = window.wsm;
+		this.ui = new UIManager(this.ctx, this._el);
+		this.time = new TimeManager(this.ctx);
+		this.root = new Root(this._el, this.ctx, this.ui, this.ws, this.time);
+		this.ws.start();
+	}
+}

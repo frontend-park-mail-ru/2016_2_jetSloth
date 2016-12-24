@@ -1,22 +1,26 @@
-(function() {
-    'use strict';
-	const Router = window.Router;
-	const RatingView = window.RatingView;
-	const GameView = window.GameView;
-	const PregameView = window.PregameView;
-	const MainView = window.MainView;
-	const SignInView = window.SignInView;
-	const SignUpView = window.SignUpView;
+'use strict';
+
+import WSManager from './components/game/wsmanager.js'
+window.wsm = new WSManager(`ws://${window.location.host}`);
+console.log(wsm);
+import Router from './modules/router.js'
+import SignInView from './views/signin/signin.js'
+import SignUpView from './views/signup/signup.js'
+import GameGateView from './views/gameGate/gameGate.js'
+import MainView from './views/main/main.js'
+import AppView from './views/app/app.js'
 
 
-	// TIP: роуты нужно указывать от наиболее специфичного к наименее специфичному
-	// З.Ы. чтобы более ранние роуты не были префиксами более поздних ;]
-	(new Router)
-		.addRoute('/game', GameView)
-		.addRoute('/rating', RatingView)
-		.addRoute('/signIn', SignInView)
-		.addRoute('/signUp', SignUpView)
-		.addRoute('/pregame', PregameView)
-		.addRoute('/', MainView)
-		.start();
-})();
+window.onload = function () {
+    let routerConfig = function () {
+        (new Router)
+            .addRoute('/signin', SignInView)
+            .addRoute('/signup', SignUpView)
+            .addRoute('/app', AppView)
+			.addRoute('/gameGate', GameGateView)
+            .addRoute('/', MainView)
+            .start();
+    }
+
+    routerConfig();
+}
